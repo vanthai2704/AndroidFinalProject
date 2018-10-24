@@ -9,14 +9,14 @@ public class Post {
      private double price;
      private double remuneration;
      private String locationCoordinate;
-     private String title;
-     private String content;
-     private String status;
+     private String postTitle;
+     private String postContent;
+     private String postStatus;
 
     public Post() {
     }
 
-    public Post(int postId, String communeId, int categoryId, int userId, double price, double remuneration, String locationCoordinate, String title, String content, String status) {
+    public Post(int postId, String communeId, int categoryId, int userId, double price, double remuneration, String locationCoordinate, String postTitle, String postContent, String postStatus) {
         this.postId = postId;
         this.communeId = communeId;
         this.categoryId = categoryId;
@@ -24,9 +24,9 @@ public class Post {
         this.price = price;
         this.remuneration = remuneration;
         this.locationCoordinate = locationCoordinate;
-        this.title = title;
-        this.content = content;
-        this.status = status;
+        this.postTitle = postTitle;
+        this.postContent = postContent;
+        this.postStatus = postStatus;
     }
 
     public int getPostId() {
@@ -85,27 +85,27 @@ public class Post {
         this.locationCoordinate = locationCoordinate;
     }
 
-    public String getTitle() {
-        return title;
+    public String getPostTitle() {
+        return postTitle;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setPostTitle(String postTitle) {
+        this.postTitle = postTitle;
     }
 
-    public String getContent() {
-        return content;
+    public String getPostContent() {
+        return postContent;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setPostContent(String postContent) {
+        this.postContent = postContent;
     }
 
-    public String getStatus() {
-        return status;
+    public String getPostStatus() {
+        return postStatus;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setPostStatus(String postStatus) {
+        this.postStatus = postStatus;
     }
 }
