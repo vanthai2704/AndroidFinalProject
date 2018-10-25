@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "956272031776",
+    "firebase_url": "https://fastjob-d3fb5.firebaseio.com",
+    "project_id": "fastjob-d3fb5",
+    "storage_bucket": "fastjob-d3fb5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:956272031776:android:cd957d032f5ca8fd",
+        "android_client_info": {
+          "package_name": "com.example.fastjobs"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "956272031776-cnp2jrh24pda7inaqr253na3v0do7koj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChrr7agxswFbuqlCXl7eTylo4SUsnZx6I"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
