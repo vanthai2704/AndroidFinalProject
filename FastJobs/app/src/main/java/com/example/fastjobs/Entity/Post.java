@@ -1,4 +1,4 @@
-package com.example.fastjobs.Entity;
+package com.example.fastjobs.entity;
 
 public class Post {
 
