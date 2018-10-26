@@ -4,6 +4,6 @@ import com.example.fastjobs.entity.User;
 
 import java.util.List;
 
-public interface UserCallback {
-    void onCallback(User user, String key, List<User> users);
+public interface CallbackSupport<T> {
+    void onCallback(T t, String key, List<T> ts);
 }

@@ -1,64 +1,69 @@
 package com.example.fastjobs.entity;
 
-public class Post {
+import com.google.firebase.database.Exclude;
+import com.google.firebase.database.IgnoreExtraProperties;
 
-     private int postId;
-     private String communeId;
-     private int categoryId;
-     private int userId;
-     private double price;
-     private double remuneration;
-     private String locationCoordinate;
-     private String postTitle;
-     private String postContent;
-     private String postStatus;
+import java.util.HashMap;
+import java.util.Map;
+
+@IgnoreExtraProperties
+public class Post {
+    private String post_id;
+    private String commune_id;
+    private int category_id;
+    private int user_id;
+    private double price;
+    private double remuneration;
+    private String location_coordinate;
+    private String post_title;
+    private String post_content;
+    private String post_status;
 
     public Post() {
     }
 
-    public Post(int postId, String communeId, int categoryId, int userId, double price, double remuneration, String locationCoordinate, String postTitle, String postContent, String postStatus) {
-        this.postId = postId;
-        this.communeId = communeId;
-        this.categoryId = categoryId;
-        this.userId = userId;
+    public Post(String commune_id, int category_id, int user_id, double price, double remuneration, String location_coordinate, String post_title, String post_content, String post_status) {
+        this.commune_id = commune_id;
+        this.category_id = category_id;
+        this.user_id = user_id;
         this.price = price;
         this.remuneration = remuneration;
-        this.locationCoordinate = locationCoordinate;
-        this.postTitle = postTitle;
-        this.postContent = postContent;
-        this.postStatus = postStatus;
+        this.location_coordinate = location_coordinate;
+        this.post_title = post_title;
+        this.post_content = post_content;
+        this.post_status = post_status;
     }
 
-    public int getPostId() {
-        return postId;
+    public String getPost_id() {
+        return post_id;
     }
 
-    public void setPostId(int postId) {
-        this.postId = postId;
+    public void setPost_id(String post_id) {
+        this.post_id = post_id;
     }
 
-    public String getCommuneId() {
-        return communeId;
+    public String getCommune_id() {
+        return commune_id;
     }
 
-    public void setCommuneId(String communeId) {
-        this.communeId = communeId;
+    public void setCommune_id(String commune_id) {
+        this.commune_id = commune_id;
     }
 
-    public int getCategoryId() {
-        return categoryId;
+    public int getCategory_id() {
+        return category_id;
     }
 
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
+    public void setCategory_id(int category_id) {
+        this.category_id = category_id;
     }
 
-    public int getUserId() {
-        return userId;
+    public int getUser_id() {
+        return user_id;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
     }
 
     public double getPrice() {
@@ -77,35 +82,50 @@ public class Post {
         this.remuneration = remuneration;
     }
 
-    public String getLocationCoordinate() {
-        return locationCoordinate;
+    public String getLocation_coordinate() {
+        return location_coordinate;
     }
 
-    public void setLocationCoordinate(String locationCoordinate) {
-        this.locationCoordinate = locationCoordinate;
+    public void setLocation_coordinate(String location_coordinate) {
+        this.location_coordinate = location_coordinate;
     }
 
-    public String getPostTitle() {
-        return postTitle;
+    public String getPost_title() {
+        return post_title;
     }
 
-    public void setPostTitle(String postTitle) {
-        this.postTitle = postTitle;
+    public void setPost_title(String post_title) {
+        this.post_title = post_title;
     }
 
-    public String getPostContent() {
-        return postContent;
+    public String getPost_content() {
+        return post_content;
     }
 
-    public void setPostContent(String postContent) {
-        this.postContent = postContent;
+    public void setPost_content(String post_content) {
+        this.post_content = post_content;
     }
 
-    public String getPostStatus() {
-        return postStatus;
+    public String getPost_status() {
+        return post_status;
     }
 
-    public void setPostStatus(String postStatus) {
-        this.postStatus = postStatus;
+    public void setPost_status(String post_status) {
+        this.post_status = post_status;
+    }
+
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("commune_id", commune_id);
+        result.put("category_id", category_id);
+        result.put("user_id", user_id);
+        result.put("price", price);
+        result.put("remuneration", remuneration);
+        result.put("location_coordinate", location_coordinate);
+        result.put("post_title", post_title);
+        result.put("post_content", post_content);
+        result.put("post_status", post_status);
+        return result;
     }
 }

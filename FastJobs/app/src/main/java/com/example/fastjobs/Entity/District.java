@@ -1,51 +1,67 @@
 package com.example.fastjobs.entity;
 
-public class District {
+import com.google.firebase.database.Exclude;
+import com.google.firebase.database.IgnoreExtraProperties;
 
-    private int districtId;
-    private String districtName;
-    private String districtType;
-    private String provinceId;
+import java.util.HashMap;
+import java.util.Map;
+
+@IgnoreExtraProperties
+public class District {
+    private String district_id;
+    private String name;
+    private String type;
+    private  String province_id;
 
     public District() {
     }
 
-    public District(int districtId, String districtName, String districtType, String provinceId) {
-        this.districtId = districtId;
-        this.districtName = districtName;
-        this.districtType = districtType;
-        this.provinceId = provinceId;
+    public District(String district_id, String name, String type, String province_id) {
+        this.district_id = district_id;
+        this.name = name;
+        this.type = type;
+        this.province_id = province_id;
     }
 
-    public int getDistrictId() {
-        return districtId;
+    public String getDistrict_id() {
+        return district_id;
     }
 
-    public void setDistrictId(int districtId) {
-        this.districtId = districtId;
+    public void setDistrict_id(String district_id) {
+        this.district_id = district_id;
     }
 
-    public String getDistrictName() {
-        return districtName;
+    public String getName() {
+        return name;
     }
 
-    public void setDistrictName(String districtName) {
-        this.districtName = districtName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getDistrictType() {
-        return districtType;
+    public String getType() {
+        return type;
     }
 
-    public void setDistrictType(String districtType) {
-        this.districtType = districtType;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public String getProvinceId() {
-        return provinceId;
+    public String getProvince_id() {
+        return province_id;
     }
 
-    public void setProvinceId(String provinceId) {
-        this.provinceId = provinceId;
+    public void setProvince_id(String province_id) {
+        this.province_id = province_id;
+    }
+
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("district_id", district_id);
+        result.put("name", name);
+        result.put("type", type);
+        result.put("province_id", province_id);
+        return result;
     }
 }

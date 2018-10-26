@@ -14,15 +14,12 @@ import java.util.List;
 import java.util.Map;
 
 public class UserSupport extends BaseSupport{
-    private ArrayList<User> users;
     private DatabaseReference dbUser;
     public UserSupport(){
         dbUser = db.child("user");
-        users= new ArrayList<>();
     }
     public void insert(User user){
-        String userId = dbUser.push().getKey();
-        dbUser.child(userId).setValue(user).addOnFailureListener(new OnFailureListener() {
+        dbUser.child(user.getEmail().replaceAll("\\.","_")).setValue(user).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
                 e.printStackTrace();
@@ -31,7 +28,7 @@ public class UserSupport extends BaseSupport{
     }
 
     // Validate page > 0
-    public void getAll(final int page, final int pageSize, final UserCallback userCallback){
+    public void getAll(final int page, final int pageSize, final CallbackSupport callbackSupport){
         dbUser.addValueEventListener(new ValueEventListener() {
             int index = 1;
             List<User> users = new ArrayList<>();
@@ -44,7 +41,7 @@ public class UserSupport extends BaseSupport{
                     }
                     index++;
                 }
-                userCallback.onCallback(null, null, users);
+                callbackSupport.onCallback(null, null, users);
             }
 
             @Override
@@ -55,26 +52,36 @@ public class UserSupport extends BaseSupport{
     }
 
     public void delete(String email){
-        find(email, new UserCallback() {
+        dbUser.child(email.replaceAll("\\.","_")).removeValue();
+    }
+
+    public void update(final User user){
+        Map<String, Object> childUpdates = new HashMap<>();
+        childUpdates.put(user.getEmail().replaceAll("\\.","_"), user.toMap());
+        dbUser.updateChildren(childUpdates);
+    }
+
+    public void find(final String email, final CallbackSupport callbackSupport){
+        dbUser.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onCallback(User user, String key, List<User> users) {
-                dbUser.child(key).removeValue();
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot item : dataSnapshot.getChildren())
+                {
+                    if(item.getKey().equalsIgnoreCase(email.replaceAll("\\.","_"))){
+                        callbackSupport.onCallback(item.getValue(User.class), item.getKey(), null);
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
     }
 
-    public void update(final User userUpdate){
-        find(userUpdate.getEmail(), new UserCallback() {
-            @Override
-            public void onCallback(User user, String key, List<User> users) {
-                Map<String, Object> childUpdates = new HashMap<>();
-                childUpdates.put(key, userUpdate.toMap());
-                dbUser.updateChildren(childUpdates);
-            }
-        });
-    }
-
-    public void find(final String email, final UserCallback userCallback){
+    public void search(final String email, final CallbackSupport callbackSupport){
         dbUser.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -82,7 +89,7 @@ public class UserSupport extends BaseSupport{
                 {
                     User user = item.getValue(User.class);
                     if(user.getEmail().equalsIgnoreCase(email)){
-                        userCallback.onCallback(user, item.getKey(), null);
+                        callbackSupport.onCallback(user, item.getKey(), null);
                         break;
                     }
                 }

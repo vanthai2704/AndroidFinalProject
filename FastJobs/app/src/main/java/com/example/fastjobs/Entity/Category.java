@@ -1,41 +1,54 @@
 package com.example.fastjobs.entity;
 
-public class Category {
+import com.google.firebase.database.Exclude;
+import com.google.firebase.database.IgnoreExtraProperties;
 
-    private int categoryId;
-    private String categoryName;
-    private String categoryStatus;
+import java.util.HashMap;
+import java.util.Map;
+
+@IgnoreExtraProperties
+public class Category {
+    private String category_id;
+    private String category_name;
+    private String category_status;
 
     public Category() {
     }
 
-    public Category(int categoryId, String categoryName, String categoryStatus) {
-        this.categoryId = categoryId;
-        this.categoryName = categoryName;
-        this.categoryStatus = categoryStatus;
+    public Category(String category_name, String category_status) {
+        this.category_name = category_name;
+        this.category_status = category_status;
     }
 
-    public int getCategoryId() {
-        return categoryId;
+    public String getCategory_id() {
+        return category_id;
     }
 
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
+    public void setCategory_id(String category_id) {
+        this.category_id = category_id;
     }
 
-    public String getCategoryName() {
-        return categoryName;
+    public String getCategory_name() {
+        return category_name;
     }
 
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
+    public void setCategory_name(String category_name) {
+        this.category_name = category_name;
     }
 
-    public String getCategoryStatus() {
-        return categoryStatus;
+    public String getCategory_status() {
+        return category_status;
     }
 
-    public void setCategoryStatus(String categoryStatus) {
-        this.categoryStatus = categoryStatus;
+    public void setCategory_status(String category_status) {
+        this.category_status = category_status;
+    }
+
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("category_name", category_name);
+        result.put("category_status", category_status);
+        return result;
     }
 }
