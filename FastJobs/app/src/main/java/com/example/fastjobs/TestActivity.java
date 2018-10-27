@@ -7,7 +7,6 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,64 +17,99 @@ import com.example.fastjobs.firebase.CallbackSupport;
 import com.example.fastjobs.firebase.UserSupport;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 public class TestActivity extends AppCompatActivity {
 
     private ImageView imageView;
-    UserSupport userSupport;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
-        userSupport = new UserSupport();
         imageView = (ImageView) findViewById(R.id.imageView);
         TextView textView = findViewById(R.id.editTextTest1);
         textView.setText("datnqse04777@fpt.edu.vn");
     }
 
-    public void test(View view){
-//        LoginSupport loginSupport = new LoginSupport();
-//        EditText email = findViewById(R.id.editTextTest1);
-//        EditText password =findViewById(R.id.editTextTest2);
-//        loginSupport.login(email.getText().toString(),password.getText().toString());
-//        chooseImage();
-        ImageSupport imageSupport = new ImageSupport();
-        imageSupport.find("1e634e43-c96a-4a49-9ac0-5ebfead4b19a", new CallbackSupport<Bitmap>() {
 
+    /********************** EXAMPLE FOR DB SUPPORT ***************************/
+    // This is how to use DB support
+
+    /*---- This for Login ----*/
+    public void signUpOnclick(View view){
+        LoginSupport loginSupport = new LoginSupport();
+        loginSupport.signUp("datnqse04777@fpt.edu.vn","12345678");
+    }
+
+    public void loginOnclick(View view){
+        LoginSupport loginSupport = new LoginSupport();
+        loginSupport.login("datnqse04777@fpt.edu.vn","12345678");
+    }
+
+    public void signOutOnclick(View view){
+        LoginSupport loginSupport = new LoginSupport();
+        loginSupport.signOut();
+    }
+
+    public boolean checkLogined(){
+        LoginSupport loginSupport = new LoginSupport();
+        return loginSupport.isLogin();
+    }
+    /*------------------------------------------------------------------------*/
+
+
+    /*---- This for User information ----*/
+    public void insertUser(View view){
+        UserSupport userSupport = new UserSupport();
+        userSupport.insert(new User("Nguyen Quang Dat","datnqse04777@fpt.edu.vn","0965658574",new Date()));
+
+        // Need insert avatar code like this
+        userSupport.get("datnqse04777@fpt.edu.vn", new CallbackSupport() {
             @Override
-            public void onCallback(Bitmap bitmap, String key, List<Bitmap> bitmaps) {
-                imageView.setImageBitmap(bitmap);
+            public void onCallback(Object o, String key, List list) {
+                ImageSupport imageSupport = new ImageSupport();
+                imageSupport.upload(filePath, getApplicationContext(), null, key, null);
+            }
+        });
+
+    }
+
+    public void updateUser(View view){
+        // Can NOT change email because email is key
+        UserSupport userSupport = new UserSupport();
+        User newUser = new User("New Nguyen Quang Dat","datnqse04777@fpt.edu.vn","0123456789",new Date());
+        userSupport.update(newUser);
+    }
+
+    public void getUserByEmail(View view){
+        UserSupport userSupport = new UserSupport();
+        userSupport.get("datnqse04777@fpt.edu.vn", new CallbackSupport() {
+            @Override
+            public void onCallback(Object o, String key, List list) {
+                // Must code any thing depend in this
+                // ...
+                // ...
             }
         });
     }
+    /*------------------------------------------------------------------------*/
 
-    public void insert(View view){
-//        userSupport.getAll(1, 3, new CallbackSupport<User>() {
-//            @Override
-//            public void onCallback(User user, String key, List<User> users) {
-//                for(User u : users){
-//                    System.out.println(u.getPhone());
-//                }
-//            }
-//        });
-        //FirebaseDatabase.getInstance().getReference().child("provice").setValue(null);
-        ImageSupport imageSupport = new ImageSupport();
-        imageSupport.upload(filePath, this, null, null, null);
-    }
+    /*---- This for Image ----*/
+    private Uri filePath;
 
     private void chooseImage() {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"),71);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"),123);
     }
 
-    private Uri filePath;
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 71 && resultCode == RESULT_OK
+        if(requestCode == 123 && resultCode == RESULT_OK
                 && data != null && data.getData() != null )
         {
             filePath = data.getData();
@@ -89,4 +123,25 @@ public class TestActivity extends AppCompatActivity {
             }
         }
     }
+
+    public void uploadImageToServer(View view){
+        ImageSupport imageSupport = new ImageSupport();
+        imageSupport.upload(filePath, this, null, null, null);
+        // Change null to id of where image belong to
+    }
+
+    public void getImageFromServer(View view){
+        ImageSupport imageSupport = new ImageSupport();
+        imageSupport.get("1e634e43-c96a-4a49-9ac0-5ebfead4b19a", new CallbackSupport<Bitmap>() {
+
+            @Override
+            public void onCallback(Bitmap bitmap, String key, List<Bitmap> bitmaps) {
+                imageView.setImageBitmap(bitmap);
+            }
+        });
+    }
+
+    /*------------------------------------------------------------------------*/
+
+
 }

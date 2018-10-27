@@ -34,8 +34,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:onClick="test"
-        android:text="Button"
+        android:onClick="updateUser"
+        android:text="Update user"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextTest2" />
 
@@ -45,8 +45,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:onClick="insert"
-        android:text="Button"
+        android:onClick="getImageFromServer"
+        android:text="Get Image"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonTest" />
 
@@ -59,4 +59,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonTest2"
         tools:srcCompat="@tools:sample/avatars" />
+
+    <Button
+        android:id="@+id/buttonTest3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:onClick="loginOnclick"
+        android:text="Login"
+        app:layout_constraintBaseline_toBaselineOf="@+id/buttonTest"
+        app:layout_constraintStart_toEndOf="@+id/buttonTest" />
 </android.support.constraint.ConstraintLayout>
