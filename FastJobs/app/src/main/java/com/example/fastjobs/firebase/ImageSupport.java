@@ -9,14 +9,20 @@ import android.support.annotation.NonNull;
 import android.widget.Toast;
 
 import com.example.fastjobs.entity.Image;
+import com.example.fastjobs.entity.Province;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class ImageSupport extends BaseSupport{
@@ -26,8 +32,8 @@ public class ImageSupport extends BaseSupport{
         dbImage = db.child("image");
         storageReference = FirebaseStorage.getInstance().getReference();
     }
-    public void upload(Uri filePath, final Context context){
-        final Image image = new Image("A",null,null, null);
+    public void upload(Uri filePath, final Context context, String post_id, String user_id, String category_id){
+        final Image image = new Image("A",post_id,user_id, category_id);
         image.setImage_id(UUID.randomUUID().toString());
         final ProgressDialog progressDialog = new ProgressDialog(context);
         progressDialog.setTitle("Uploading...");
@@ -81,11 +87,10 @@ public class ImageSupport extends BaseSupport{
 
     }
 
-    public void find(final String image_id, final CallbackSupport callbackSupport){
+    public void get(final String image_id, final CallbackSupport callbackSupport){
         StorageReference islandRef = storageReference.child("image").child(image_id);
-
-        final long ONE_MEGABYTE = 10240 * 10240;
-        islandRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+        final long HUNDRED_MEGABYTE = 10240 * 10240;
+        islandRef.getBytes(HUNDRED_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
             public void onSuccess(byte[] bytes) {
                 Bitmap image = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
@@ -95,6 +100,48 @@ public class ImageSupport extends BaseSupport{
             @Override
             public void onFailure(@NonNull Exception exception) {
                 // Handle any errors
+            }
+        });
+    }
+
+    public void getImageUser(final String user_id, final CallbackSupport callbackSupport){
+        dbImage.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<Bitmap> images = new ArrayList<>();
+                for (DataSnapshot item : dataSnapshot.getChildren())
+                {
+                    if(item.getValue(Image.class).getUser_id().equalsIgnoreCase(user_id)){
+                        callbackSupport.onCallback(null, user_id, images);
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void getImagePost(final String post_id, final CallbackSupport callbackSupport){
+        dbImage.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<Bitmap> images = new ArrayList<>();
+                for (DataSnapshot item : dataSnapshot.getChildren())
+                {
+                    if(item.getValue(Image.class).getPost_id().equalsIgnoreCase(post_id)){
+                        callbackSupport.onCallback(null, post_id, images);
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
     }

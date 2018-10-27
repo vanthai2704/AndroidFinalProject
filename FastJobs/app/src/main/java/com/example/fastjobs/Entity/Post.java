@@ -10,8 +10,8 @@ import java.util.Map;
 public class Post {
     private String post_id;
     private String commune_id;
-    private int category_id;
-    private int user_id;
+    private String category_id;
+    private String user_id;
     private double price;
     private double remuneration;
     private String location_coordinate;
@@ -22,7 +22,7 @@ public class Post {
     public Post() {
     }
 
-    public Post(String commune_id, int category_id, int user_id, double price, double remuneration, String location_coordinate, String post_title, String post_content, String post_status) {
+    public Post(String commune_id, String category_id, String user_id, double price, double remuneration, String location_coordinate, String post_title, String post_content, String post_status) {
         this.commune_id = commune_id;
         this.category_id = category_id;
         this.user_id = user_id;
@@ -50,19 +50,19 @@ public class Post {
         this.commune_id = commune_id;
     }
 
-    public int getCategory_id() {
+    public String getCategory_id() {
         return category_id;
     }
 
-    public void setCategory_id(int category_id) {
+    public void setCategory_id(String category_id) {
         this.category_id = category_id;
     }
 
-    public int getUser_id() {
+    public String getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(int user_id) {
+    public void setUser_id(String user_id) {
         this.user_id = user_id;
     }
 

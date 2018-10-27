@@ -61,7 +61,7 @@ public class TestActivity extends AppCompatActivity {
 //        });
         //FirebaseDatabase.getInstance().getReference().child("provice").setValue(null);
         ImageSupport imageSupport = new ImageSupport();
-        imageSupport.upload(filePath, this);
+        imageSupport.upload(filePath, this, null, null, null);
     }
 
     private void chooseImage() {

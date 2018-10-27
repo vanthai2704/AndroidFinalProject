@@ -60,19 +60,62 @@ public class PostSupport extends BaseSupport{
         childUpdates.put(post.getPost_id(), post.toMap());
         dbPost.updateChildren(childUpdates);
     }
-    public void find(final String post_id, final CallbackSupport callbackSupport){
+    public void get(final String post_id, final CallbackSupport callbackSupport){
         dbPost.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot item : dataSnapshot.getChildren())
                 {
                     if(item.getKey().equalsIgnoreCase(post_id)){
-                        Post post = item.getValue(Post.class);
-                        post.setPost_id(item.getKey());
-                        callbackSupport.onCallback(post,item.getKey(),null);
+                        callbackSupport.onCallback(item.getValue(Post.class),post_id,null);
                         break;
                     }
                 }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void search(final Post post,final int page, final int pageSize, final CallbackSupport callbackSupport){
+        dbPost.addValueEventListener(new ValueEventListener() {
+            int index = 1;
+            List<Post> posts = new ArrayList<>();
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot item : dataSnapshot.getChildren())
+                {
+                    Post postItem = item.getValue(Post.class);
+                    if(post.getCommune_id() == null || (postItem.getCommune_id() != null
+                            && postItem.getCommune_id().toLowerCase().contains(post.getCommune_id().toLowerCase()))){
+                        if(post.getCategory_id() == null || (postItem.getCategory_id() != null
+                                && postItem.getCategory_id().toLowerCase().contains(post.getCategory_id().toLowerCase()))){
+                            if(post.getUser_id() == null || (postItem.getUser_id() != null
+                                    && postItem.getUser_id().toLowerCase().contains(post.getUser_id().toLowerCase()))){
+                                if(post.getLocation_coordinate() == null || (postItem.getLocation_coordinate() != null
+                                        && postItem.getLocation_coordinate().toLowerCase().contains(post.getLocation_coordinate().toLowerCase()))){
+                                    if(post.getPost_title() == null || (postItem.getPost_title() != null
+                                            && postItem.getPost_title().toLowerCase().contains(post.getPost_title().toLowerCase()))){
+                                        if(post.getPost_content() == null || (postItem.getPost_content() != null
+                                                && postItem.getPost_content().toLowerCase().contains(post.getPost_content().toLowerCase()))){
+                                            if(post.getPost_status() == null || (postItem.getPost_status() != null
+                                                    && postItem.getPost_status().toLowerCase().contains(post.getPost_status().toLowerCase()))){
+                                                if(index>(page-1)*pageSize && index<= page*pageSize){
+                                                    posts.add(postItem);
+                                                }
+                                                index++;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                callbackSupport.onCallback(null, null, posts);
             }
 
             @Override

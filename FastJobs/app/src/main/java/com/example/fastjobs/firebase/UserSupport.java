@@ -61,7 +61,7 @@ public class UserSupport extends BaseSupport{
         dbUser.updateChildren(childUpdates);
     }
 
-    public void find(final String email, final CallbackSupport callbackSupport){
+    public void get(final String email, final CallbackSupport callbackSupport){
         dbUser.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

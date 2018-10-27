@@ -3,7 +3,6 @@ package com.example.fastjobs.firebase;
 import android.support.annotation.NonNull;
 
 import com.example.fastjobs.entity.Category;
-import com.example.fastjobs.entity.Post;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -56,16 +55,14 @@ public class CategorySupport extends BaseSupport {
         childUpdates.put(category.getCategory_id(), category.toMap());
         dbCategory.updateChildren(childUpdates);
     }
-    public void find(final String category_id, final CallbackSupport callbackSupport){
+    public void get(final String category_id, final CallbackSupport callbackSupport){
         dbCategory.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot item : dataSnapshot.getChildren())
                 {
                     if(item.getKey().equalsIgnoreCase(category_id)){
-                        Category category = item.getValue(Category.class);
-                        category.setCategory_id(item.getKey());
-                        callbackSupport.onCallback(category, item.getKey(), null);
+                        callbackSupport.onCallback(item.getValue(Category.class), category_id, null);
                         break;
                     }
                 }
