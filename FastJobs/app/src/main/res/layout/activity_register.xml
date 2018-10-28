@@ -94,6 +94,7 @@
         android:layout_marginEnd="42dp"
         android:background="@drawable/rounded_button"
         android:onClick="Register"
-        android:text="@string/register" />
+        android:text="@string/register"
+        android:textColor="@android:color/white" />
 
 </RelativeLayout>
