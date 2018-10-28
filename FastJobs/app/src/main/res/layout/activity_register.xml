@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     tools:context=".View.RegisterActivity">
 
     <TextView
@@ -13,8 +14,9 @@
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="50dp"
-        android:textSize="18sp"
-        android:text="@string/txtemail" />
+        android:text="@string/txtemail"
+        android:textColor="@android:color/white"
+        android:textSize="18sp" />
 
     <EditText
         android:id="@+id/editText_enter_username"
@@ -33,12 +35,13 @@
         android:id="@+id/textView_enter_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:layout_below="@+id/editText_enter_username"
+        android:layout_alignParentLeft="true"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="15dp"
-        android:textSize="18sp"
-        android:text="@string/txtpass" />
+        android:text="@string/txtpass"
+        android:textColor="@android:color/white"
+        android:textSize="18sp" />
 
     <EditText
         android:id="@+id/editText_enter_password"
@@ -57,12 +60,13 @@
         android:id="@+id/textView_enter_rpassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:layout_below="@+id/editText_enter_password"
+        android:layout_alignParentLeft="true"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="15dp"
-        android:textSize="18sp"
-        android:text="@string/txtrepass" />
+        android:text="@string/txtrepass"
+        android:textColor="@android:color/white"
+        android:textSize="18sp" />
 
     <EditText
         android:id="@+id/editText_enter_rpassword"
@@ -79,11 +83,17 @@
 
     <Button
         android:id="@+id/button_register"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
         android:layout_below="@+id/editText_enter_rpassword"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
+        android:layout_marginStart="42dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="42dp"
+        android:background="@drawable/rounded_button"
+        android:onClick="Register"
         android:text="@string/register" />
 
 </RelativeLayout>
