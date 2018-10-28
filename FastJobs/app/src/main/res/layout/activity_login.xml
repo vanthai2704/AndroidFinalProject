@@ -17,7 +17,7 @@
         app:srcCompat="@drawable/logo1" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/username"
         android:layout_width="250dp"
         android:layout_height="40dp"
         android:background="#11000000"
@@ -27,16 +27,16 @@
         android:inputType="textPersonName"
         android:textSize="16dp"
         android:layout_marginBottom="35dp"
-        android:layout_above="@+id/editText2"
+        android:layout_above="@+id/password"
         android:layout_centerHorizontal="true" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/password"
         android:layout_width="250dp"
         android:layout_height="40dp"
         android:layout_above="@+id/login"
-        android:layout_alignStart="@+id/editText"
-        android:layout_alignLeft="@+id/editText"
+        android:layout_alignStart="@+id/username"
+        android:layout_alignLeft="@+id/username"
         android:layout_marginBottom="24dp"
         android:background="#11000000"
         android:drawableLeft="@drawable/common_google_signin_btn_icon_dark"
