@@ -51,6 +51,8 @@
         android:text="Register Here."
         android:layout_above="@+id/linearLayout"
         android:layout_centerHorizontal="true"
+        android:onClick="Register"
+        android:clickable="true"/>
         android:layout_marginBottom="6dp" />
 
     <LinearLayout

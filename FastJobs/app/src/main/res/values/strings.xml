@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">FastJobs</string>
+    <string name="txtemail">Enter Email</string>
+    <string name="txtpass">Enter Password</string>
+    <string name="txtrepass">Repeat Password</string>
+    <string name="register">Register</string>
+
 </resources>

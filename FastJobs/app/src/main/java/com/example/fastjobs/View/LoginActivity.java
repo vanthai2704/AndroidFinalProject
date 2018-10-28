@@ -58,4 +58,10 @@ public class LoginActivity extends AppCompatActivity {
         }
 
     }
+    public void Register(View v){
+        Toast.makeText(getApplicationContext(),"Register",Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(this, RegisterActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }
