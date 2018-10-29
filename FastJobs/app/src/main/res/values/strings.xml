@@ -18,6 +18,10 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="txtemail">Enter Email</string>
+    <string name="txtpass">Enter Password</string>
+    <string name="txtrepass">Repeat Password</string>
+    <string name="register">Register</string>
 
     <string name="action_example">Example action</string>
 </resources>
