@@ -29,6 +29,7 @@
         android:layout_marginRight="15dp"
         android:ems="10"
         android:inputType="text"
+        android:textColor="@android:color/white"
         android:textSize="17sp"></EditText>
 
     <TextView
@@ -54,6 +55,7 @@
         android:layout_marginRight="15dp"
         android:ems="10"
         android:inputType="textPassword"
+        android:textColor="@android:color/white"
         android:textSize="17sp"></EditText>
 
     <TextView
@@ -79,6 +81,7 @@
         android:layout_marginRight="15dp"
         android:ems="10"
         android:inputType="textPassword"
+        android:textColor="@android:color/white"
         android:textSize="17sp"></EditText>
 
     <Button
