@@ -62,6 +62,6 @@ public class LoginActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(),"Register",Toast.LENGTH_LONG).show();
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
-        finish();
+
     }
 }

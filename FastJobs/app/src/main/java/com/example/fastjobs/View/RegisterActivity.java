@@ -53,10 +53,9 @@ public class RegisterActivity extends AppCompatActivity {
         if (matcher.matches()){
             LoginSupport loginSupport = new LoginSupport();
             loginSupport.signUp(getemail,getpass);
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
             finish();
-            return;
         }
     }
 }
