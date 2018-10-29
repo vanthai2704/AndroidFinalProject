@@ -1,5 +1,6 @@
 package com.example.fastjobs.View;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
@@ -12,11 +13,13 @@ import android.widget.Toast;
 
 import com.example.fastjobs.MainActivity;
 import com.example.fastjobs.R;
+import com.example.fastjobs.firebase.CallbackSupport;
 import com.example.fastjobs.firebase.LoginSupport;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.tooltip.Tooltip;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -83,15 +86,23 @@ public class LoginActivity extends AppCompatActivity {
 
 
         if (matcher.matches()){
+            final ProgressDialog dialog = ProgressDialog.show(LoginActivity.this, "",
+                    "Loading. Please wait...", true);
             LoginSupport loginSupport = new LoginSupport();
-            Task<AuthResult> task = loginSupport.login(tooltipmail,tooltippass);
-            if(task.isSuccessful()){
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
-            }
-            else{
-                Toast.makeText(getApplicationContext(),"Email or Password is InValid",Toast.LENGTH_LONG).show();
-            }
+            loginSupport.login(tooltipmail, tooltippass, new CallbackSupport<Boolean>() {
+                @Override
+                public void onCallback(Boolean aBoolean, String key, List<Boolean> booleans) {
+                    if(aBoolean){
+                        Intent intent = new Intent(LoginActivity.super.getBaseContext(), MainActivity.class);
+                        startActivity(intent);
+                    }
+                    else{
+                        Toast.makeText(getApplicationContext(),"Email or Password is InValid",Toast.LENGTH_LONG).show();
+                    }
+                    dialog.dismiss();
+                }
+            });
+
         }
 
     }

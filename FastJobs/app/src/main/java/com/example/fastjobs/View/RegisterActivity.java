@@ -1,5 +1,6 @@
 package com.example.fastjobs.View;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,8 +11,11 @@ import android.widget.Toast;
 
 import com.example.fastjobs.MainActivity;
 import com.example.fastjobs.R;
+import com.example.fastjobs.entity.User;
+import com.example.fastjobs.firebase.CallbackSupport;
 import com.example.fastjobs.firebase.LoginSupport;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -51,11 +55,19 @@ public class RegisterActivity extends AppCompatActivity {
 
 
         if (matcher.matches()){
+            final ProgressDialog dialog = ProgressDialog.show(RegisterActivity.this, "",
+                    "Loading. Please wait...", true);
             LoginSupport loginSupport = new LoginSupport();
-            loginSupport.signUp(getemail,getpass);
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
-            finish();
+            loginSupport.signUp(getemail, getpass, new CallbackSupport<User>() {
+                @Override
+                public void onCallback(User user, String key, List<User> users) {
+                    Intent intent = new Intent(RegisterActivity.super.getBaseContext(), LoginActivity.class);
+                    startActivity(intent);
+                    finish();
+                    dialog.dismiss();
+                }
+            });
+
         }
     }
 }
