@@ -1,4 +1,4 @@
-package com.example.fastjobs.View;
+package com.example.fastjobs.view;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.fastjobs.MainActivity;
 import com.example.fastjobs.R;
 import com.example.fastjobs.entity.User;
 import com.example.fastjobs.firebase.CallbackSupport;
@@ -41,7 +40,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         Matcher matcher= Pattern.compile(LoginActivity.validemail).matcher(getemail);
         if(getemail.equals("") || !matcher.matches()){
-            Toast.makeText(getApplicationContext(),"InValid Email",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),"Invalid Email",Toast.LENGTH_LONG).show();
             return;
         }
         if(getpass.equals("")){
