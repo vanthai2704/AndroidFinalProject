@@ -11,6 +11,8 @@ import android.widget.Toast;
 import com.example.fastjobs.MainActivity;
 import com.example.fastjobs.R;
 import com.example.fastjobs.firebase.LoginSupport;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -50,11 +52,16 @@ public class LoginActivity extends AppCompatActivity {
 
         if (matcher.matches()){
             LoginSupport loginSupport = new LoginSupport();
-            loginSupport.login(email,pass);
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-            finish();
-            return;
+            Task<AuthResult> task = loginSupport.login(email,pass);
+            if(task.isSuccessful()){
+                System.out.println("hahaha");
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+            }
+            else{
+                Toast.makeText(getApplicationContext(),"Email or Password is InValid",Toast.LENGTH_LONG).show();
+                System.out.println("hihihi");
+            }
         }
 
     }
