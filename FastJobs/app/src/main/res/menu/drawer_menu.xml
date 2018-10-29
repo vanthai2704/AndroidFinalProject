@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/home" android:state_checked="true" android:title="Trang Chủ" android:icon="@drawable/ic_home" />
+    <item android:id="@+id/search" android:title="Tìm Kiếm" android:icon="@drawable/ic_search"/>
+    <item android:id="@+id/addPost" android:title="Đăng Bài" android:icon="@drawable/ic_addpost"/>
+    <item android:id="@+id/myPosts" android:title="Bài Đăng Của Tôi" android:icon="@drawable/ic_myposts"/>
+    <item android:id="@+id/logOut" android:title="Đăng Xuất" android:icon="@drawable/ic_logout"/>
+
+</menu>
