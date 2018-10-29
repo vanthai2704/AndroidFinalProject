@@ -51,7 +51,8 @@
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
         android:textColor="@android:color/white"
-        android:textColorHint="@color/common_google_signin_btn_text_light_disabled" />
+        android:textColorHint="@color/common_google_signin_btn_text_light_disabled"
+        />
 
     <TextView
         android:id="@+id/textView2"
