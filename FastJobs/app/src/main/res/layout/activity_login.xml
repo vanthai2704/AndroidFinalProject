@@ -4,17 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="@drawable/gradient"
     tools:context=".View.LoginActivity">
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="120dp"
-        android:layout_height="150dp"
+        android:layout_width="212dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
-        app:srcCompat="@drawable/ic_launcher" />
+        app:srcCompat="@drawable/logo3" />
 
     <EditText
         android:id="@+id/username"
@@ -22,7 +22,7 @@
         android:layout_height="40dp"
         android:layout_above="@+id/password"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="35dp"
+        android:layout_marginBottom="30dp"
         android:background="@drawable/rounded_edit_text"
         android:drawableLeft="@android:drawable/sym_action_email"
         android:drawablePadding="15dp"
@@ -31,7 +31,8 @@
         android:inputType="textPersonName"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
-        android:textColor="@android:color/white" />
+        android:textColor="@android:color/white"
+        android:textColorHint="@color/common_google_signin_btn_text_light_disabled" />
 
     <EditText
         android:id="@+id/password"
@@ -40,7 +41,7 @@
         android:layout_above="@+id/login"
         android:layout_alignStart="@+id/username"
         android:layout_alignLeft="@+id/username"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="30dp"
         android:background="@drawable/rounded_edit_text"
         android:drawableLeft="@android:drawable/ic_lock_idle_lock"
         android:drawablePadding="15dp"
@@ -49,27 +50,28 @@
         android:inputType="textPassword"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
-        android:textColor="@android:color/white" />
+        android:textColor="@android:color/white"
+        android:textColorHint="@color/common_google_signin_btn_text_light_disabled" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Register Here."
         android:layout_above="@+id/linearLayout"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="30dp"
+        android:clickable="true"
         android:onClick="Register"
-        android:clickable="true"/>
-        android:layout_marginBottom="6dp" />
+        android:text="Register Here" />
+    android:layout_marginBottom="6dp" />
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:orientation="horizontal"
-        android:layout_alignParentBottom="true"
         android:layout_alignLeft="@+id/imageView"
-        android:layout_alignStart="@+id/imageView"
-        android:id="@+id/linearLayout">
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/imageView4"
@@ -96,12 +98,9 @@
         android:id="@+id/login"
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="42dp"
-        android:layout_marginEnd="42dp"
-        android:layout_marginBottom="101dp"
+        android:layout_above="@+id/textView2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="30dp"
         android:background="@drawable/rounded_button"
         android:onClick="Login"
         android:text="Login"
