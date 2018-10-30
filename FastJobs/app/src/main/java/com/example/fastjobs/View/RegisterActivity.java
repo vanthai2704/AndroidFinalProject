@@ -30,44 +30,25 @@ public class RegisterActivity extends AppCompatActivity {
         register = findViewById(R.id.button_register);
     }
 
-    public void EmailClick(View v){
-        email.setError(null);
-    }
-
-    public void PasswordClick(View v){
-        pass.setError(null);
-    }
-
-    public void RepasswordClick(View v){
-        repass.setError(null);
-    }
-
     public void Register(View v){
         String getemail = email.getText().toString();
         String getpass = pass.getText().toString();
         String getrepass = repass.getText().toString();
 
         Matcher matcher= Pattern.compile(LoginActivity.validemail).matcher(getemail);
-        if(getemail.equals("")){
-            email.setError("Email is required");
-            email.requestFocus();
-            return;
-        }
-        if(!matcher.matches()){
-            email.setError("Invalid Email");
-            email.requestFocus();
+        if(getemail.equals("") || !matcher.matches()){
+            Toast.makeText(getApplicationContext(),"InValid Email",Toast.LENGTH_LONG).show();
             return;
         }
         if(getpass.equals("")){
-            pass.setError("Password is required");
-            pass.requestFocus();
+            Toast.makeText(getApplicationContext(),"Require Password",Toast.LENGTH_LONG).show();
             return;
         }
         if(!getpass.equals(getrepass)){
-            repass.setError("Repeat Password and Password not be the same");
-            repass.requestFocus();
+            Toast.makeText(getApplicationContext(),"Repeat Password and Password not be the same",Toast.LENGTH_LONG).show();
             return;
         }
+
 
         if (matcher.matches()){
             LoginSupport loginSupport = new LoginSupport();

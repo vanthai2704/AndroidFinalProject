@@ -38,13 +38,13 @@ public class LoginActivity extends AppCompatActivity {
 
     public void Login(View v) throws InterruptedException {
 
+
         String email = username.getText().toString();
         String pass = password.getText().toString();
 
         showTooltip(email,pass);
 
     }
-
     public void Register(View v){
         Toast.makeText(getApplicationContext(),"Register",Toast.LENGTH_LONG).show();
         Intent intent = new Intent(this, RegisterActivity.class);
@@ -52,35 +52,35 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    public void EmailClick(View v){
-        username.setError(null);
-    }
-
-    public void PasswordClick(View v){
-        password.setError(null);
-    }
-
     private void showTooltip (String tooltipmail,String tooltippass) throws InterruptedException {
 
         Matcher matcher= Pattern.compile(validemail).matcher(tooltipmail);
 
-        if(tooltipmail.equals("") ){
-            username.setError("Email is required");
-            username.requestFocus();
+
+        if(tooltipmail.equals("") || !matcher.matches()){
+            Tooltip tooltip = new Tooltip.Builder(username).setText("InValid Email")
+                    .setTextColor(Color.RED)
+                    .setGravity(Gravity.TOP)
+                    .setCornerRadius(8f)
+                    .setDismissOnClick(true)
+                    .show();
+            //Thread.sleep(3000);
+            //tooltip.wait(2000);
+            //tooltip.dismiss();
             return;
         }
-
-        if(!matcher.matches()){
-            username.setError("Invalid Email");
-            username.requestFocus();
-            return;
-        }
-
         if(tooltippass.equals("")){
-            password.setError("Password is required");
-            password.requestFocus();
+            Tooltip tooltip = new Tooltip.Builder(password).setText("InValid Password")
+                    .setTextColor(Color.RED)
+                    .setGravity(Gravity.TOP)
+                    .setCornerRadius(8f)
+                    .setDismissOnClick(true)
+                    .show();
+            //Thread.sleep(3000);
+            //tooltip.dismiss();
             return;
         }
+
 
         if (matcher.matches()){
             LoginSupport loginSupport = new LoginSupport();
@@ -90,7 +90,7 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
             else{
-                Toast.makeText(getApplicationContext(),"Email or Password is InCorrect",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"Email or Password is InValid",Toast.LENGTH_LONG).show();
             }
         }
 

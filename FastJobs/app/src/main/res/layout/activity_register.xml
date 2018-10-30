@@ -30,8 +30,6 @@
         android:ems="10"
         android:inputType="text"
         android:textColor="@android:color/white"
-        android:clickable="true"
-        android:onClick="EmailClick"
         android:textSize="17sp"></EditText>
 
     <TextView
@@ -58,8 +56,6 @@
         android:ems="10"
         android:inputType="textPassword"
         android:textColor="@android:color/white"
-        android:clickable="true"
-        android:onClick="PasswordClick"
         android:textSize="17sp"></EditText>
 
     <TextView
@@ -86,8 +82,6 @@
         android:ems="10"
         android:inputType="textPassword"
         android:textColor="@android:color/white"
-        android:clickable="true"
-        android:onClick="RepasswordClick"
         android:textSize="17sp"></EditText>
 
     <Button
