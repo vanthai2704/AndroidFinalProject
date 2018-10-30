@@ -1,6 +1,5 @@
-package com.example.fastjobs.view;
+package com.example.fastjobs.View;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,12 +8,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.fastjobs.MainActivity;
 import com.example.fastjobs.R;
-import com.example.fastjobs.entity.User;
-import com.example.fastjobs.firebase.CallbackSupport;
 import com.example.fastjobs.firebase.LoginSupport;
 
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -51,7 +48,6 @@ public class RegisterActivity extends AppCompatActivity {
         String getrepass = repass.getText().toString();
 
         Matcher matcher= Pattern.compile(LoginActivity.validemail).matcher(getemail);
-<<<<<<< HEAD:FastJobs/app/src/main/java/com/example/fastjobs/View/RegisterActivity.java
         if(getemail.equals("")){
             email.setError("Email is required");
             email.requestFocus();
@@ -60,10 +56,6 @@ public class RegisterActivity extends AppCompatActivity {
         if(!matcher.matches()){
             email.setError("Invalid Email");
             email.requestFocus();
-=======
-        if(getemail.equals("") || !matcher.matches()){
-            Toast.makeText(getApplicationContext(),"Invalid Email",Toast.LENGTH_LONG).show();
->>>>>>> b75cacb5547981083d12faa17809a34e2a4d38d5:FastJobs/app/src/main/java/com/example/fastjobs/view/RegisterActivity.java
             return;
         }
         if(getpass.equals("")){
@@ -78,19 +70,11 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
         if (matcher.matches()){
-            final ProgressDialog dialog = ProgressDialog.show(RegisterActivity.this, "",
-                    "Loading. Please wait...", true);
             LoginSupport loginSupport = new LoginSupport();
-            loginSupport.signUp(getemail, getpass, new CallbackSupport<User>() {
-                @Override
-                public void onCallback(User user, String key, List<User> users) {
-                    Intent intent = new Intent(RegisterActivity.super.getBaseContext(), LoginActivity.class);
-                    startActivity(intent);
-                    finish();
-                    dialog.dismiss();
-                }
-            });
-
+            loginSupport.signUp(getemail,getpass);
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            finish();
         }
     }
 }
