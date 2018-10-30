@@ -40,12 +40,26 @@ public class TestActivity extends AppCompatActivity {
     /*---- This for Login ----*/
     public void signUpOnclick(View view){
         LoginSupport loginSupport = new LoginSupport();
-        loginSupport.signUp("datnqse04777@fpt.edu.vn","12345678");
+        loginSupport.signUp("datnqse04777@fpt.edu.vn", "12345678", new CallbackSupport<Boolean>() {
+            @Override
+            public void onCallback(Boolean aBoolean, String key, List<Boolean> booleans) {
+                // Must code any thing depend in this
+                // ...
+                // ...
+            }
+        });
     }
 
     public void loginOnclick(View view){
         LoginSupport loginSupport = new LoginSupport();
-        loginSupport.login("datnqse04777@fpt.edu.vn","12345678");
+        loginSupport.login("datnqse04777@fpt.edu.vn", "12345678", new CallbackSupport<Boolean>() {
+            @Override
+            public void onCallback(Boolean aBoolean, String key, List<Boolean> booleans) {
+                // Must code any thing depend in this
+                // ...
+                // ...
+            }
+        });
     }
 
     public void signOutOnclick(View view){
@@ -66,9 +80,9 @@ public class TestActivity extends AppCompatActivity {
         userSupport.insert(new User("Nguyen Quang Dat","datnqse04777@fpt.edu.vn","0965658574",new Date()));
 
         // Need insert avatar code like this
-        userSupport.get("datnqse04777@fpt.edu.vn", new CallbackSupport() {
+        userSupport.get("datnqse04777@fpt.edu.vn", new CallbackSupport<User>() {
             @Override
-            public void onCallback(Object o, String key, List list) {
+            public void onCallback(User user, String key, List<User> users) {
                 ImageSupport imageSupport = new ImageSupport();
                 imageSupport.upload(filePath, getApplicationContext(), null, key, null);
             }
@@ -85,9 +99,9 @@ public class TestActivity extends AppCompatActivity {
 
     public void getUserByEmail(View view){
         UserSupport userSupport = new UserSupport();
-        userSupport.get("datnqse04777@fpt.edu.vn", new CallbackSupport() {
+        userSupport.get("datnqse04777@fpt.edu.vn", new CallbackSupport<User>() {
             @Override
-            public void onCallback(Object o, String key, List list) {
+            public void onCallback(User user, String key, List<User> users) {
                 // Must code any thing depend in this
                 // ...
                 // ...
