@@ -1,5 +1,6 @@
-package com.example.fastjobs.View;
+package com.example.fastjobs.view;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
@@ -12,11 +13,11 @@ import android.widget.Toast;
 
 import com.example.fastjobs.MainActivity;
 import com.example.fastjobs.R;
+import com.example.fastjobs.firebase.CallbackSupport;
 import com.example.fastjobs.firebase.LoginSupport;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.tooltip.Tooltip;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -46,7 +47,6 @@ public class LoginActivity extends AppCompatActivity {
 
     }
     public void Register(View v){
-        Toast.makeText(getApplicationContext(),"Register",Toast.LENGTH_LONG).show();
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
 
@@ -58,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
         if(tooltipmail.equals("") || !matcher.matches()){
-            Tooltip tooltip = new Tooltip.Builder(username).setText("InValid Email")
+            Tooltip tooltip = new Tooltip.Builder(username).setText("Invalid Email")
                     .setTextColor(Color.RED)
                     .setGravity(Gravity.TOP)
                     .setCornerRadius(8f)
@@ -70,7 +70,7 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
         if(tooltippass.equals("")){
-            Tooltip tooltip = new Tooltip.Builder(password).setText("InValid Password")
+            Tooltip tooltip = new Tooltip.Builder(password).setText("Invalid Password")
                     .setTextColor(Color.RED)
                     .setGravity(Gravity.TOP)
                     .setCornerRadius(8f)
@@ -83,15 +83,23 @@ public class LoginActivity extends AppCompatActivity {
 
 
         if (matcher.matches()){
+            final ProgressDialog dialog = ProgressDialog.show(LoginActivity.this, "",
+                    "Loading. Please wait...", true);
             LoginSupport loginSupport = new LoginSupport();
-            Task<AuthResult> task = loginSupport.login(tooltipmail,tooltippass);
-            if(task.isSuccessful()){
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
-            }
-            else{
-                Toast.makeText(getApplicationContext(),"Email or Password is InValid",Toast.LENGTH_LONG).show();
-            }
+            loginSupport.login(tooltipmail, tooltippass, new CallbackSupport<Boolean>() {
+                @Override
+                public void onCallback(Boolean aBoolean, String key, List<Boolean> booleans) {
+                    if(aBoolean){
+                        Intent intent = new Intent(LoginActivity.super.getBaseContext(), MainActivity.class);
+                        startActivity(intent);
+                    }
+                    else{
+                        Toast.makeText(getApplicationContext(),"Email or Password is Invalid",Toast.LENGTH_LONG).show();
+                    }
+                    dialog.dismiss();
+                }
+            });
+
         }
 
     }
