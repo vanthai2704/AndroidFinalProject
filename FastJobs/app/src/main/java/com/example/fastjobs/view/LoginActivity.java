@@ -52,32 +52,32 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    public void EmailClick(View v){
+        username.setError(null);
+    }
+
+    public void PasswordClick(View v){
+        password.setError(null);
+    }
+
     private void showTooltip (String tooltipmail,String tooltippass) throws InterruptedException {
 
         Matcher matcher= Pattern.compile(validemail).matcher(tooltipmail);
 
 
-        if(tooltipmail.equals("") || !matcher.matches()){
-            Tooltip tooltip = new Tooltip.Builder(username).setText("Invalid Email")
-                    .setTextColor(Color.RED)
-                    .setGravity(Gravity.TOP)
-                    .setCornerRadius(8f)
-                    .setDismissOnClick(true)
-                    .show();
-            //Thread.sleep(3000);
-            //tooltip.wait(2000);
-            //tooltip.dismiss();
+        if(tooltipmail.equals("") ){
+            username.setError("Email is required");
+            username.requestFocus();
+            return;
+        }
+        if(!matcher.matches()){
+            username.setError("Invalid Email");
+            username.requestFocus();
             return;
         }
         if(tooltippass.equals("")){
-            Tooltip tooltip = new Tooltip.Builder(password).setText("Invalid Password")
-                    .setTextColor(Color.RED)
-                    .setGravity(Gravity.TOP)
-                    .setCornerRadius(8f)
-                    .setDismissOnClick(true)
-                    .show();
-            //Thread.sleep(3000);
-            //tooltip.dismiss();
+            password.setError("Password is required");
+            password.requestFocus();
             return;
         }
 
@@ -94,7 +94,7 @@ public class LoginActivity extends AppCompatActivity {
                         startActivity(intent);
                     }
                     else{
-                        Toast.makeText(getApplicationContext(),"Email or Password is Invalid",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),"Email or Password is InCorrect",Toast.LENGTH_LONG).show();
                     }
                     dialog.dismiss();
                 }
