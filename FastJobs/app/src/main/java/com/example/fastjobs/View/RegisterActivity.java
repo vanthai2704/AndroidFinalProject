@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import com.example.fastjobs.MainPage;
 import com.example.fastjobs.R;
 import com.example.fastjobs.entity.User;
 import com.example.fastjobs.firebase.CallbackSupport;
@@ -86,7 +88,6 @@ public class RegisterActivity extends AppCompatActivity {
                     dialog.dismiss();
                 }
             });
-
         }
     }
 }

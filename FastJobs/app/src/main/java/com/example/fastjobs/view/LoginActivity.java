@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.fastjobs.MainActivity;
+import com.example.fastjobs.MainPage;
 import com.example.fastjobs.R;
 import com.example.fastjobs.firebase.CallbackSupport;
 import com.example.fastjobs.firebase.LoginSupport;
@@ -90,7 +90,7 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onCallback(Boolean aBoolean, String key, List<Boolean> booleans) {
                     if(aBoolean){
-                        Intent intent = new Intent(LoginActivity.super.getBaseContext(), MainActivity.class);
+                        Intent intent = new Intent(LoginActivity.super.getBaseContext(), MainPage.class);
                         startActivity(intent);
                     }
                     else{
@@ -99,7 +99,6 @@ public class LoginActivity extends AppCompatActivity {
                     dialog.dismiss();
                 }
             });
-
         }
 
     }

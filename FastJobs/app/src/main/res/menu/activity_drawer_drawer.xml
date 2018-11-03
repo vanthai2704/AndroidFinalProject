@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_home"
+            android:title="Trang Chủ"/>
+        <item
+            android:id="@+id/nav_search"
+            android:icon="@drawable/ic_magnifier"
+            android:title="Tìm Kiếm"/>
+        <item
+            android:id="@+id/nav_addpost"
+            android:icon="@drawable/ic_add_page"
+            android:title="Đăng Bài"/>
+        <item
+            android:id="@+id/nav_listPost"
+            android:icon="@drawable/ic_listpost"
+            android:title="Bài Đăng Của Tôi"/>
+        <item
+            android:id="@+id/nav_logOut"
+            android:icon="@drawable/ic_logout"
+            android:title="Đăng Xuất"/>
+</menu>
