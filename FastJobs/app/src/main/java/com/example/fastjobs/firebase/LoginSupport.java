@@ -59,4 +59,8 @@ public class LoginSupport extends BaseSupport{
     public boolean isLogin(){
         return auth.getCurrentUser() != null;
     }
+
+    public String getCurrentUserEmail(){
+        return auth.getCurrentUser().getEmail();
+    }
 }

@@ -38,6 +38,8 @@ public class UserSupport extends BaseSupport{
                 {
                     if(index>(page-1)*pageSize && index<= page*pageSize){
                         users.add(item.getValue(User.class));
+                    }else {
+                        break;
                     }
                     index++;
                 }

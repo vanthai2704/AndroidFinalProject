@@ -4,5 +4,6 @@
     <string name="txtpass">Enter Password</string>
     <string name="txtrepass">Repeat Password</string>
     <string name="register">Register</string>
+    <string name="send">Send</string>
 
 </resources>

@@ -1,0 +1,72 @@
+package com.example.fastjobs.firebase;
+
+import android.support.annotation.NonNull;
+
+import com.example.fastjobs.entity.Category;
+import com.example.fastjobs.entity.Message;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+public class MessageSupport extends BaseSupport{
+    private DatabaseReference dbMessage;
+    public MessageSupport(){
+        dbMessage = db.child("message");
+    }
+    public void chat(String from, String to, Date time, String content){
+        DatabaseReference dbMessageFrom = dbMessage.child(from).child(to);
+        DatabaseReference dbMessageTo = dbMessage.child(to).child(from);
+        String keyFrom = dbMessageFrom.push().getKey();
+        String keyTo = dbMessageTo.push().getKey();
+        Message message = new Message(content, from, time);
+        dbMessageFrom.child(keyFrom).setValue(message).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                e.printStackTrace();
+            }
+        });
+        dbMessageTo.child(keyTo).setValue(message).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    public void getMessage(final String from, final String to, final int page, final int pageSize,
+                           final CallbackSupport callbackSupport){
+        DatabaseReference dbMessageFrom = dbMessage.child(from).child(to);
+        dbMessageFrom.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                int index = 1;
+                List<Message> messages = new ArrayList<>();
+                for (DataSnapshot item : dataSnapshot.getChildren())
+                {
+                    if(index>(page-1)*pageSize && index<= page*pageSize){
+                        messages.add(item.getValue(Message.class));
+                    }else {
+                        break;
+                    }
+                    index++;
+                }
+                callbackSupport.onCallback(null, null, messages);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public DatabaseReference getDatabaseReferenceMessage(final String from, final String to){
+        return dbMessage.child(from).child(to);
+    }
+}

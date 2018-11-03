@@ -105,6 +105,8 @@ public class PostSupport extends BaseSupport{
                                                     && postItem.getPost_status().toLowerCase().contains(post.getPost_status().toLowerCase()))){
                                                 if(index>(page-1)*pageSize && index<= page*pageSize){
                                                     posts.add(postItem);
+                                                }else {
+                                                    break;
                                                 }
                                                 index++;
                                             }
@@ -124,4 +126,6 @@ public class PostSupport extends BaseSupport{
             }
         });
     }
+
+
 }

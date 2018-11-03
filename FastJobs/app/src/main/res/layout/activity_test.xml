@@ -69,4 +69,14 @@
         android:text="Login"
         app:layout_constraintBaseline_toBaselineOf="@+id/buttonTest"
         app:layout_constraintStart_toEndOf="@+id/buttonTest" />
+
+    <Button
+        android:id="@+id/buttonTestChat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:onClick="toChat"
+        android:text="Chat"
+        app:layout_constraintBaseline_toBaselineOf="@+id/buttonTest2"
+        app:layout_constraintStart_toEndOf="@+id/buttonTest2" />
 </android.support.constraint.ConstraintLayout>
