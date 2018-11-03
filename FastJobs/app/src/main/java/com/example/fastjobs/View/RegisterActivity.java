@@ -8,7 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.fastjobs.MainActivity;
+import com.example.fastjobs.MainPage;
 import com.example.fastjobs.R;
 import com.example.fastjobs.firebase.LoginSupport;
 
@@ -53,7 +53,7 @@ public class RegisterActivity extends AppCompatActivity {
         if (matcher.matches()){
             LoginSupport loginSupport = new LoginSupport();
             loginSupport.signUp(getemail,getpass);
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, MainPage.class);
             startActivity(intent);
             finish();
             return;
