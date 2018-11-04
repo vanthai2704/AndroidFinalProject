@@ -158,10 +158,6 @@ public class TestActivity extends AppCompatActivity {
     /*------------------------------------------------------------------------*/
 
     public void toChat(View view){
-        TextView to = findViewById(R.id.editTextTest1);
-        Intent intent = new Intent(this, ChatActivity.class);
-        intent.putExtra("to",to.getText().toString());
-        startActivity(intent);
     }
 
 }

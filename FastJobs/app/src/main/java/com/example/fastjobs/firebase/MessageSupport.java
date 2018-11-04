@@ -2,12 +2,16 @@ package com.example.fastjobs.firebase;
 
 import android.support.annotation.NonNull;
 
+import com.example.fastjobs.MessageFragment.ListMessageFragment;
+import com.example.fastjobs.adapter.ListMessageAdapter;
 import com.example.fastjobs.entity.Category;
 import com.example.fastjobs.entity.Message;
+import com.example.fastjobs.entity.MessageOne;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -51,6 +55,53 @@ public class MessageSupport extends BaseSupport{
                 {
                     if(index>(page-1)*pageSize && index<= page*pageSize){
                         messages.add(item.getValue(Message.class));
+                    }else {
+                        break;
+                    }
+                    index++;
+                }
+                callbackSupport.onCallback(null, null, messages);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void getMessageOne(final ListMessageFragment listMessageFragment, final String from, final int page, final int pageSize,
+                              final CallbackSupport callbackSupport){
+        final DatabaseReference dbMessageOne = dbMessage.child(from);
+        dbMessageOne.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                int index = 1;
+                List<MessageOne> messages = new ArrayList<>();
+                for (DataSnapshot item : dataSnapshot.getChildren())
+                {
+                    if(index>(page-1)*pageSize && index <= page*pageSize){
+                        MessageOne messageOne = new MessageOne(from,item.getKey(),"");
+                        final int position = index - 1;
+                        dbMessageOne.child(item.getKey()).orderByKey()
+                                .limitToLast(1).addListenerForSingleValueEvent(
+                                        new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                ListMessageAdapter listMessageAdapter
+                                                        = (ListMessageAdapter)listMessageFragment.getListViewListMessage().getAdapter();
+                                                Message lastMessage = dataSnapshot.getChildren().iterator().next().getValue(Message.class);
+                                                listMessageAdapter.setTextContent(position, lastMessage.getContent());
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                            }
+                                        }
+                                );
+
+                        messages.add(messageOne);
                     }else {
                         break;
                     }

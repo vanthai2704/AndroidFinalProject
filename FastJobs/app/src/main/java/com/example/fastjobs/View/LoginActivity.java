@@ -94,7 +94,7 @@ public class LoginActivity extends AppCompatActivity {
                         startActivity(intent);
                     }
                     else{
-                        Toast.makeText(getApplicationContext(),"Email or Password is InCorrect",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),"Email or password is wrong!",Toast.LENGTH_LONG).show();
                     }
                     dialog.dismiss();
                 }

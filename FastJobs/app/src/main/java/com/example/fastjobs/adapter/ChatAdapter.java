@@ -7,7 +7,8 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.fastjobs.ChatActivity;
+import com.example.fastjobs.MessageActivity;
+import com.example.fastjobs.MessageFragment.MessageFragment;
 import com.example.fastjobs.R;
 import com.example.fastjobs.entity.Message;
 import com.google.firebase.auth.FirebaseAuth;
@@ -18,11 +19,11 @@ import java.util.List;
 public class ChatAdapter extends BaseAdapter {
 
     private List<Message> messages;
-    private ChatActivity chatActivity;
+    private MessageFragment messageFragment;
 
-    public ChatAdapter(List<Message> messages, ChatActivity chatActivity) {
+    public ChatAdapter(List<Message> messages, MessageFragment messageFragment) {
         this.messages = messages;
-        this.chatActivity = chatActivity;
+        this.messageFragment = messageFragment;
     }
     @Override
     public int getCount() {
@@ -45,7 +46,7 @@ public class ChatAdapter extends BaseAdapter {
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
         MessageHolder messageHolder = null;
         if(convertView == null){
-            convertView = chatActivity.getLayoutInflater().inflate(R.layout.message_layout, null);
+            convertView = messageFragment.getLayoutInflater().inflate(R.layout.message_layout, null);
             messageHolder = new MessageHolder();
             messageHolder.textViewTo = convertView.findViewById(R.id.textViewTo);
             messageHolder.textViewTimeTo = convertView.findViewById(R.id.textViewTimeTo);
