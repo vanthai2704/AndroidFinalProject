@@ -4,6 +4,7 @@ import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @IgnoreExtraProperties
@@ -11,13 +12,15 @@ public class Category {
     private String category_id;
     private String category_name;
     private String category_status;
+    private List<Image> images;
 
     public Category() {
     }
 
-    public Category(String category_name, String category_status) {
+    public Category(String category_name, String category_status, List<Image> images) {
         this.category_name = category_name;
         this.category_status = category_status;
+        this.images = images;
     }
 
     public String getCategory_id() {
@@ -44,11 +47,20 @@ public class Category {
         this.category_status = category_status;
     }
 
+    public List<Image> getImages() {
+        return images;
+    }
+
+    public void setImages(List<Image> images) {
+        this.images = images;
+    }
+
     @Exclude
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
         result.put("category_name", category_name);
         result.put("category_status", category_status);
+        result.put("images", images);
         return result;
     }
 }

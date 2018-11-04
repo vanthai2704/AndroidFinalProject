@@ -1,6 +1,9 @@
 package com.example.fastjobs.firebase;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
+
+import com.example.fastjobs.entity.Image;
 import com.example.fastjobs.entity.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.database.DataSnapshot;
@@ -18,13 +21,33 @@ public class UserSupport extends BaseSupport{
     public UserSupport(){
         dbUser = db.child("user");
     }
-    public void insert(User user){
+    public void insert(final User user, Context context){
+        List<Image> images = new ArrayList<>();
+        images.addAll(user.getImages());
+        user.setImages(null);
         dbUser.child(user.getEmail().replaceAll("\\.","_")).setValue(user).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
                 e.printStackTrace();
             }
         });
+        if(images.size() > 0){
+            ImageSupport imageSupport = new ImageSupport();
+            for (final Image image : images){
+                imageSupport.upload(image.getImage_uri(), context, new CallbackSupport() {
+                    @Override
+                    public void onCallback(Object o, String key, List list) {
+                        image.setImage_id(key);
+                        dbUser.child(user.getEmail().replaceAll("\\.","_")).child("images").setValue(image).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                e.printStackTrace();
+                            }
+                        });
+                    }
+                });
+            }
+        }
     }
 
     // Validate page > 0
@@ -57,10 +80,30 @@ public class UserSupport extends BaseSupport{
         dbUser.child(email.replaceAll("\\.","_")).removeValue();
     }
 
-    public void update(final User user){
+    public void update(final User user, Context context){
+        List<Image> images = new ArrayList<>();
+        images.addAll(user.getImages());
+        user.setImages(null);
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put(user.getEmail().replaceAll("\\.","_"), user.toMap());
         dbUser.updateChildren(childUpdates);
+        if(images.size() > 0){
+            ImageSupport imageSupport = new ImageSupport();
+            for (final Image image : images){
+                imageSupport.upload(image.getImage_uri(), context, new CallbackSupport() {
+                    @Override
+                    public void onCallback(Object o, String key, List list) {
+                        image.setImage_id(key);
+                        dbUser.child(user.getEmail().replaceAll("\\.","_")).child("images").setValue(image).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                e.printStackTrace();
+                            }
+                        });
+                    }
+                });
+            }
+        }
     }
 
     public void get(final String email, final CallbackSupport callbackSupport){
