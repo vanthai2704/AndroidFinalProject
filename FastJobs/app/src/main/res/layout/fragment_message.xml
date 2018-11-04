@@ -29,7 +29,6 @@
         android:background="@drawable/input_chat"
         android:ems="10"
         android:inputType="textPersonName"
-        android:onClick="scrollChatToBottom"
         android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/buttonSend"

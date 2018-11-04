@@ -163,12 +163,6 @@ public class MessageFragment extends Fragment {
             public void onCallback(Message message, String key,final List<Message> messages) {
                 ChatAdapter chatAdapter = new ChatAdapter(messages, getActivityMessage());
                 listViewChat.setAdapter(chatAdapter);
-                listViewChat.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        listViewChat.setSelection(messages.size() - 1);
-                    }
-                });
             }
         });
     }
@@ -177,12 +171,4 @@ public class MessageFragment extends Fragment {
         return this;
     }
 
-    public void scrollChatToBottom(View view){
-        listViewChat.post(new Runnable() {
-            @Override
-            public void run() {
-                listViewChat.setSelection(listViewChat.getAdapter().getCount()-1);
-            }
-        });
-    }
 }
