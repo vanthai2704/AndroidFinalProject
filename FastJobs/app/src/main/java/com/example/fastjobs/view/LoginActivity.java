@@ -92,6 +92,7 @@ public class LoginActivity extends AppCompatActivity {
                     if(aBoolean){
                         Intent intent = new Intent(LoginActivity.super.getBaseContext(), MainPage.class);
                         startActivity(intent);
+                        finish();
                     }
                     else{
                         Toast.makeText(getApplicationContext(),"Email or password is wrong!",Toast.LENGTH_LONG).show();
@@ -99,6 +100,7 @@ public class LoginActivity extends AppCompatActivity {
                     dialog.dismiss();
                 }
             });
+
         }
 
     }
