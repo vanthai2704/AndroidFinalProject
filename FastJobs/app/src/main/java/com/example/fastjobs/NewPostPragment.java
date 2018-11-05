@@ -102,6 +102,8 @@ public class NewPostPragment extends Fragment {
                 String user_id = (new LoginSupport()).getCurrentUserEmail().replaceAll("\\.","_");
                 Post post = new Post(commune,category,user_id,50000,remuneration,null,title,content,"A",new Date(),new ArrayList<Image>());
                 postSupport.insert(post,getContext());
+
+
             }
         });
 
