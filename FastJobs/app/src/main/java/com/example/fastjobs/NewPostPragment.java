@@ -53,6 +53,15 @@ public class NewPostPragment extends Fragment {
     private Button addpost;
     String category;
     String commune;
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public void setCommune(String commune) {
+        this.commune = commune;
+    }
+
     public NewPostPragment() {
         // Required empty public constructor
     }
@@ -89,28 +98,7 @@ public class NewPostPragment extends Fragment {
                 String content = jobContent.getText().toString();
                 double remuneration = Integer.parseInt(jobremuneration.getText().toString());
 
-                spinnerCategoriesPost.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        category = ((Category)parent.getItemAtPosition(position)).getCategory_id();
-                    }
 
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-
-                    }
-                });
-                spinnerCommunePost.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        commune = ((Commune)parent.getItemAtPosition(position)).getCommune_id();
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-
-                    }
-                });
                 String user_id = (new LoginSupport()).getCurrentUserEmail().replaceAll("\\.","_");
                 Post post = new Post(commune,category,user_id,50000,remuneration,null,title,content,"A",new Date(),new ArrayList<Image>());
                 postSupport.insert(post,getContext());
@@ -132,7 +120,7 @@ public class NewPostPragment extends Fragment {
                 spinnerCategoriesPost.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+                        setCategory(((Category)parent.getItemAtPosition(position)).getCategory_id());
                     }
 
                     @Override
@@ -187,7 +175,7 @@ public class NewPostPragment extends Fragment {
                                                 spinnerCommunePost.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                                                     @Override
                                                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+                                                        setCommune(((Commune)parent.getItemAtPosition(position)).getCommune_id());
                                                     }
 
                                                     @Override
