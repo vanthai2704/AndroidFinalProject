@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.fastjobs.entity.User;
+import com.example.fastjobs.Entity.User;
 import com.example.fastjobs.firebase.ImageSupport;
 import com.example.fastjobs.firebase.LoginSupport;
 import com.example.fastjobs.firebase.CallbackSupport;

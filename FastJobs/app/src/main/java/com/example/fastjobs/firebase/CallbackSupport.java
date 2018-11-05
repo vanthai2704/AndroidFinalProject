@@ -1,6 +1,6 @@
 package com.example.fastjobs.firebase;
 
-import com.example.fastjobs.entity.User;
+import com.example.fastjobs.Entity.User;
 
 import java.util.List;
 

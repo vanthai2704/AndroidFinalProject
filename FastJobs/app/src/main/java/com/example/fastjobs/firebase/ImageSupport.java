@@ -8,8 +8,8 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.widget.Toast;
 
-import com.example.fastjobs.entity.Image;
-import com.example.fastjobs.entity.Province;
+import com.example.fastjobs.Entity.Image;
+import com.example.fastjobs.Entity.Province;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;

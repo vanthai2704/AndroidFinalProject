@@ -2,8 +2,8 @@ package com.example.fastjobs.firebase;
 
 import android.support.annotation.NonNull;
 
-import com.example.fastjobs.entity.Province;
-import com.example.fastjobs.entity.User;
+import com.example.fastjobs.Entity.Province;
+import com.example.fastjobs.Entity.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

@@ -1,4 +1,4 @@
-package com.example.fastjobs.view;
+package com.example.fastjobs.View;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
