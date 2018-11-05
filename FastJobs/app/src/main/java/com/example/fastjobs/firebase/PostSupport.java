@@ -69,6 +69,7 @@ public class PostSupport extends BaseSupport{
                     }
                     index++;
                 }
+                Collections.reverse(posts);
                 callbackSupport.onCallback(null, null, posts);
             }
 
