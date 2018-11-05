@@ -39,14 +39,14 @@
         android:inputType="textPersonName" />
 
     <TextView
-        android:id="@+id/price"
+        android:id="@+id/jobremuneration"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:text="Price" />
+        android:text="Remuneration" />
 
     <EditText
-        android:id="@+id/jobPrice"
+        android:id="@+id/remuneration"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
@@ -106,4 +106,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Post" />
+
 </LinearLayout>
