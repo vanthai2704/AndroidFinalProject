@@ -54,7 +54,11 @@ public class District {
     public void setProvince_id(String province_id) {
         this.province_id = province_id;
     }
-
+    @Exclude
+    @Override
+    public String toString() {
+        return getName();
+    }
     @Exclude
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();

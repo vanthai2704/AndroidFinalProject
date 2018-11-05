@@ -55,6 +55,13 @@ public class Category {
         this.images = images;
     }
 
+
+    @Exclude
+    @Override
+    public String toString() {
+        return getCategory_name();
+    }
+
     @Exclude
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
