@@ -79,7 +79,7 @@ public class PostSupport extends BaseSupport{
     }
 
     public void getRecently(final CallbackSupport callbackSupport){
-        dbPost.orderByKey().limitToLast(10).addValueEventListener(new ValueEventListener() {
+        dbPost.orderByKey().limitToLast(100).addValueEventListener(new ValueEventListener() {
             List<Post> posts = new ArrayList<>();
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

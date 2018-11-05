@@ -92,6 +92,7 @@ public class SearchFragment extends android.support.v4.app.Fragment {
                 spinnerCategoriesSearch.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        postSearch.setCategory_id(((Category)parent.getItemAtPosition(position)).getCategory_id());
                         loadData();
                     }
 
@@ -147,7 +148,8 @@ public class SearchFragment extends android.support.v4.app.Fragment {
                                                 spinnerCommuneSearch.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                                                     @Override
                                                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+                                                        postSearch.setCommune_id(((Commune)parent.getItemAtPosition(position)).getCommune_id());
+                                                        loadData();
                                                     }
 
                                                     @Override
