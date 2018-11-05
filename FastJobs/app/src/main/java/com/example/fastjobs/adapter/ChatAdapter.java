@@ -7,9 +7,10 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.fastjobs.Entity.Message;
 import com.example.fastjobs.MessageFragment.MessageFragment;
 import com.example.fastjobs.R;
-import com.example.fastjobs.Entity.Message;
+
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.text.SimpleDateFormat;

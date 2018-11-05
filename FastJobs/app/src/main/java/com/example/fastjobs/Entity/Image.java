@@ -1,5 +1,6 @@
 package com.example.fastjobs.Entity;
 
+
 import android.net.Uri;
 
 import com.google.firebase.database.Exclude;
