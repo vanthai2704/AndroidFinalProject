@@ -52,7 +52,7 @@ public class MyFragment extends Fragment {
             @Override
             public void onCallback(Post post, String key, List<Post> posts) {
                 listPost = posts;
-                PostAdapter adapter = new PostAdapter(listPost, getContext());
+                adapter = new PostAdapter(listPost, getContext());
                 lvPost.setAdapter(adapter);
                 registerForContextMenu(lvPost);
             }

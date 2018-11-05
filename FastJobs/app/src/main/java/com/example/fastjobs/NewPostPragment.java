@@ -10,19 +10,28 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
+import com.example.fastjobs.Adapter.PostAdapter;
 import com.example.fastjobs.Entity.Category;
 import com.example.fastjobs.Entity.Commune;
 import com.example.fastjobs.Entity.District;
+import com.example.fastjobs.Entity.Image;
+import com.example.fastjobs.Entity.Post;
 import com.example.fastjobs.Entity.Province;
 import com.example.fastjobs.firebase.CallbackSupport;
 import com.example.fastjobs.firebase.CategorySupport;
 import com.example.fastjobs.firebase.CommuneSupport;
 import com.example.fastjobs.firebase.DistrictSupport;
+import com.example.fastjobs.firebase.LoginSupport;
 import com.example.fastjobs.firebase.PostSupport;
 import com.example.fastjobs.firebase.ProvinceSupport;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -31,7 +40,7 @@ import java.util.List;
  */
 public class NewPostPragment extends Fragment {
 
-
+    private PostSupport postSupport;
     private Spinner spinnerCategoriesPost;
     private Spinner spinnerProvincePost;
     private Spinner spinnerDistrictPost;
@@ -40,6 +49,10 @@ public class NewPostPragment extends Fragment {
     private ProvinceSupport provinceSupport;
     private DistrictSupport districtSupport;
     private CommuneSupport communeSupport;
+    private EditText jobTitle, jobContent, jobremuneration;
+    private Button addpost;
+    String category;
+    String commune;
     public NewPostPragment() {
         // Required empty public constructor
     }
@@ -55,6 +68,7 @@ public class NewPostPragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        postSupport = new PostSupport();
         categorySupport = new CategorySupport();
         provinceSupport = new ProvinceSupport();
         districtSupport = new DistrictSupport();
@@ -63,6 +77,45 @@ public class NewPostPragment extends Fragment {
         spinnerProvincePost = view.findViewById(R.id.spinnerProvincePost);
         spinnerDistrictPost = view.findViewById(R.id.spinnerDistrictPost);
         spinnerCommunePost = view.findViewById(R.id.spinnerCommunePost);
+        jobTitle = view.findViewById(R.id.jobName);
+        jobContent = view.findViewById(R.id.jobContent);
+        jobremuneration = view.findViewById(R.id.remuneration);
+        addpost = view.findViewById(R.id.jobPost);
+
+        addpost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String title = jobTitle.getText().toString();
+                String content = jobContent.getText().toString();
+                double remuneration = Integer.parseInt(jobremuneration.getText().toString());
+
+                spinnerCategoriesPost.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        category = ((Category)parent.getItemAtPosition(position)).getCategory_id();
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+                spinnerCommunePost.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        commune = ((Commune)parent.getItemAtPosition(position)).getCommune_id();
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+                String user_id = (new LoginSupport()).getCurrentUserEmail().replaceAll("\\.","_");
+                Post post = new Post(commune,category,user_id,50000,remuneration,null,title,content,"A",new Date(),new ArrayList<Image>());
+                postSupport.insert(post,getContext());
+            }
+        });
 
         categorySupport.getAll(new CallbackSupport<Category>() {
 
@@ -163,4 +216,5 @@ public class NewPostPragment extends Fragment {
             }
         });
     }
+
 }
