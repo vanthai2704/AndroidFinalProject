@@ -1,5 +1,8 @@
 package com.example.fastjobs.Entity;
 
+
+import android.net.Uri;
+
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 
@@ -10,18 +13,33 @@ import java.util.Map;
 public class Image {
     private String image_id;
     private String status;
-    private String post_id;
-    private String user_id;
-    private String category_id;
+    private String image_type;
+
+
+    @Exclude
+    private Uri image_uri;
+
+    @Exclude
+    public Uri getImage_uri() {
+        return image_uri;
+    }
+
+    @Exclude
+    public void setImage_uri(Uri image_uri) {
+        this.image_uri = image_uri;
+    }
 
     public Image() {
     }
 
-    public Image(String status, String post_id, String user_id, String category_id) {
+    public Image(String status, String image_type) {
         this.status = status;
-        this.post_id = post_id;
-        this.user_id = user_id;
-        this.category_id = category_id;
+        this.image_type = image_type;
+    }
+    public Image(String status, String image_type, Uri image_uri) {
+        this.status = status;
+        this.image_type = image_type;
+        this.image_uri = image_uri;
     }
 
     public String getImage_id() {
@@ -40,28 +58,12 @@ public class Image {
         this.status = status;
     }
 
-    public String getPost_id() {
-        return post_id;
+    public String getImage_type() {
+        return image_type;
     }
 
-    public void setPost_id(String post_id) {
-        this.post_id = post_id;
-    }
-
-    public String getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
-    }
-
-    public String getCategory_id() {
-        return category_id;
-    }
-
-    public void setCategory_id(String category_id) {
-        this.category_id = category_id;
+    public void setImage_type(String image_type) {
+        this.image_type = image_type;
     }
 
     @Exclude
@@ -69,9 +71,7 @@ public class Image {
         HashMap<String, Object> result = new HashMap<>();
         result.put("image_id", image_id);
         result.put("status", status);
-        result.put("post_id", post_id);
-        result.put("user_id", user_id);
-        result.put("category_id", category_id);
+        result.put("image_type", image_type);
         return result;
     }
 }

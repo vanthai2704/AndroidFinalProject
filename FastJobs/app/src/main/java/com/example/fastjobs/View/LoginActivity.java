@@ -2,10 +2,8 @@ package com.example.fastjobs.View;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -15,7 +13,6 @@ import com.example.fastjobs.MainPage;
 import com.example.fastjobs.R;
 import com.example.fastjobs.firebase.CallbackSupport;
 import com.example.fastjobs.firebase.LoginSupport;
-import com.tooltip.Tooltip;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -92,13 +89,15 @@ public class LoginActivity extends AppCompatActivity {
                     if(aBoolean){
                         Intent intent = new Intent(LoginActivity.super.getBaseContext(), MainPage.class);
                         startActivity(intent);
+                        finish();
                     }
                     else{
-                        Toast.makeText(getApplicationContext(),"Email or Password is InCorrect",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),"Email or password is wrong!",Toast.LENGTH_LONG).show();
                     }
                     dialog.dismiss();
                 }
             });
+
         }
 
     }

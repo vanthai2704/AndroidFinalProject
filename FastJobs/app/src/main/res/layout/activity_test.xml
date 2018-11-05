@@ -45,8 +45,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:onClick="getImageFromServer"
-        android:text="Get Image"
+        android:onClick="chooseImage"
+        android:text="Choose Image"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonTest" />
 
@@ -69,4 +69,14 @@
         android:text="Login"
         app:layout_constraintBaseline_toBaselineOf="@+id/buttonTest"
         app:layout_constraintStart_toEndOf="@+id/buttonTest" />
+
+    <Button
+        android:id="@+id/buttonTestChat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:onClick="post"
+        android:text="Post"
+        app:layout_constraintBaseline_toBaselineOf="@+id/buttonTest2"
+        app:layout_constraintStart_toEndOf="@+id/buttonTest2" />
 </android.support.constraint.ConstraintLayout>

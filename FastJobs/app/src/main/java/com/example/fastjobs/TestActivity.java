@@ -10,13 +10,18 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+
+import com.example.fastjobs.Entity.Image;
+import com.example.fastjobs.Entity.Post;
 import com.example.fastjobs.Entity.User;
 import com.example.fastjobs.firebase.ImageSupport;
 import com.example.fastjobs.firebase.LoginSupport;
 import com.example.fastjobs.firebase.CallbackSupport;
+import com.example.fastjobs.firebase.PostSupport;
 import com.example.fastjobs.firebase.UserSupport;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -77,14 +82,19 @@ public class TestActivity extends AppCompatActivity {
     /*---- This for User information ----*/
     public void insertUser(View view){
         UserSupport userSupport = new UserSupport();
-        userSupport.insert(new User("Nguyen Quang Dat","datnqse04777@fpt.edu.vn","0965658574",new Date()));
+        userSupport.insert(new User("Nguyen Quang Dat","datnqse04777@fpt.edu.vn","0965658574",new Date(), null), this);
 
         // Need insert avatar code like this
         userSupport.get("datnqse04777@fpt.edu.vn", new CallbackSupport<User>() {
             @Override
             public void onCallback(User user, String key, List<User> users) {
                 ImageSupport imageSupport = new ImageSupport();
-                imageSupport.upload(filePath, getApplicationContext(), null, key, null);
+                imageSupport.upload(filePath, getApplicationContext(), new CallbackSupport() {
+                    @Override
+                    public void onCallback(Object o, String key, List list) {
+
+                    }
+                });
             }
         });
 
@@ -93,8 +103,8 @@ public class TestActivity extends AppCompatActivity {
     public void updateUser(View view){
         // Can NOT change email because email is key
         UserSupport userSupport = new UserSupport();
-        User newUser = new User("New Nguyen Quang Dat","datnqse04777@fpt.edu.vn","0123456789",new Date());
-        userSupport.update(newUser);
+        User newUser = new User("New Nguyen Quang Dat","datnqse04777@fpt.edu.vn","0123456789",new Date(), null);
+        userSupport.update(newUser, this);
     }
 
     public void getUserByEmail(View view){
@@ -113,7 +123,7 @@ public class TestActivity extends AppCompatActivity {
     /*---- This for Image ----*/
     private Uri filePath;
 
-    private void chooseImage() {
+    public void chooseImage(View view) {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -140,7 +150,12 @@ public class TestActivity extends AppCompatActivity {
 
     public void uploadImageToServer(View view){
         ImageSupport imageSupport = new ImageSupport();
-        imageSupport.upload(filePath, this, null, null, null);
+        imageSupport.upload(filePath, this, new CallbackSupport() {
+            @Override
+            public void onCallback(Object o, String key, List list) {
+
+            }
+        });
         // Change null to id of where image belong to
     }
 
@@ -157,5 +172,14 @@ public class TestActivity extends AppCompatActivity {
 
     /*------------------------------------------------------------------------*/
 
+    public void post(View view){
+        PostSupport postSupport = new PostSupport();
+        Image image = new Image("A","AVATAR", filePath);
+        List<Image> images = new ArrayList<>();
+        images.add(image);
+        Post post = new Post();
+        post.setImages(images);
+        postSupport.insert(post, this);
+    }
 
 }

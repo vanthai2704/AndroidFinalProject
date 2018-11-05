@@ -1,8 +1,8 @@
 package com.example.fastjobs;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -13,23 +13,35 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import com.example.fastjobs.firebase.LoginSupport;
+import com.example.fastjobs.View.LoginActivity;
 
 public class MainPage extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        LoginSupport loginSupport = new LoginSupport();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_page);
+        if(!loginSupport.isLogin()){
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            return;
+        }
+
         Toolbar toolbar =  findViewById(R.id.toolbarDrawer);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(getMainPage(), MessageActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -45,7 +57,14 @@ public class MainPage extends AppCompatActivity
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.contentLayout,new HomeFragment());
         ft.commit();
+        View headerLayout =
+                navigationView.getHeaderView(0);
+        TextView textViewHeaderEmail = headerLayout.findViewById(R.id.textViewHeaderEmail);
+        textViewHeaderEmail.setText(loginSupport.getCurrentUserEmail());
+    }
 
+    public MainPage getMainPage(){
+        return this;
     }
 
     @Override
@@ -96,12 +115,19 @@ public class MainPage extends AppCompatActivity
             ft.replace(R.id.contentLayout,new SearchFragment());
             ft.commit();
         } else if (id == R.id.nav_addpost) {
-
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.contentLayout,new NewPostPragment());
+            ft.commit();
         }else if (id == R.id.nav_listPost) {
-
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.contentLayout,new MyFragment());
+            ft.commit();
         }
         else if (id == R.id.nav_logOut) {
-
+            LoginSupport loginSupport = new LoginSupport();
+            loginSupport.signOut();
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

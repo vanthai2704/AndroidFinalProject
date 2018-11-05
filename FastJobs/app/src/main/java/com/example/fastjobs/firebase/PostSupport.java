@@ -1,7 +1,10 @@
 package com.example.fastjobs.firebase;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 
+
+import com.example.fastjobs.Entity.Image;
 import com.example.fastjobs.Entity.Post;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.database.DataSnapshot;
@@ -20,15 +23,37 @@ public class PostSupport extends BaseSupport{
         dbPost = db.child("post");
     }
 
-    public void insert(Post post){
-        String key = dbPost.push().getKey();
-        post.setPost_id(key);
-        dbPost.child(key).setValue(post).addOnFailureListener(new OnFailureListener() {
+    public void insert(Post post, Context context){
+        List<Image> images = new ArrayList<>();
+        images.addAll(post.getImages());
+        final String keyPost = dbPost.push().getKey();
+        post.setPost_id(keyPost);
+        post.setImages(null);
+        dbPost.child(keyPost).setValue(post).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
                 e.printStackTrace();
             }
         });
+
+        if(images.size() > 0){
+            ImageSupport imageSupport = new ImageSupport();
+            for (final Image image : images){
+                imageSupport.upload(image.getImage_uri(), context, new CallbackSupport() {
+                    @Override
+                    public void onCallback(Object o, String key, List list) {
+                        image.setImage_id(key);
+                        dbPost.child(keyPost).child("images").setValue(image).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                e.printStackTrace();
+                            }
+                        });
+                    }
+                });
+            }
+        }
+
     }
     public void getAll(final int page, final int pageSize, final CallbackSupport callbackSupport){
         dbPost.addValueEventListener(new ValueEventListener() {
@@ -105,6 +130,8 @@ public class PostSupport extends BaseSupport{
                                                     && postItem.getPost_status().toLowerCase().contains(post.getPost_status().toLowerCase()))){
                                                 if(index>(page-1)*pageSize && index<= page*pageSize){
                                                     posts.add(postItem);
+                                                }else {
+                                                    break;
                                                 }
                                                 index++;
                                             }
@@ -124,4 +151,6 @@ public class PostSupport extends BaseSupport{
             }
         });
     }
+
+
 }
