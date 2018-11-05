@@ -59,9 +59,10 @@ public class PostSupport extends BaseSupport{
     public void getAll(final int page, final int pageSize, final CallbackSupport callbackSupport){
         dbPost.addValueEventListener(new ValueEventListener() {
             int index = 1;
-            List<Post> posts = new ArrayList<>();
+            List<Post> posts;
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                posts = new ArrayList<>();
                 for (DataSnapshot item : dataSnapshot.getChildren())
                 {
                     if(index>(page-1)*pageSize && index<= page*pageSize){
@@ -82,9 +83,10 @@ public class PostSupport extends BaseSupport{
 
     public void getRecently(final CallbackSupport callbackSupport){
         dbPost.orderByKey().limitToLast(100).addValueEventListener(new ValueEventListener() {
-            List<Post> posts = new ArrayList<>();
+            List<Post> posts;
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                posts = new ArrayList<>();
                 for (DataSnapshot item : dataSnapshot.getChildren())
                 {
                     posts.add(item.getValue(Post.class));
@@ -130,9 +132,10 @@ public class PostSupport extends BaseSupport{
     public void search(final Post post,final int page, final int pageSize, final CallbackSupport callbackSupport){
         dbPost.addValueEventListener(new ValueEventListener() {
             int index = 1;
-            List<Post> posts = new ArrayList<>();
+            List<Post> posts;
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                posts = new ArrayList<>();
                 for (DataSnapshot item : dataSnapshot.getChildren())
                 {
                     Post postItem = item.getValue(Post.class);
