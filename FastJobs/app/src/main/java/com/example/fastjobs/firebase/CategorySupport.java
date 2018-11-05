@@ -3,8 +3,8 @@ package com.example.fastjobs.firebase;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.example.fastjobs.entity.Category;
-import com.example.fastjobs.entity.Image;
+import com.example.fastjobs.Entity.Category;
+import com.example.fastjobs.Entity.Image;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

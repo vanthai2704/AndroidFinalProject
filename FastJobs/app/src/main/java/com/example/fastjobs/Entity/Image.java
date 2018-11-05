@@ -1,16 +1,11 @@
-package com.example.fastjobs.entity;
+package com.example.fastjobs.Entity;
 
-import android.graphics.Bitmap;
 import android.net.Uri;
 
-import com.example.fastjobs.firebase.CallbackSupport;
-import com.example.fastjobs.firebase.ImageSupport;
-import com.example.fastjobs.firebase.PostSupport;
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @IgnoreExtraProperties

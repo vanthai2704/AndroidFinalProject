@@ -3,15 +3,13 @@ package com.example.fastjobs.firebase;
 import android.support.annotation.NonNull;
 
 import com.example.fastjobs.MessageFragment.ListMessageFragment;
-import com.example.fastjobs.adapter.ListMessageAdapter;
-import com.example.fastjobs.entity.Category;
-import com.example.fastjobs.entity.Message;
-import com.example.fastjobs.entity.MessageOne;
+import com.example.fastjobs.Adapter.ListMessageAdapter;
+import com.example.fastjobs.Entity.Message;
+import com.example.fastjobs.Entity.MessageOne;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;

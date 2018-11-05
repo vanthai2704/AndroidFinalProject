@@ -1,6 +1,4 @@
-package com.example.fastjobs.entity;
-
-import android.graphics.Bitmap;
+package com.example.fastjobs.Entity;
 
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;

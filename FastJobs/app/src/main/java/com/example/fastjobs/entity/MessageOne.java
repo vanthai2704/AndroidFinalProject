@@ -1,4 +1,4 @@
-package com.example.fastjobs.entity;
+package com.example.fastjobs.Entity;
 
 public class MessageOne {
     private String from;

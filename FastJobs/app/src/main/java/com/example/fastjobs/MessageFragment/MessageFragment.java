@@ -1,7 +1,6 @@
 package com.example.fastjobs.MessageFragment;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,8 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import com.example.fastjobs.R;
-import com.example.fastjobs.adapter.ChatAdapter;
-import com.example.fastjobs.entity.Message;
+import com.example.fastjobs.Adapter.ChatAdapter;
+import com.example.fastjobs.Entity.Message;
 import com.example.fastjobs.firebase.CallbackSupport;
 import com.example.fastjobs.firebase.LoginSupport;
 import com.example.fastjobs.firebase.MessageSupport;

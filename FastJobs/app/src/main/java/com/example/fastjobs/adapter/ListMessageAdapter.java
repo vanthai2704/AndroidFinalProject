@@ -1,4 +1,4 @@
-package com.example.fastjobs.adapter;
+package com.example.fastjobs.Adapter;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,8 +7,7 @@ import android.widget.TextView;
 
 import com.example.fastjobs.MessageFragment.ListMessageFragment;
 import com.example.fastjobs.R;
-import com.example.fastjobs.entity.MessageOne;
-import com.example.fastjobs.firebase.CallbackSupport;
+import com.example.fastjobs.Entity.MessageOne;
 
 import java.util.ArrayList;
 import java.util.List;

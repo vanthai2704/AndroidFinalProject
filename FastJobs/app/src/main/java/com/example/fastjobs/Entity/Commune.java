@@ -1,4 +1,4 @@
-package com.example.fastjobs.entity;
+package com.example.fastjobs.Entity;
 
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
