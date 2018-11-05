@@ -2,6 +2,7 @@ package com.example.fastjobs.firebase;
 
 import android.support.annotation.NonNull;
 
+
 import com.example.fastjobs.Entity.Commune;
 import com.example.fastjobs.Entity.District;
 import com.google.firebase.database.DataSnapshot;
