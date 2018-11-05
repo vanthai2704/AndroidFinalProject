@@ -26,7 +26,7 @@ public class CommuneSupport extends BaseSupport{
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot item : dataSnapshot.getChildren())
                 {
-                    if(item.getValue(District.class).getProvince_id().equalsIgnoreCase(district_id)){
+                    if(item.getValue(Commune.class).getDistrict_id().equalsIgnoreCase(district_id)){
                         communes.add(item.getValue(Commune.class));
                     }
                 }

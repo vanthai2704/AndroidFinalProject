@@ -43,7 +43,7 @@ public class PostSupport extends BaseSupport{
                     @Override
                     public void onCallback(Object o, String key, List list) {
                         image.setImage_id(key);
-                        dbPost.child(keyPost).child("images").setValue(image).addOnFailureListener(new OnFailureListener() {
+                        dbPost.child(keyPost).child(key).setValue(image).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 e.printStackTrace();
@@ -67,6 +67,25 @@ public class PostSupport extends BaseSupport{
                         posts.add(item.getValue(Post.class));
                     }
                     index++;
+                }
+                callbackSupport.onCallback(null, null, posts);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void getRecently(final CallbackSupport callbackSupport){
+        dbPost.orderByKey().limitToLast(10).addValueEventListener(new ValueEventListener() {
+            List<Post> posts = new ArrayList<>();
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot item : dataSnapshot.getChildren())
+                {
+                    posts.add(item.getValue(Post.class));
                 }
                 callbackSupport.onCallback(null, null, posts);
             }

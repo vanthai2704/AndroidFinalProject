@@ -135,7 +135,11 @@ public class Post {
     public void setImages(List<Image> images) {
         this.images = images;
     }
-
+    @Exclude
+    @Override
+    public String toString() {
+        return getPost_title();
+    }
     @Exclude
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
