@@ -115,7 +115,9 @@ public class MainPage extends AppCompatActivity
             ft.replace(R.id.contentLayout,new SearchFragment());
             ft.commit();
         } else if (id == R.id.nav_addpost) {
-
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.contentLayout,new NewPostPragment());
+            ft.commit();
         }else if (id == R.id.nav_listPost) {
 
         }
