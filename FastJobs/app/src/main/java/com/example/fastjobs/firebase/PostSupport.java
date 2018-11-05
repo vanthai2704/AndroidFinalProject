@@ -13,6 +13,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -68,6 +69,7 @@ public class PostSupport extends BaseSupport{
                     }
                     index++;
                 }
+                Collections.reverse(posts);
                 callbackSupport.onCallback(null, null, posts);
             }
 
@@ -87,6 +89,7 @@ public class PostSupport extends BaseSupport{
                 {
                     posts.add(item.getValue(Post.class));
                 }
+                Collections.reverse(posts);
                 callbackSupport.onCallback(null, null, posts);
             }
 
