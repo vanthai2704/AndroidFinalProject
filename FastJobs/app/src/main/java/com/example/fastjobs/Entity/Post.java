@@ -3,6 +3,7 @@ package com.example.fastjobs.Entity;
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,12 +20,13 @@ public class Post {
     private String post_title;
     private String post_content;
     private String post_status;
+    private Date post_time;
     private List<Image> images;
 
     public Post() {
     }
 
-    public Post(String commune_id, String category_id, String user_id, double price, double remuneration, String location_coordinate, String post_title, String post_content, String post_status, List<Image> images) {
+    public Post(String commune_id, String category_id, String user_id, double price, double remuneration, String location_coordinate, String post_title, String post_content, String post_status, Date post_time, List<Image> images) {
         this.commune_id = commune_id;
         this.category_id = category_id;
         this.user_id = user_id;
@@ -34,6 +36,7 @@ public class Post {
         this.post_title = post_title;
         this.post_content = post_content;
         this.post_status = post_status;
+        this.post_time = post_time;
         this.images = images;
     }
 
@@ -117,6 +120,14 @@ public class Post {
         this.post_status = post_status;
     }
 
+    public Date getPost_time() {
+        return post_time;
+    }
+
+    public void setPost_time(Date post_time) {
+        this.post_time = post_time;
+    }
+
     public List<Image> getImages() {
         return images;
     }
@@ -137,6 +148,7 @@ public class Post {
         result.put("post_title", post_title);
         result.put("post_content", post_content);
         result.put("post_status", post_status);
+        result.put("post_time", post_time);
         result.put("images", images);
         return result;
     }
