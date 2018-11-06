@@ -68,6 +68,8 @@ public class NewPostPragment extends Fragment {
     private GridViewImageAdapter gridViewImageAdapter;
     String category;
     String commune;
+    private Activity activityTmp;
+    private Context contextTmp;
 
     public void setCategory(String category) {
         this.category = category;
@@ -93,6 +95,8 @@ public class NewPostPragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        activityTmp = getActivity();
+        contextTmp = getContext();
         postSupport = new PostSupport();
         categorySupport = new CategorySupport();
         provinceSupport = new ProvinceSupport();
@@ -132,7 +136,7 @@ public class NewPostPragment extends Fragment {
                     String location = spinnerDistrictPost.getSelectedItem().toString()
                             + " "+ spinnerDistrictPost.getSelectedItem().toString()
                             + " "+ spinnerProvincePost.getSelectedItem().toString();
-                    Geocoder gc = new Geocoder(getActivity().getApplicationContext());
+                    Geocoder gc = new Geocoder(activityTmp.getApplicationContext());
                     List<Address> addresses= gc.getFromLocationName(location, 1); // get ddthe found Aress Objects
                     location_coordinate = addresses.get(0).getLatitude() +"-" + addresses.get(0).getLongitude();
                 } catch (Exception ex) {
@@ -142,7 +146,7 @@ public class NewPostPragment extends Fragment {
 
                 String user_id = (new LoginSupport()).getCurrentUserEmail().replaceAll("\\.","_");
                 Post post = new Post(commune,category,user_id,50000,remuneration,location_coordinate,title,content,"A",new Date(),timeToDisplay,images);
-                postSupport.insert(post,getContext());
+                postSupport.insert(post,contextTmp);
 
 
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -159,7 +163,7 @@ public class NewPostPragment extends Fragment {
             public void onCallback(Category category, String key, List<Category> categories) {
                 ArrayAdapter<Category> adapter;
                 adapter = new ArrayAdapter<Category>(
-                        getContext(),
+                        contextTmp,
                         android.R.layout.simple_spinner_item,
                         categories
                 );
@@ -184,7 +188,7 @@ public class NewPostPragment extends Fragment {
             public void onCallback(Province province, String key, List<Province> provinces) {
                 ArrayAdapter<Province> adapter;
                 adapter = new ArrayAdapter<Province>(
-                        getContext(),
+                        contextTmp,
                         android.R.layout.simple_spinner_item,
                         provinces
                 );
@@ -199,7 +203,7 @@ public class NewPostPragment extends Fragment {
                             public void onCallback(District district, String key, List<District> districts) {
                                 ArrayAdapter<District> adapter;
                                 adapter = new ArrayAdapter<District>(
-                                        getContext(),
+                                        contextTmp,
                                         android.R.layout.simple_spinner_item,
                                         districts
                                 );
@@ -214,7 +218,7 @@ public class NewPostPragment extends Fragment {
                                             public void onCallback(Commune commune, String key, List<Commune> communes) {
                                                 ArrayAdapter<Commune> adapter;
                                                 adapter = new ArrayAdapter<Commune>(
-                                                        getContext(),
+                                                        contextTmp,
                                                         android.R.layout.simple_spinner_item,
                                                         communes
                                                 );
