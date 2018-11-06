@@ -1,17 +1,16 @@
 package com.example.fastjobs.Adapter;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.location.Location;
-import android.location.LocationListener;
-import android.os.Bundle;
-import android.provider.MediaStore;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.fastjobs.Entity.*;
+import com.example.fastjobs.JobDetail;
 import com.example.fastjobs.MainPage;
 import com.example.fastjobs.R;
 import com.example.fastjobs.SubHomeFragment.RecentPostFragment;
@@ -26,11 +25,13 @@ public class RecentPostAdapter extends BaseAdapter {
     private List<Post> postList;
     private MainPage mainPage;
     private Location currentLocation;
+    private FragmentManager fragmentManager;
 
-    public RecentPostAdapter(RecentPostFragment recentPostFragment, List<Post> postList, Location currentLocation) {
+    public RecentPostAdapter(RecentPostFragment recentPostFragment, List<Post> postList, Location currentLocation,FragmentManager fragmentManager) {
         this.recentPostFragment = recentPostFragment;
         this.postList = postList;
         this.currentLocation = currentLocation;
+        this.fragmentManager=fragmentManager;
     }
 
     @Override
@@ -49,7 +50,7 @@ public class RecentPostAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
 
         if(convertView == null){
@@ -112,8 +113,20 @@ public class RecentPostAdapter extends BaseAdapter {
                 int tmpDistance = Math.round(((float) distance)/10);
                 myHolder.distancePost.setText(((double)tmpDistance)/100+"Km");
             }
-        }
+            myHolder.titlePost.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Post post = postList.get(position);
+                    JobDetail jobDetail = JobDetail.newInstance(
+                            post.getPost_id(), null);
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.remove(fragmentManager.findFragmentById(R.id.contentLayout));
+                    fragmentTransaction.add(R.id.contentLayout, jobDetail);
+                    fragmentTransaction.commit();
+                }
+            });
 
+        }
 
         return convertView;
     }

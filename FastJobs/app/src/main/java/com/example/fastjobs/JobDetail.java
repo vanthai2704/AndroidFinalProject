@@ -18,6 +18,7 @@ import com.example.fastjobs.Entity.Post;
 import com.example.fastjobs.firebase.CallbackSupport;
 import com.example.fastjobs.firebase.CategorySupport;
 import com.example.fastjobs.firebase.CommuneSupport;
+import com.example.fastjobs.firebase.LoginSupport;
 import com.example.fastjobs.firebase.PostSupport;
 
 import java.util.List;
@@ -164,7 +165,6 @@ public class JobDetail extends Fragment {
                 ft.commit();
             }
         });
-
 
     }
 }
