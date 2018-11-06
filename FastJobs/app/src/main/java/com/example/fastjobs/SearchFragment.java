@@ -2,6 +2,7 @@ package com.example.fastjobs;
 
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -51,11 +52,10 @@ public class SearchFragment extends android.support.v4.app.Fragment {
     private Button buttonSearch;
     private ListView listViewSearchJobs;
     private CategorySupport categorySupport;
-    private ProvinceSupport provinceSupport;
-    private DistrictSupport districtSupport;
-    private CommuneSupport communeSupport;
     private PostSupport postSupport;
     private double distanceSearch;
+    private Activity activityTmp;
+    private Context contextTmp;
 
     private Post postSearch;
     public SearchFragment() {
@@ -74,65 +74,58 @@ public class SearchFragment extends android.support.v4.app.Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-        postSearch = new Post();
-        categorySupport = new CategorySupport();
-        provinceSupport = new ProvinceSupport();
-        districtSupport = new DistrictSupport();
-        communeSupport = new CommuneSupport();
-        editTextDistanceSearch = view.findViewById(R.id.editTextDistanceSearch);
-        spinnerCategoriesSearch = view.findViewById(R.id.spinnerCategoriesSearch);
-        buttonSearch =view.findViewById(R.id.buttonSearch);
-        listViewSearchJobs = view.findViewById(R.id.listViewSearchJobs);
-        categorySupport.getAll(new CallbackSupport<Category>() {
+        activityTmp = getActivity();
+        contextTmp = getContext();
+            locationManager = (LocationManager) activityTmp.getSystemService(Context.LOCATION_SERVICE);
+            postSearch = new Post();
+            categorySupport = new CategorySupport();
+            postSupport = new PostSupport();
+            editTextDistanceSearch = view.findViewById(R.id.editTextDistanceSearch);
+            spinnerCategoriesSearch = view.findViewById(R.id.spinnerCategoriesSearch);
+            buttonSearch =view.findViewById(R.id.buttonSearch);
+            listViewSearchJobs = view.findViewById(R.id.listViewSearchJobs);
+            categorySupport.getAll(new CallbackSupport<Category>() {
 
-            @Override
-            public void onCallback(Category category, String key, List<Category> categories) {
-                ArrayAdapter<Category> adapter;
-                adapter = new ArrayAdapter<Category>(
-                        getContext(),
-                        android.R.layout.simple_spinner_item,
-                        categories
-                );
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinnerCategoriesSearch.setAdapter(adapter);
-                spinnerCategoriesSearch.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        postSearch.setCategory_id(((Category)parent.getItemAtPosition(position)).getCategory_id());
-                    }
+                @Override
+                public void onCallback(Category category, String key, List<Category> categories) {
+                    ArrayAdapter<Category> adapter;
+                    adapter = new ArrayAdapter<Category>(
+                            contextTmp,
+                            android.R.layout.simple_spinner_item,
+                            categories
+                    );
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinnerCategoriesSearch.setAdapter(adapter);
+                    spinnerCategoriesSearch.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            postSearch.setCategory_id(((Category)parent.getItemAtPosition(position)).getCategory_id());
+                        }
 
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
 
-                    }
-                });
-            }
-        });
-
-
-
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        buttonSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try{
-                    distanceSearch = Double.parseDouble(editTextDistanceSearch.getText().toString());
-                }catch (NumberFormatException e){
-                    distanceSearch = 0;
+                        }
+                    });
                 }
+            });
+            buttonSearch.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try{
+                        distanceSearch = Double.parseDouble(editTextDistanceSearch.getText().toString());
+                    }catch (NumberFormatException e){
+                        distanceSearch = 0;
+                    }
 
-                loadData();
-            }
-        });
+                    loadData();
+                }
+            });
     }
+
+
 
     private void loadData(){
-        postSupport = new PostSupport();
         postSupport.search(postSearch, 1, 100, new CallbackSupport<Post>() {
             @Override
             public void onCallback(Post post, String key, List<Post> posts) {
@@ -151,7 +144,7 @@ public class SearchFragment extends android.support.v4.app.Fragment {
                         }
                     }
                     ArrayAdapter<Post> postArrayAdapter
-                            = new ArrayAdapter<Post>(getContext(), android.R.layout.simple_list_item_1, postsResult);
+                            = new ArrayAdapter<Post>(contextTmp, android.R.layout.simple_list_item_1, postsResult);
                     listViewSearchJobs.setAdapter(postArrayAdapter);
                 }
             }
@@ -159,20 +152,20 @@ public class SearchFragment extends android.support.v4.app.Fragment {
     }
 
     private Location getLastBestLocation() {
-        if (getActivity() != null && ContextCompat.checkSelfPermission(getActivity(),
+        if (ContextCompat.checkSelfPermission(activityTmp,
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
 
             // Permission is not granted
             // Should we show an explanation?
-            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
+            if (ActivityCompat.shouldShowRequestPermissionRationale(activityTmp,
                     Manifest.permission.ACCESS_FINE_LOCATION)) {
                 // Show an explanation to the user *asynchronously* -- don't block
                 // this thread waiting for the user's response! After the user
                 // sees the explanation, try again to request the permission.
             } else {
                 // No explanation needed; request the permission
-                ActivityCompat.requestPermissions(getActivity(),
+                ActivityCompat.requestPermissions(activityTmp,
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                         123);
 

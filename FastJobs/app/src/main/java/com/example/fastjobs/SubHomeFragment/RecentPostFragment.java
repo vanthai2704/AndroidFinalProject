@@ -35,6 +35,8 @@ public class RecentPostFragment extends Fragment implements LocationListener{
     ListView listView;
     private PostSupport postSupport;
     private LocationManager locationManager;
+    private Activity activityTmp;
+    private Context contextTmp;
 
     public RecentPostFragment() {
         // Required empty public constructor
@@ -46,8 +48,20 @@ public class RecentPostFragment extends Fragment implements LocationListener{
                              Bundle savedInstanceState) {
 
         View view= inflater.inflate(R.layout.fragment_recent_post, container, false);
-        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-        listView = view.findViewById(R.id.listViewPost);
+        activityTmp = getActivity();
+        contextTmp = getContext();
+
+            locationManager = (LocationManager) activityTmp.getSystemService(Context.LOCATION_SERVICE);
+            listView = view.findViewById(R.id.listViewPost);
+            postSupport = new PostSupport();
+            postSupport.getRecently(new CallbackSupport<Post>() {
+                @Override
+                public void onCallback(Post post, String key, List<Post> posts) {
+                    Location currentLocation = getLastBestLocation();
+                    RecentPostAdapter recentPostAdapter = new RecentPostAdapter(getRecentPostFragment(),posts, currentLocation);
+                    listView.setAdapter(recentPostAdapter);
+                }
+            });
 
         // Inflate the layout for this fragment
         return view;
@@ -77,35 +91,21 @@ public class RecentPostFragment extends Fragment implements LocationListener{
 
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        postSupport = new PostSupport();
-        postSupport.getRecently(new CallbackSupport<Post>() {
-            @Override
-            public void onCallback(Post post, String key, List<Post> posts) {
-                Location currentLocation = getLastBestLocation();
-                RecentPostAdapter recentPostAdapter = new RecentPostAdapter(getRecentPostFragment(),posts, currentLocation);
-                listView.setAdapter(recentPostAdapter);
-            }
-        });
-    }
-
     private Location getLastBestLocation() {
-        if (getActivity() != null && ContextCompat.checkSelfPermission(getActivity(),
+        if (activityTmp != null && ContextCompat.checkSelfPermission(activityTmp,
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
 
             // Permission is not granted
             // Should we show an explanation?
-            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
+            if (ActivityCompat.shouldShowRequestPermissionRationale(activityTmp,
                     Manifest.permission.ACCESS_FINE_LOCATION)) {
                 // Show an explanation to the user *asynchronously* -- don't block
                 // this thread waiting for the user's response! After the user
                 // sees the explanation, try again to request the permission.
             } else {
                 // No explanation needed; request the permission
-                ActivityCompat.requestPermissions(getActivity(),
+                ActivityCompat.requestPermissions(activityTmp,
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                         123);
 
