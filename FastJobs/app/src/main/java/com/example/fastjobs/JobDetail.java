@@ -40,6 +40,7 @@ public class JobDetail extends Fragment {
     private EditText jobTitle, jobContent, jobremuneration,jobCategory,jobLocation;
     private Button backlistpost;
     private PostSupport postSupport;
+    private Button buy;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -133,11 +134,19 @@ public class JobDetail extends Fragment {
         jobCategory = view.findViewById(R.id.jobCategory);
         jobLocation = view.findViewById(R.id.jobLocation);
         backlistpost = view.findViewById(R.id.backButton);
+        buy = view.findViewById(R.id.buyButton);
         jobTitle.setInputType(0);
         jobContent.setInputType(0);
         jobremuneration.setInputType(0);
         jobCategory.setInputType(0);
         jobLocation.setInputType(0);
+
+        if(true){
+            buy.setText("Mua Cong Viec");
+        }
+        else{
+            buy.setText("Huy Cong Viec");
+        }
 
         postSupport = new PostSupport();
         postSupport.get(mParam1, new CallbackSupport<Post>() {
@@ -161,8 +170,14 @@ public class JobDetail extends Fragment {
             @Override
             public void onClick(View v) {
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.contentLayout,new MyFragment());
-                ft.commit();
+                if(true){
+                    ft.replace(R.id.contentLayout,new MyFragment());
+                    ft.commit();
+                }
+                else{
+                    ft.replace(R.id.contentLayout,new HomeFragment());
+                    ft.commit();
+                }
             }
         });
 
