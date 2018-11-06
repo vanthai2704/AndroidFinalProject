@@ -125,7 +125,6 @@ public class RecentPostAdapter extends BaseAdapter {
                     fragmentTransaction.commit();
                 }
             });
-
         }
 
         return convertView;
