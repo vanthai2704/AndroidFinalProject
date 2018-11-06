@@ -60,7 +60,7 @@ public class NewPostPragment extends Fragment {
     private ProvinceSupport provinceSupport;
     private DistrictSupport districtSupport;
     private CommuneSupport communeSupport;
-    private EditText jobTitle, jobContent, jobremuneration, editTextTimeToDisplay;
+    private EditText jobTitle, jobContent, jobremuneration, editTextTimeToDisplay, editTextContactNew, editTextLocationDetailNew;
     private Button addpost;
     private Button buttonChooseImage;
     private GridView gridViewImageInNew;
@@ -109,6 +109,8 @@ public class NewPostPragment extends Fragment {
         jobTitle = view.findViewById(R.id.jobName);
         jobContent = view.findViewById(R.id.jobContent);
         jobremuneration = view.findViewById(R.id.remuneration);
+        editTextContactNew= view.findViewById(R.id.editTextContactNew);
+        editTextLocationDetailNew= view.findViewById(R.id.editTextLocationDetailNew);
         addpost = view.findViewById(R.id.jobPost);
         buttonChooseImage = view.findViewById(R.id.buttonChooseImage);
         editTextTimeToDisplay = view.findViewById(R.id.editTextTimeToDisplay);
@@ -132,6 +134,8 @@ public class NewPostPragment extends Fragment {
                 double remuneration = Double.parseDouble(jobremuneration.getText().toString());
                 double timeToDisplay = Double.parseDouble(editTextTimeToDisplay.getText().toString());
                 String location_coordinate="";
+                String contact = editTextContactNew.getText().toString();
+                String locationDetail = editTextLocationDetailNew.getText().toString();
                 try {
                     String location = spinnerDistrictPost.getSelectedItem().toString()
                             + " "+ spinnerDistrictPost.getSelectedItem().toString()
@@ -145,7 +149,8 @@ public class NewPostPragment extends Fragment {
                 }
 
                 String user_id = (new LoginSupport()).getCurrentUserEmail().replaceAll("\\.","_");
-                Post post = new Post(commune,category,user_id,50000,remuneration,location_coordinate,title,content,"A",new Date(),timeToDisplay,images);
+                Post post = new Post(commune,category,user_id,50000,remuneration,location_coordinate,
+                        title,content,PostSupport.ACTIVE,new Date(),timeToDisplay,images,contact,locationDetail);
                 postSupport.insert(post,contextTmp);
 
 

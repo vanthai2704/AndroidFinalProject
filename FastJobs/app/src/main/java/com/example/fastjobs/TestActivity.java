@@ -103,8 +103,8 @@ public class TestActivity extends AppCompatActivity {
     public void updateUser(View view){
         // Can NOT change email because email is key
         UserSupport userSupport = new UserSupport();
-        User newUser = new User("New Nguyen Quang Dat","datnqse04777@fpt.edu.vn","0123456789",new Date(), null);
-        userSupport.update(newUser, this);
+        User newUser = new User("New Nguyen Quang Dat","datnqse04777@fpt.edu.vn","0123456789",new Date(), new ArrayList<Image>());
+        userSupport.update(newUser);
     }
 
     public void getUserByEmail(View view){

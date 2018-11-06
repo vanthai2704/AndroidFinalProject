@@ -17,6 +17,7 @@ import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.fastjobs.Adapter.RecentPostAdapter;
@@ -50,19 +51,24 @@ public class RecentPostFragment extends Fragment implements LocationListener{
         View view= inflater.inflate(R.layout.fragment_recent_post, container, false);
         activityTmp = getActivity();
         contextTmp = getContext();
-
-            locationManager = (LocationManager) activityTmp.getSystemService(Context.LOCATION_SERVICE);
-            listView = view.findViewById(R.id.listViewPost);
-            postSupport = new PostSupport();
-            postSupport.getRecently(new CallbackSupport<Post>() {
-                @Override
-                public void onCallback(Post post, String key, List<Post> posts) {
-                    Location currentLocation = getLastBestLocation();
-                    RecentPostAdapter recentPostAdapter = new RecentPostAdapter(getRecentPostFragment(),posts, currentLocation,getFragmentManager());
-                    listView.setAdapter(recentPostAdapter);
-                }
-            });
-
+        locationManager = (LocationManager) activityTmp.getSystemService(Context.LOCATION_SERVICE);
+        listView = view.findViewById(R.id.listViewPost);
+        postSupport = new PostSupport();
+        postSupport.getRecently(new CallbackSupport<Post>() {
+            @Override
+            public void onCallback(Post post, String key, List<Post> posts) {
+                Location currentLocation = getLastBestLocation();
+                RecentPostAdapter recentPostAdapter = new RecentPostAdapter(getRecentPostFragment(),posts, currentLocation,getFragmentManager());
+                listView.setAdapter(recentPostAdapter);
+            }
+        });
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Post postSelected = (Post)listView.getAdapter().getItem(position);
+                String post_id = postSelected.getPost_id();
+            }
+        });
         // Inflate the layout for this fragment
         return view;
     }

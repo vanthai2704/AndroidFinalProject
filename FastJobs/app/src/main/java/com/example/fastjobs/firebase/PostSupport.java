@@ -19,6 +19,10 @@ import java.util.List;
 import java.util.Map;
 
 public class PostSupport extends BaseSupport{
+    public static String ACTIVE = "ACTIVE";
+    public static String DELETE = "DELETE";
+    public static String PROCESS = "PROCESS";
+    public static String COMPLETE = "COMPLETE";
     private DatabaseReference dbPost;
     public PostSupport(){
         dbPost = db.child("post");
