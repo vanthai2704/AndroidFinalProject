@@ -6,4 +6,11 @@
     <color name="colorStart">#2d9a59</color>
     <color name="colorCenter">#42959a</color>
     <color name="colorEnd">#23729a</color>
+
+    <color name="ProfilecolorPrimary">#3F51B5</color>
+    <color name="ProfilecolorPrimaryDark">#292b3d</color>
+    <color name="Profilegraylight">#fafafa</color>
+    <color name="Profilestartblue">#09c6df</color>
+    <color name="Profileendblue">#0bcce6</color>
+    <color name="ProfilecolorAccent">#FF4081</color>
 </resources>

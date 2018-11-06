@@ -21,9 +21,9 @@ public class CommuneSupport extends BaseSupport{
 
     public void getAll(final String district_id, final CallbackSupport callbackSupport){
         dbCommune.addValueEventListener(new ValueEventListener() {
-            List<Commune> communes = new ArrayList<>();
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<Commune> communes = new ArrayList<>();
                 for (DataSnapshot item : dataSnapshot.getChildren())
                 {
                     if(item.getValue(Commune.class).getDistrict_id().equalsIgnoreCase(district_id)){

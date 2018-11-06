@@ -20,9 +20,10 @@ public class DistrictSupport extends BaseSupport{
 
     public void getAll(final String province_id, final CallbackSupport callbackSupport){
         dbDistrict.addValueEventListener(new ValueEventListener() {
-            List<District> districts = new ArrayList<>();
+
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<District> districts = new ArrayList<>();
                 for (DataSnapshot item : dataSnapshot.getChildren())
                 {
                     if(item.getValue(District.class).getProvince_id().equalsIgnoreCase(province_id)){

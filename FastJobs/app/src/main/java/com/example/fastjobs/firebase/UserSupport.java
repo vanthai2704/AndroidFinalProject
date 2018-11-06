@@ -55,9 +55,10 @@ public class UserSupport extends BaseSupport{
     public void getAll(final int page, final int pageSize, final CallbackSupport callbackSupport){
         dbUser.addValueEventListener(new ValueEventListener() {
             int index = 1;
-            List<User> users = new ArrayList<>();
+
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<User> users = new ArrayList<>();
                 for (DataSnapshot item : dataSnapshot.getChildren())
                 {
                     if(index>(page-1)*pageSize && index<= page*pageSize){

@@ -20,9 +20,10 @@ public class ProvinceSupport extends BaseSupport{
 
     public void getAll(final CallbackSupport callbackSupport){
         dbProvince.addValueEventListener(new ValueEventListener() {
-            List<Province> provinces = new ArrayList<>();
+
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<Province> provinces = new ArrayList<>();
                 for (DataSnapshot item : dataSnapshot.getChildren())
                 {
                     provinces.add(item.getValue(Province.class));
