@@ -13,6 +13,7 @@ import android.widget.ListView;
 import com.example.fastjobs.Adapter.PostAdapter;
 import com.example.fastjobs.Entity.Post;
 import com.example.fastjobs.firebase.CallbackSupport;
+import com.example.fastjobs.firebase.LoginSupport;
 import com.example.fastjobs.firebase.PostSupport;
 
 import java.util.List;
@@ -47,7 +48,9 @@ public class MyFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         helper = new PostSupport();
         lvPost= view.findViewById(R.id.listPost);
-        helper.getAll(1, 100, new CallbackSupport<Post>() {
+        Post postSearch = new Post();
+        postSearch.setUser_id((new LoginSupport()).getCurrentUserEmail().replaceAll("\\.","_"));
+        helper.search(postSearch, 1, 100, new CallbackSupport<Post>() {
 
             @Override
             public void onCallback(Post post, String key, List<Post> posts) {
