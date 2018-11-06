@@ -39,6 +39,7 @@ public class MyFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        getActivity().setTitle("Bài Đăng Của Tôi");
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_my, container, false);
     }
