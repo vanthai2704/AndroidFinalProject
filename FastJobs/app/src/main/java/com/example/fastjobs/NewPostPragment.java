@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 
-import com.example.fastjobs.Adapter.PostAdapter;
 import com.example.fastjobs.Entity.Category;
 import com.example.fastjobs.Entity.Commune;
 import com.example.fastjobs.Entity.District;
@@ -102,6 +101,11 @@ public class NewPostPragment extends Fragment {
                 String user_id = (new LoginSupport()).getCurrentUserEmail().replaceAll("\\.","_");
                 Post post = new Post(commune,category,user_id,50000,remuneration,null,title,content,"A",new Date(),new ArrayList<Image>());
                 postSupport.insert(post,getContext());
+
+
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.replace(R.id.contentLayout,new MyFragment());
+                ft.commit();
 
 
             }
