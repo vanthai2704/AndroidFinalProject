@@ -48,16 +48,6 @@ public class RecentPostFragment extends Fragment implements LocationListener{
         View view= inflater.inflate(R.layout.fragment_recent_post, container, false);
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         listView = view.findViewById(R.id.listViewPost);
-        postSupport = new PostSupport();
-        postSupport.getRecently(new CallbackSupport<Post>() {
-            @Override
-            public void onCallback(Post post, String key, List<Post> posts) {
-                Location currentLocation = getLastBestLocation();
-                RecentPostAdapter recentPostAdapter = new RecentPostAdapter(getRecentPostFragment(),posts, currentLocation);
-                listView.setAdapter(recentPostAdapter);
-            }
-        });
-
 
         // Inflate the layout for this fragment
         return view;
@@ -85,6 +75,20 @@ public class RecentPostFragment extends Fragment implements LocationListener{
     @Override
     public void onProviderDisabled(String provider) {
 
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        postSupport = new PostSupport();
+        postSupport.getRecently(new CallbackSupport<Post>() {
+            @Override
+            public void onCallback(Post post, String key, List<Post> posts) {
+                Location currentLocation = getLastBestLocation();
+                RecentPostAdapter recentPostAdapter = new RecentPostAdapter(getRecentPostFragment(),posts, currentLocation);
+                listView.setAdapter(recentPostAdapter);
+            }
+        });
     }
 
     private Location getLastBestLocation() {

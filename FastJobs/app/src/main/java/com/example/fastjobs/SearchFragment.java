@@ -80,7 +80,6 @@ public class SearchFragment extends android.support.v4.app.Fragment {
         provinceSupport = new ProvinceSupport();
         districtSupport = new DistrictSupport();
         communeSupport = new CommuneSupport();
-        postSupport = new PostSupport();
         editTextDistanceSearch = view.findViewById(R.id.editTextDistanceSearch);
         spinnerCategoriesSearch = view.findViewById(R.id.spinnerCategoriesSearch);
         buttonSearch =view.findViewById(R.id.buttonSearch);
@@ -110,18 +109,30 @@ public class SearchFragment extends android.support.v4.app.Fragment {
                 });
             }
         });
-        buttonSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                distanceSearch = Double.parseDouble(editTextDistanceSearch.getText().toString());
-                loadData();
-            }
-        });
+
 
 
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        buttonSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try{
+                    distanceSearch = Double.parseDouble(editTextDistanceSearch.getText().toString());
+                }catch (NumberFormatException e){
+                    distanceSearch = 0;
+                }
+
+                loadData();
+            }
+        });
+    }
+
     private void loadData(){
+        postSupport = new PostSupport();
         postSupport.search(postSearch, 1, 100, new CallbackSupport<Post>() {
             @Override
             public void onCallback(Post post, String key, List<Post> posts) {
