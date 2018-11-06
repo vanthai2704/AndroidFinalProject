@@ -1,10 +1,14 @@
 package com.example.fastjobs;
 
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,8 +20,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.Spinner;
 
+import com.example.fastjobs.Adapter.GridViewImageAdapter;
 import com.example.fastjobs.Entity.Category;
 import com.example.fastjobs.Entity.Commune;
 import com.example.fastjobs.Entity.District;
@@ -43,6 +49,7 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  */
 public class NewPostPragment extends Fragment {
+    public static int REQUEST_CODE_CHOOSE_IMAGE = 123;
 
     private PostSupport postSupport;
     private Spinner spinnerCategoriesPost;
@@ -53,8 +60,12 @@ public class NewPostPragment extends Fragment {
     private ProvinceSupport provinceSupport;
     private DistrictSupport districtSupport;
     private CommuneSupport communeSupport;
-    private EditText jobTitle, jobContent, jobremuneration;
+    private EditText jobTitle, jobContent, jobremuneration, editTextTimeToDisplay;
     private Button addpost;
+    private Button buttonChooseImage;
+    private GridView gridViewImageInNew;
+    private List<Image> images = new ArrayList<>();
+    private GridViewImageAdapter gridViewImageAdapter;
     String category;
     String commune;
 
@@ -94,14 +105,28 @@ public class NewPostPragment extends Fragment {
         jobContent = view.findViewById(R.id.jobContent);
         jobremuneration = view.findViewById(R.id.remuneration);
         addpost = view.findViewById(R.id.jobPost);
+        buttonChooseImage = view.findViewById(R.id.buttonChooseImage);
+        editTextTimeToDisplay = view.findViewById(R.id.editTextTimeToDisplay);
+        gridViewImageInNew = view.findViewById(R.id.gridViewImageInNew);
+
+        buttonChooseImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"),123);
+            }
+        });
 
         addpost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String title = jobTitle.getText().toString();
                 String content = jobContent.getText().toString();
-                double remuneration = Integer.parseInt(jobremuneration.getText().toString());
-                String location_coordinate ="";
+                double remuneration = Double.parseDouble(jobremuneration.getText().toString());
+                double timeToDisplay = Double.parseDouble(editTextTimeToDisplay.getText().toString());
+                String location_coordinate="";
                 try {
                     String location = spinnerDistrictPost.getSelectedItem().toString()
                             + " "+ spinnerDistrictPost.getSelectedItem().toString()
@@ -115,7 +140,7 @@ public class NewPostPragment extends Fragment {
                 }
 
                 String user_id = (new LoginSupport()).getCurrentUserEmail().replaceAll("\\.","_");
-                Post post = new Post(commune,category,user_id,50000,remuneration,location_coordinate,title,content,"A",new Date(),new ArrayList<Image>());
+                Post post = new Post(commune,category,user_id,50000,remuneration,location_coordinate,title,content,"A",new Date(),timeToDisplay,images);
                 postSupport.insert(post,getContext());
 
 
@@ -227,4 +252,16 @@ public class NewPostPragment extends Fragment {
         });
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REQUEST_CODE_CHOOSE_IMAGE && resultCode == Activity.RESULT_OK
+                && data != null && data.getData() != null )
+        {
+            Image image = new Image("A", "POST_IMAGE", data.getData());
+            images.add(image);
+            gridViewImageAdapter = new GridViewImageAdapter(images, this);
+            gridViewImageInNew.setAdapter(gridViewImageAdapter);
+        }
+    }
 }

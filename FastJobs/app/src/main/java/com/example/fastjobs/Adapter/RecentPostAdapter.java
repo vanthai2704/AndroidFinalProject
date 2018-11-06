@@ -1,5 +1,11 @@
 package com.example.fastjobs.Adapter;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.location.Location;
+import android.location.LocationListener;
+import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -9,27 +15,32 @@ import com.example.fastjobs.Entity.*;
 import com.example.fastjobs.MainPage;
 import com.example.fastjobs.R;
 import com.example.fastjobs.SubHomeFragment.RecentPostFragment;
+import com.example.fastjobs.firebase.CallbackSupport;
+import com.example.fastjobs.firebase.ImageSupport;
 
 import java.util.List;
 
 public class RecentPostAdapter extends BaseAdapter {
 
     private RecentPostFragment recentPostFragment;
-    private List<Post> PostList;
+    private List<Post> postList;
     private MainPage mainPage;
-    public RecentPostAdapter(RecentPostFragment recentPostFragment, List<Post> PostList) {
+    private Location currentLocation;
+
+    public RecentPostAdapter(RecentPostFragment recentPostFragment, List<Post> postList, Location currentLocation) {
         this.recentPostFragment = recentPostFragment;
-        this.PostList = PostList;
+        this.postList = postList;
+        this.currentLocation = currentLocation;
     }
 
     @Override
     public int getCount() {
-        return PostList.size();
+        return postList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return PostList.get(position);
+        return postList.get(position);
     }
 
     @Override
@@ -39,11 +50,11 @@ public class RecentPostAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        MyHolder myHolder=null;
+
 
         if(convertView == null){
             convertView = recentPostFragment.getLayoutInflater().inflate(R.layout.layout_recentpost,null);
-            myHolder = new MyHolder();
+            final MyHolder myHolder = new MyHolder();
             myHolder.postImage=  convertView.findViewById(R.id.postImage);
             myHolder.titlePost= convertView.findViewById(R.id.titlePost);
             myHolder.remuneration= convertView.findViewById(R.id.remunerationPost);
@@ -51,14 +62,59 @@ public class RecentPostAdapter extends BaseAdapter {
             myHolder.contentPost= convertView.findViewById(R.id.descriptionPost);
             convertView.setTag(myHolder);
 
+            if(postList.get(position).getImages() != null && postList.get(position).getImages().size()>0){
+                ImageSupport imageSupport = new ImageSupport();
+                imageSupport.get(postList.get(position).getImages().get(0).getImage_id(), new CallbackSupport<Bitmap>() {
+
+                    @Override
+                    public void onCallback(Bitmap bitmap, String key, List<Bitmap> bitmaps) {
+                        myHolder.postImage.setImageBitmap(bitmap);
+                    }
+                });
+            }
+
+
+            myHolder.contentPost.setText(postList.get(position).getPost_content());
+            myHolder.titlePost.setText(postList.get(position).getPost_title());
+            myHolder.remuneration.setText(""+postList.get(position).getRemuneration());
+            myHolder.distancePost.setText("...Km");
+            Location location = new Location("postLocation");
+            location.setLatitude(Double.parseDouble(postList.get(position).getLocation_coordinate().split("-")[0]));
+            location.setLongitude(Double.parseDouble(postList.get(position).getLocation_coordinate().split("-")[1]));
+            if(currentLocation != null){
+                double distance = currentLocation.distanceTo(location);
+                int tmpDistance = Math.round(((float) distance)/10);
+                myHolder.distancePost.setText(((double)tmpDistance)/100+"Km");
+            }
+
         }else{
-            myHolder = (MyHolder)convertView.getTag();
+            final MyHolder  myHolder = (MyHolder)convertView.getTag();
+            if(postList.get(position).getImages() != null && postList.get(position).getImages().size()>0){
+                ImageSupport imageSupport = new ImageSupport();
+                imageSupport.get(postList.get(position).getImages().get(0).getImage_id(), new CallbackSupport<Bitmap>() {
+
+                    @Override
+                    public void onCallback(Bitmap bitmap, String key, List<Bitmap> bitmaps) {
+                        myHolder.postImage.setImageBitmap(bitmap);
+                    }
+                });
+            }
+
+            myHolder.contentPost.setText(postList.get(position).getPost_content());
+            myHolder.titlePost.setText(postList.get(position).getPost_title());
+            myHolder.remuneration.setText(""+postList.get(position).getRemuneration());
+            myHolder.distancePost.setText("...Km");
+            Location location = new Location("postLocation");
+            location.setLatitude(Double.parseDouble(postList.get(position).getLocation_coordinate().split("-")[0]));
+            location.setLongitude(Double.parseDouble(postList.get(position).getLocation_coordinate().split("-")[1]));
+            if(currentLocation != null){
+                double distance = currentLocation.distanceTo(location);
+                int tmpDistance = Math.round(((float) distance)/10);
+                myHolder.distancePost.setText(((double)tmpDistance)/100+"Km");
+            }
         }
-        myHolder.postImage.setImageResource(R.drawable.anh_nha);
-        myHolder.contentPost.setText(PostList.get(position).getPost_content());
-        myHolder.titlePost.setText(PostList.get(position).getPost_title());
-        myHolder.remuneration.setText(""+PostList.get(position).getRemuneration());
-        myHolder.distancePost.setText("20 Km");
+
+
         return convertView;
     }
 

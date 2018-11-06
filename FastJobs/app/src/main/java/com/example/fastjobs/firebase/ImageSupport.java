@@ -9,8 +9,10 @@ import android.support.annotation.NonNull;
 import android.widget.Toast;
 
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
@@ -73,7 +75,7 @@ public class ImageSupport extends BaseSupport{
     }
 
     public void get(final String image_id, final CallbackSupport callbackSupport){
-        StorageReference ref = storageReference.child("image");
+        StorageReference ref = storageReference.child("image/"+image_id);
         final long SIZE = 10240 * 10240;
         ref.getBytes(SIZE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override

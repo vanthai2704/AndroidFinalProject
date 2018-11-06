@@ -16,6 +16,7 @@ import com.example.fastjobs.firebase.CallbackSupport;
 import com.example.fastjobs.firebase.LoginSupport;
 import com.example.fastjobs.firebase.PostSupport;
 
+import java.util.Collections;
 import java.util.List;
 
 
@@ -55,11 +56,16 @@ public class MyFragment extends Fragment {
             @Override
             public void onCallback(Post post, String key, List<Post> posts) {
                 listPost = posts;
-                adapter = new PostAdapter(listPost, getContext(),getFragmentManager());
+                Collections.reverse(listPost);
+                adapter = new PostAdapter(listPost, getMyFragment(), getFragmentManager());
                 lvPost.setAdapter(adapter);
                 registerForContextMenu(lvPost);
             }
         });
 
+    }
+
+    public MyFragment getMyFragment(){
+        return this;
     }
 }

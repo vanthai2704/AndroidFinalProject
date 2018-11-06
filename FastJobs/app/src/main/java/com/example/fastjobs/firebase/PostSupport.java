@@ -24,12 +24,12 @@ public class PostSupport extends BaseSupport{
         dbPost = db.child("post");
     }
 
-    public void insert(Post post, Context context){
-        List<Image> images = new ArrayList<>();
+    public void insert(final Post post, Context context){
+        final List<Image> images = new ArrayList<>();
         images.addAll(post.getImages());
         final String keyPost = dbPost.push().getKey();
         post.setPost_id(keyPost);
-        post.setImages(null);
+
         dbPost.child(keyPost).setValue(post).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
@@ -44,12 +44,8 @@ public class PostSupport extends BaseSupport{
                     @Override
                     public void onCallback(Object o, String key, List list) {
                         image.setImage_id(key);
-                        dbPost.child(keyPost).child(key).setValue(image).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                e.printStackTrace();
-                            }
-                        });
+                        post.setImages(images);
+                        update(post);
                     }
                 });
             }

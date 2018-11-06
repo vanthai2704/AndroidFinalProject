@@ -21,12 +21,13 @@ public class Post {
     private String post_content;
     private String post_status;
     private Date post_time;
+    private double time_to_display;
     private List<Image> images;
 
     public Post() {
     }
 
-    public Post(String commune_id, String category_id, String user_id, double price, double remuneration, String location_coordinate, String post_title, String post_content, String post_status, Date post_time, List<Image> images) {
+    public Post(String commune_id, String category_id, String user_id, double price, double remuneration, String location_coordinate, String post_title, String post_content, String post_status, Date post_time, double time_to_display, List<Image> images) {
         this.commune_id = commune_id;
         this.category_id = category_id;
         this.user_id = user_id;
@@ -37,6 +38,7 @@ public class Post {
         this.post_content = post_content;
         this.post_status = post_status;
         this.post_time = post_time;
+        this.time_to_display = time_to_display;
         this.images = images;
     }
 
@@ -128,6 +130,14 @@ public class Post {
         this.post_time = post_time;
     }
 
+    public double getTime_to_display() {
+        return time_to_display;
+    }
+
+    public void setTime_to_display(double time_to_display) {
+        this.time_to_display = time_to_display;
+    }
+
     public List<Image> getImages() {
         return images;
     }
@@ -143,6 +153,7 @@ public class Post {
     @Exclude
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
+        result.put("post_id", post_id);
         result.put("commune_id", commune_id);
         result.put("category_id", category_id);
         result.put("user_id", user_id);
@@ -153,6 +164,7 @@ public class Post {
         result.put("post_content", post_content);
         result.put("post_status", post_status);
         result.put("post_time", post_time);
+        result.put("time_to_display", time_to_display);
         result.put("images", images);
         return result;
     }

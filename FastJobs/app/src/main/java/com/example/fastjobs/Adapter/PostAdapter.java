@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.example.fastjobs.Entity.Post;
 import com.example.fastjobs.JobDetail;
 import com.example.fastjobs.MessageFragment.MessageFragment;
+import com.example.fastjobs.MyFragment;
 import com.example.fastjobs.R;
 
 import java.util.List;
@@ -21,15 +22,13 @@ import java.util.List;
 public class PostAdapter extends BaseAdapter {
 
     private List<Post> listData;
-    private LayoutInflater layoutInflater;
-    private Context context;
+    private MyFragment myFragment;
     private FragmentManager fragmentManager;
 
-    public PostAdapter(List<Post> listData, Context context, FragmentManager fragmentManager) {
+    public PostAdapter(List<Post> listData, MyFragment myFragment, FragmentManager fragmentManager) {
         this.listData = listData;
-        this.layoutInflater = LayoutInflater.from(context);
-        this.context = context;
-        this.fragmentManager= fragmentManager;
+        this.myFragment = myFragment;
+        this.fragmentManager = fragmentManager;
     }
     @Override
     public int getCount() {
@@ -50,7 +49,7 @@ public class PostAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
         PostHolder holder;
         if (convertView == null) {
-            convertView = layoutInflater.inflate(R.layout.post_layout, null);
+            convertView = myFragment.getLayoutInflater().inflate(R.layout.post_layout, null);
             holder = new PostHolder();
             holder.jobTitle = convertView.findViewById(R.id.layoutTitle);
             holder.jobDetail = convertView.findViewById(R.id.jobDetail);

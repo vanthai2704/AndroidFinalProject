@@ -20,5 +20,10 @@
     <string name="categories">Categories</string>
     <string name="location">Location</string>
     <string name="result">Result</string>
+    <string name="monetary_unit">VNĐ</string>
+    <string name="time_to_display">Time to display (Hour)</string>
+    <string name="choose_image">Choose image</string>
+    <string name="image">Image</string>
+
 
 </resources>

@@ -32,7 +32,8 @@ public class Image {
     public Image() {
     }
 
-    public Image(String status, String image_type) {
+    public Image(String image_id, String status, String image_type) {
+        this.image_id = image_id;
         this.status = status;
         this.image_type = image_type;
     }
