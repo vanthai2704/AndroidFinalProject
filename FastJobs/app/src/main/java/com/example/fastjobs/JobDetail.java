@@ -132,6 +132,11 @@ public class JobDetail extends Fragment {
         jobCategory = view.findViewById(R.id.jobCategory);
         jobLocation = view.findViewById(R.id.jobLocation);
         backlistpost = view.findViewById(R.id.backButton);
+        jobTitle.setInputType(0);
+        jobContent.setInputType(0);
+        jobremuneration.setInputType(0);
+        jobCategory.setInputType(0);
+        jobLocation.setInputType(0);
 
         postSupport = new PostSupport();
         postSupport.get(mParam1, new CallbackSupport<Post>() {
