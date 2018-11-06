@@ -13,6 +13,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,7 @@ import android.widget.ListView;
 
 import com.example.fastjobs.Adapter.RecentPostAdapter;
 import com.example.fastjobs.Entity.Post;
+import com.example.fastjobs.JobDetail;
 import com.example.fastjobs.R;
 import com.example.fastjobs.firebase.CallbackSupport;
 import com.example.fastjobs.firebase.PostSupport;
@@ -67,6 +69,12 @@ public class RecentPostFragment extends Fragment implements LocationListener{
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Post postSelected = (Post)listView.getAdapter().getItem(position);
                 String post_id = postSelected.getPost_id();
+                JobDetail jobDetail = JobDetail.newInstance(
+                        post_id, null);
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.remove(getFragmentManager().findFragmentById(R.id.contentLayout));
+                fragmentTransaction.add(R.id.contentLayout, jobDetail);
+                fragmentTransaction.commit();
             }
         });
         // Inflate the layout for this fragment

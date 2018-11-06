@@ -41,6 +41,7 @@ public class JobDetail extends Fragment {
     private Button backlistpost;
     private PostSupport postSupport;
     private Button buy;
+    public boolean mua = false;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -140,13 +141,7 @@ public class JobDetail extends Fragment {
         jobremuneration.setInputType(0);
         jobCategory.setInputType(0);
         jobLocation.setInputType(0);
-
-        if(true){
-            buy.setText("Mua Cong Viec");
-        }
-        else{
-            buy.setText("Huy Cong Viec");
-        }
+        mua = false;
 
         postSupport = new PostSupport();
         postSupport.get(mParam1, new CallbackSupport<Post>() {
@@ -162,6 +157,13 @@ public class JobDetail extends Fragment {
                         jobCategory.setText(category.getCategory_name());
                     }
                 });
+                if(post.getPost_id().replaceAll("\\.","_").equals((new LoginSupport()).getCurrentUserEmail().replaceAll("\\.","_"))){
+                    buy.setText("Huy Cong Viec");
+                }
+                else{
+                    buy.setText("Mua Cong Viec");
+                    mua = true;
+                }
 
             }
         });
@@ -170,12 +172,12 @@ public class JobDetail extends Fragment {
             @Override
             public void onClick(View v) {
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                if(true){
-                    ft.replace(R.id.contentLayout,new MyFragment());
+                if(mua == true){
+                    ft.replace(R.id.contentLayout,new HomeFragment());
                     ft.commit();
                 }
                 else{
-                    ft.replace(R.id.contentLayout,new HomeFragment());
+                    ft.replace(R.id.contentLayout,new MyFragment());
                     ft.commit();
                 }
             }
