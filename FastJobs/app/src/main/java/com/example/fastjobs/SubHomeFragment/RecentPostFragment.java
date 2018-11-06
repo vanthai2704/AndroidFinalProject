@@ -58,11 +58,10 @@ public class RecentPostFragment extends Fragment implements LocationListener{
             @Override
             public void onCallback(Post post, String key, List<Post> posts) {
                 Location currentLocation = getLastBestLocation();
-                RecentPostAdapter recentPostAdapter = new RecentPostAdapter(getRecentPostFragment(),posts, currentLocation);
+                RecentPostAdapter recentPostAdapter = new RecentPostAdapter(getRecentPostFragment(),posts, currentLocation,getFragmentManager());
                 listView.setAdapter(recentPostAdapter);
             }
         });
-
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -70,7 +69,6 @@ public class RecentPostFragment extends Fragment implements LocationListener{
                 String post_id = postSelected.getPost_id();
             }
         });
-
         // Inflate the layout for this fragment
         return view;
     }
