@@ -22,12 +22,14 @@ public class Post {
     private String post_status;
     private Date post_time;
     private double time_to_display;
+    private String post_contact;
+    private String post_location_detail;
     private List<Image> images;
 
     public Post() {
     }
 
-    public Post(String commune_id, String category_id, String user_id, double price, double remuneration, String location_coordinate, String post_title, String post_content, String post_status, Date post_time, double time_to_display, List<Image> images) {
+    public Post(String commune_id, String category_id, String user_id, double price, double remuneration, String location_coordinate, String post_title, String post_content, String post_status, Date post_time, double time_to_display, List<Image> images, String post_contact, String post_location_detail) {
         this.commune_id = commune_id;
         this.category_id = category_id;
         this.user_id = user_id;
@@ -40,6 +42,8 @@ public class Post {
         this.post_time = post_time;
         this.time_to_display = time_to_display;
         this.images = images;
+        this.post_contact = post_contact;
+        this.post_location_detail = post_location_detail;
     }
 
     public String getPost_id() {
@@ -142,6 +146,22 @@ public class Post {
         return images;
     }
 
+    public String getPost_contact() {
+        return post_contact;
+    }
+
+    public void setPost_contact(String post_contact) {
+        this.post_contact = post_contact;
+    }
+
+    public String getPost_location_detail() {
+        return post_location_detail;
+    }
+
+    public void setPost_location_detail(String post_location_detail) {
+        this.post_location_detail = post_location_detail;
+    }
+
     public void setImages(List<Image> images) {
         this.images = images;
     }
@@ -166,6 +186,8 @@ public class Post {
         result.put("post_time", post_time);
         result.put("time_to_display", time_to_display);
         result.put("images", images);
+        result.put("post_contact", post_contact);
+        result.put("post_location_detail", post_location_detail);
         return result;
     }
 }
