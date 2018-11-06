@@ -131,6 +131,7 @@ public class JobDetail extends Fragment {
         jobremuneration = view.findViewById(R.id.remuneration);
         jobCategory = view.findViewById(R.id.jobCategory);
         jobLocation = view.findViewById(R.id.jobLocation);
+        backlistpost = view.findViewById(R.id.backButton);
 
         postSupport = new PostSupport();
         postSupport.get(mParam1, new CallbackSupport<Post>() {
@@ -147,6 +148,15 @@ public class JobDetail extends Fragment {
                     }
                 });
 
+            }
+        });
+
+        backlistpost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.replace(R.id.contentLayout,new MyFragment());
+                ft.commit();
             }
         });
 
