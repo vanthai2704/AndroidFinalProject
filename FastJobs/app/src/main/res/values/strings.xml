@@ -24,6 +24,8 @@
     <string name="time_to_display">Time to display (Hour)</string>
     <string name="choose_image">Choose image</string>
     <string name="image">Image</string>
+    <string name="distance">Distance (Km)</string>
+    <string name="search">Search</string>
 
 
 </resources>

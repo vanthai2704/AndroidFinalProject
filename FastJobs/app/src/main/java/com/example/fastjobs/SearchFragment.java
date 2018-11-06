@@ -1,18 +1,26 @@
 package com.example.fastjobs;
 
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 
@@ -37,17 +45,17 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  */
 public class SearchFragment extends android.support.v4.app.Fragment {
-
+    private LocationManager locationManager;
+    private EditText editTextDistanceSearch;
     private Spinner spinnerCategoriesSearch;
-    private Spinner spinnerProvinceSearch;
-    private Spinner spinnerDistrictSearch;
-    private Spinner spinnerCommuneSearch;
+    private Button buttonSearch;
     private ListView listViewSearchJobs;
     private CategorySupport categorySupport;
     private ProvinceSupport provinceSupport;
     private DistrictSupport districtSupport;
     private CommuneSupport communeSupport;
     private PostSupport postSupport;
+    private double distanceSearch;
 
     private Post postSearch;
     public SearchFragment() {
@@ -66,16 +74,16 @@ public class SearchFragment extends android.support.v4.app.Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         postSearch = new Post();
         categorySupport = new CategorySupport();
         provinceSupport = new ProvinceSupport();
         districtSupport = new DistrictSupport();
         communeSupport = new CommuneSupport();
         postSupport = new PostSupport();
+        editTextDistanceSearch = view.findViewById(R.id.editTextDistanceSearch);
         spinnerCategoriesSearch = view.findViewById(R.id.spinnerCategoriesSearch);
-        spinnerProvinceSearch = view.findViewById(R.id.spinnerProvinceSearch);
-        spinnerDistrictSearch = view.findViewById(R.id.spinnerDistrictSearch);
-        spinnerCommuneSearch = view.findViewById(R.id.spinnerCommuneSearch);
+        buttonSearch =view.findViewById(R.id.buttonSearch);
         listViewSearchJobs = view.findViewById(R.id.listViewSearchJobs);
         categorySupport.getAll(new CallbackSupport<Category>() {
 
@@ -93,7 +101,6 @@ public class SearchFragment extends android.support.v4.app.Fragment {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         postSearch.setCategory_id(((Category)parent.getItemAtPosition(position)).getCategory_id());
-                        loadData();
                     }
 
                     @Override
@@ -103,80 +110,14 @@ public class SearchFragment extends android.support.v4.app.Fragment {
                 });
             }
         });
-
-        provinceSupport.getAll(new CallbackSupport<Province>() {
+        buttonSearch.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCallback(Province province, String key, List<Province> provinces) {
-                ArrayAdapter<Province> adapter;
-                adapter = new ArrayAdapter<Province>(
-                        getContext(),
-                        android.R.layout.simple_spinner_item,
-                        provinces
-                );
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinnerProvinceSearch.setAdapter(adapter);
-                spinnerProvinceSearch.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        Province provinceSelected = (Province)parent.getItemAtPosition(position);
-                        districtSupport.getAll(provinceSelected.getProvince_id(), new CallbackSupport<District>() {
-                            @Override
-                            public void onCallback(District district, String key, List<District> districts) {
-                                ArrayAdapter<District> adapter;
-                                adapter = new ArrayAdapter<District>(
-                                        getContext(),
-                                        android.R.layout.simple_spinner_item,
-                                        districts
-                                );
-                                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                                spinnerDistrictSearch.setAdapter(adapter);
-                                spinnerDistrictSearch.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                                    @Override
-                                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                                        District districtSelected = (District)parent.getItemAtPosition(position);
-                                        communeSupport.getAll(districtSelected.getDistrict_id(), new CallbackSupport<Commune>() {
-                                            @Override
-                                            public void onCallback(Commune commune, String key, List<Commune> communes) {
-                                                ArrayAdapter<Commune> adapter;
-                                                adapter = new ArrayAdapter<Commune>(
-                                                        getContext(),
-                                                        android.R.layout.simple_spinner_item,
-                                                        communes
-                                                );
-                                                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                                                spinnerCommuneSearch.setAdapter(adapter);
-                                                spinnerCommuneSearch.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                                                    @Override
-                                                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                                                        postSearch.setCommune_id(((Commune)parent.getItemAtPosition(position)).getCommune_id());
-                                                        loadData();
-                                                    }
-
-                                                    @Override
-                                                    public void onNothingSelected(AdapterView<?> parent) {
-
-                                                    }
-                                                });
-                                            }
-                                        });
-                                    }
-
-                                    @Override
-                                    public void onNothingSelected(AdapterView<?> parent) {
-
-                                    }
-                                });
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-
-                    }
-                });
+            public void onClick(View v) {
+                distanceSearch = Double.parseDouble(editTextDistanceSearch.getText().toString());
+                loadData();
             }
         });
+
 
     }
 
@@ -184,11 +125,74 @@ public class SearchFragment extends android.support.v4.app.Fragment {
         postSupport.search(postSearch, 1, 100, new CallbackSupport<Post>() {
             @Override
             public void onCallback(Post post, String key, List<Post> posts) {
-                ArrayAdapter<Post> postArrayAdapter
-                        = new ArrayAdapter<Post>(getContext(), android.R.layout.simple_list_item_1, posts);
-                listViewSearchJobs.setAdapter(postArrayAdapter);
+                List<Post> postsResult = new ArrayList<>();
+                if(distanceSearch > 0){
+                    for(Post p : posts){
+                        double distance = -1;
+                        Location location = new Location("postLocation");
+                        location.setLatitude(Double.parseDouble(p.getLocation_coordinate().split("-")[0]));
+                        location.setLongitude(Double.parseDouble(p.getLocation_coordinate().split("-")[1]));
+                        if(getLastBestLocation() != null){
+                            distance = getLastBestLocation().distanceTo(location);
+                        }
+                        if(distance != -1 && distance <= distanceSearch*1000){
+                            postsResult.add(p);
+                        }
+                    }
+                    ArrayAdapter<Post> postArrayAdapter
+                            = new ArrayAdapter<Post>(getContext(), android.R.layout.simple_list_item_1, postsResult);
+                    listViewSearchJobs.setAdapter(postArrayAdapter);
+                }
             }
         });
+    }
+
+    private Location getLastBestLocation() {
+        if (getActivity() != null && ContextCompat.checkSelfPermission(getActivity(),
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Permission is not granted
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
+                    Manifest.permission.ACCESS_FINE_LOCATION)) {
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+            } else {
+                // No explanation needed; request the permission
+                ActivityCompat.requestPermissions(getActivity(),
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        123);
+
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+            return null;
+        } else {
+            // Permission has already been granted
+            Location locationGPS = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            Location locationNet = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+
+            long GPSLocationTime = 0;
+            if (null != locationGPS) { GPSLocationTime = locationGPS.getTime(); }
+
+            long NetLocationTime = 0;
+
+            if (null != locationNet) {
+                NetLocationTime = locationNet.getTime();
+            }
+
+            if ( 0 < GPSLocationTime - NetLocationTime ) {
+                return locationGPS;
+            }
+            else {
+                return locationNet;
+            }
+        }
+
+
     }
 
 }

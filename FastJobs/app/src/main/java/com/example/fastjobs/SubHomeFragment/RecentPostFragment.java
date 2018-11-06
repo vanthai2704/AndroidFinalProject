@@ -2,6 +2,7 @@ package com.example.fastjobs.SubHomeFragment;
 
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -87,7 +88,7 @@ public class RecentPostFragment extends Fragment implements LocationListener{
     }
 
     private Location getLastBestLocation() {
-        if (ContextCompat.checkSelfPermission(getActivity(),
+        if (getActivity() != null && ContextCompat.checkSelfPermission(getActivity(),
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
 
