@@ -37,7 +37,7 @@ public class HomeFragment extends android.support.v4.app.Fragment {
         TabLayout tabLayout  = view.findViewById(R.id.tab_layout);
         ViewPager viewPager  = view.findViewById(R.id.view_pager);
         HomeAdapter adapter = new HomeAdapter(getChildFragmentManager());
-        adapter.addFrag(new RecentPostFragment(), "Gần Đây");
+        adapter.addFrag(new RecentPostFragment(), "Mới Đăng");
         adapter.addFrag(new TopRankFragment(), "Top Rank");
         adapter.addFrag(new NewsFragment(), "Tin Mới");
         viewPager.setAdapter(adapter);

@@ -1,6 +1,9 @@
 package com.example.fastjobs;
 
 
+import android.content.Context;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -29,7 +32,9 @@ import com.example.fastjobs.firebase.DistrictSupport;
 import com.example.fastjobs.firebase.LoginSupport;
 import com.example.fastjobs.firebase.PostSupport;
 import com.example.fastjobs.firebase.ProvinceSupport;
+import com.google.android.gms.maps.model.LatLng;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -97,10 +102,21 @@ public class NewPostPragment extends Fragment {
                 String title = jobTitle.getText().toString();
                 String content = jobContent.getText().toString();
                 double remuneration = Integer.parseInt(jobremuneration.getText().toString());
-
+                String location_coordinate ="";
+                try {
+                    String location = spinnerDistrictPost.getSelectedItem().toString()
+                            + " "+ spinnerDistrictPost.getSelectedItem().toString()
+                            + " "+ spinnerProvincePost.getSelectedItem().toString();
+                    Geocoder gc = new Geocoder(getActivity().getApplicationContext());
+                    List<Address> addresses= gc.getFromLocationName(location, 1); // get ddthe found Aress Objects
+                    location_coordinate = addresses.get(0).getLatitude() +"-" + addresses.get(0).getLongitude();
+                } catch (Exception ex) {
+                    // handle the exception
+                     ex.printStackTrace();
+                }
 
                 String user_id = (new LoginSupport()).getCurrentUserEmail().replaceAll("\\.","_");
-                Post post = new Post(commune,category,user_id,50000,remuneration,null,title,content,"A",new Date(),new ArrayList<Image>());
+                Post post = new Post(commune,category,user_id,50000,remuneration,location_coordinate,title,content,"A",new Date(),new ArrayList<Image>());
                 postSupport.insert(post,getContext());
             }
         });
