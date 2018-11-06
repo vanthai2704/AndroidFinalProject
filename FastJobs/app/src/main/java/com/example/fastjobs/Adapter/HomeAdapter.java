@@ -10,41 +10,33 @@ import com.example.fastjobs.SubHomeFragment.NewsFragment;
 import com.example.fastjobs.SubHomeFragment.RecentPostFragment;
 import com.example.fastjobs.SubHomeFragment.TopRankFragment;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class HomeAdapter extends  FragmentPagerAdapter {
-    int mNumOfTabs;
-    public HomeAdapter(FragmentManager manager,int NumOfTabs){
+    private final List<Fragment> mFragmentList = new ArrayList<>();
+    private final List<String> mFragmentTitleList = new ArrayList<>();
+    public HomeAdapter(FragmentManager manager){
         super(manager);
-        this.mNumOfTabs = NumOfTabs;
     }
 
     @Override
-    public Fragment getItem(int i) {
-
-         switch (i){
-             case 0: return new RecentPostFragment();
-             case 1: return new TopRankFragment();
-             case 2: return new NewsFragment();
-         }
-
-        return null;
-    }
-
-    @Nullable
-    @Override
-    public CharSequence getPageTitle(int position) {
-
-        switch (position){
-            case 0: return "Gần Đây";
-            case 1: return "Top Rank";
-            case 2: return "Tin Mới";
-        }
-
-
-        return super.getPageTitle(position);
+    public Fragment getItem(int position) {
+        return mFragmentList.get(position);
     }
 
     @Override
     public int getCount() {
-        return mNumOfTabs;
+        return mFragmentList.size();
+    }
+
+    public void addFrag(Fragment fragment, String title) {
+        mFragmentList.add(fragment);
+        mFragmentTitleList.add(title);
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return mFragmentTitleList.get(position);
     }
 }

@@ -3,8 +3,9 @@ package com.example.fastjobs.firebase;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.example.fastjobs.entity.Image;
-import com.example.fastjobs.entity.Post;
+
+import com.example.fastjobs.Entity.Image;
+import com.example.fastjobs.Entity.Post;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -12,6 +13,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,7 +44,7 @@ public class PostSupport extends BaseSupport{
                     @Override
                     public void onCallback(Object o, String key, List list) {
                         image.setImage_id(key);
-                        dbPost.child(keyPost).child("images").setValue(image).addOnFailureListener(new OnFailureListener() {
+                        dbPost.child(keyPost).child(key).setValue(image).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 e.printStackTrace();
@@ -57,9 +59,10 @@ public class PostSupport extends BaseSupport{
     public void getAll(final int page, final int pageSize, final CallbackSupport callbackSupport){
         dbPost.addValueEventListener(new ValueEventListener() {
             int index = 1;
-            List<Post> posts = new ArrayList<>();
+
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<Post> posts = new ArrayList<>();
                 for (DataSnapshot item : dataSnapshot.getChildren())
                 {
                     if(index>(page-1)*pageSize && index<= page*pageSize){
@@ -67,6 +70,28 @@ public class PostSupport extends BaseSupport{
                     }
                     index++;
                 }
+                Collections.reverse(posts);
+                callbackSupport.onCallback(null, null, posts);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void getRecently(final CallbackSupport callbackSupport){
+        dbPost.orderByKey().limitToLast(100).addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<Post> posts = new ArrayList<>();
+                for (DataSnapshot item : dataSnapshot.getChildren())
+                {
+                    posts.add(item.getValue(Post.class));
+                }
+                Collections.reverse(posts);
                 callbackSupport.onCallback(null, null, posts);
             }
 
@@ -107,9 +132,10 @@ public class PostSupport extends BaseSupport{
     public void search(final Post post,final int page, final int pageSize, final CallbackSupport callbackSupport){
         dbPost.addValueEventListener(new ValueEventListener() {
             int index = 1;
-            List<Post> posts = new ArrayList<>();
+
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<Post> posts = new ArrayList<>();
                 for (DataSnapshot item : dataSnapshot.getChildren())
                 {
                     Post postItem = item.getValue(Post.class);

@@ -3,8 +3,9 @@ package com.example.fastjobs.firebase;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.example.fastjobs.entity.Image;
-import com.example.fastjobs.entity.User;
+
+import com.example.fastjobs.Entity.Image;
+import com.example.fastjobs.Entity.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -38,7 +39,7 @@ public class UserSupport extends BaseSupport{
                     @Override
                     public void onCallback(Object o, String key, List list) {
                         image.setImage_id(key);
-                        dbUser.child(user.getEmail().replaceAll("\\.","_")).child("images").setValue(image).addOnFailureListener(new OnFailureListener() {
+                        dbUser.child(user.getEmail().replaceAll("\\.","_")).child(key).setValue(image).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 e.printStackTrace();
@@ -54,9 +55,10 @@ public class UserSupport extends BaseSupport{
     public void getAll(final int page, final int pageSize, final CallbackSupport callbackSupport){
         dbUser.addValueEventListener(new ValueEventListener() {
             int index = 1;
-            List<User> users = new ArrayList<>();
+
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<User> users = new ArrayList<>();
                 for (DataSnapshot item : dataSnapshot.getChildren())
                 {
                     if(index>(page-1)*pageSize && index<= page*pageSize){

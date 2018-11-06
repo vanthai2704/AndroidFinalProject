@@ -1,4 +1,4 @@
-package com.example.fastjobs.adapter;
+package com.example.fastjobs.Adapter;
 
 import android.view.Gravity;
 import android.view.View;
@@ -7,10 +7,10 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.fastjobs.MessageActivity;
+import com.example.fastjobs.Entity.Message;
 import com.example.fastjobs.MessageFragment.MessageFragment;
 import com.example.fastjobs.R;
-import com.example.fastjobs.entity.Message;
+
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.text.SimpleDateFormat;

@@ -1,4 +1,4 @@
-package com.example.fastjobs.entity;
+package com.example.fastjobs.Entity;
 
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
@@ -53,6 +53,13 @@ public class Category {
 
     public void setImages(List<Image> images) {
         this.images = images;
+    }
+
+
+    @Exclude
+    @Override
+    public String toString() {
+        return getCategory_name();
     }
 
     @Exclude

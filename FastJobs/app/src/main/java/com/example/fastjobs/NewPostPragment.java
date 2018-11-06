@@ -1,21 +1,21 @@
 package com.example.fastjobs;
 
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
+import com.example.fastjobs.Adapter.PostAdapter;
 import com.example.fastjobs.Entity.Category;
 import com.example.fastjobs.Entity.Commune;
 import com.example.fastjobs.Entity.District;
@@ -26,31 +26,43 @@ import com.example.fastjobs.firebase.CallbackSupport;
 import com.example.fastjobs.firebase.CategorySupport;
 import com.example.fastjobs.firebase.CommuneSupport;
 import com.example.fastjobs.firebase.DistrictSupport;
+import com.example.fastjobs.firebase.LoginSupport;
 import com.example.fastjobs.firebase.PostSupport;
 import com.example.fastjobs.firebase.ProvinceSupport;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SearchFragment extends android.support.v4.app.Fragment {
+public class NewPostPragment extends Fragment {
 
-    private Spinner spinnerCategoriesSearch;
-    private Spinner spinnerProvinceSearch;
-    private Spinner spinnerDistrictSearch;
-    private Spinner spinnerCommuneSearch;
-    private ListView listViewSearchJobs;
+    private PostSupport postSupport;
+    private Spinner spinnerCategoriesPost;
+    private Spinner spinnerProvincePost;
+    private Spinner spinnerDistrictPost;
+    private Spinner spinnerCommunePost;
     private CategorySupport categorySupport;
     private ProvinceSupport provinceSupport;
     private DistrictSupport districtSupport;
     private CommuneSupport communeSupport;
-    private PostSupport postSupport;
+    private EditText jobTitle, jobContent, jobremuneration;
+    private Button addpost;
+    String category;
+    String commune;
 
-    private Post postSearch;
-    public SearchFragment() {
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public void setCommune(String commune) {
+        this.commune = commune;
+    }
+
+    public NewPostPragment() {
         // Required empty public constructor
     }
 
@@ -58,25 +70,43 @@ public class SearchFragment extends android.support.v4.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        getActivity().setTitle("Tìm Kiếm");
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_search, container, false);
+        return inflater.inflate(R.layout.fragment_new_post_pragment, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        postSearch = new Post();
+        postSupport = new PostSupport();
         categorySupport = new CategorySupport();
         provinceSupport = new ProvinceSupport();
         districtSupport = new DistrictSupport();
         communeSupport = new CommuneSupport();
-        postSupport = new PostSupport();
-        spinnerCategoriesSearch = view.findViewById(R.id.spinnerCategoriesSearch);
-        spinnerProvinceSearch = view.findViewById(R.id.spinnerProvinceSearch);
-        spinnerDistrictSearch = view.findViewById(R.id.spinnerDistrictSearch);
-        spinnerCommuneSearch = view.findViewById(R.id.spinnerCommuneSearch);
-        listViewSearchJobs = view.findViewById(R.id.listViewSearchJobs);
+        spinnerCategoriesPost = view.findViewById(R.id.spinnerCategoriesPost);
+        spinnerProvincePost = view.findViewById(R.id.spinnerProvincePost);
+        spinnerDistrictPost = view.findViewById(R.id.spinnerDistrictPost);
+        spinnerCommunePost = view.findViewById(R.id.spinnerCommunePost);
+        jobTitle = view.findViewById(R.id.jobName);
+        jobContent = view.findViewById(R.id.jobContent);
+        jobremuneration = view.findViewById(R.id.remuneration);
+        addpost = view.findViewById(R.id.jobPost);
+
+        addpost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String title = jobTitle.getText().toString();
+                String content = jobContent.getText().toString();
+                double remuneration = Integer.parseInt(jobremuneration.getText().toString());
+
+
+                String user_id = (new LoginSupport()).getCurrentUserEmail().replaceAll("\\.","_");
+                Post post = new Post(commune,category,user_id,50000,remuneration,null,title,content,"A",new Date(),new ArrayList<Image>());
+                postSupport.insert(post,getContext());
+
+
+            }
+        });
+
         categorySupport.getAll(new CallbackSupport<Category>() {
 
             @Override
@@ -88,12 +118,11 @@ public class SearchFragment extends android.support.v4.app.Fragment {
                         categories
                 );
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinnerCategoriesSearch.setAdapter(adapter);
-                spinnerCategoriesSearch.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                spinnerCategoriesPost.setAdapter(adapter);
+                spinnerCategoriesPost.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        postSearch.setCategory_id(((Category)parent.getItemAtPosition(position)).getCategory_id());
-                        loadData();
+                        setCategory(((Category)parent.getItemAtPosition(position)).getCategory_id());
                     }
 
                     @Override
@@ -114,8 +143,8 @@ public class SearchFragment extends android.support.v4.app.Fragment {
                         provinces
                 );
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinnerProvinceSearch.setAdapter(adapter);
-                spinnerProvinceSearch.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                spinnerProvincePost.setAdapter(adapter);
+                spinnerProvincePost.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         Province provinceSelected = (Province)parent.getItemAtPosition(position);
@@ -129,8 +158,8 @@ public class SearchFragment extends android.support.v4.app.Fragment {
                                         districts
                                 );
                                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                                spinnerDistrictSearch.setAdapter(adapter);
-                                spinnerDistrictSearch.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                spinnerDistrictPost.setAdapter(adapter);
+                                spinnerDistrictPost.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                                     @Override
                                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                                         District districtSelected = (District)parent.getItemAtPosition(position);
@@ -144,12 +173,11 @@ public class SearchFragment extends android.support.v4.app.Fragment {
                                                         communes
                                                 );
                                                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                                                spinnerCommuneSearch.setAdapter(adapter);
-                                                spinnerCommuneSearch.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                                spinnerCommunePost.setAdapter(adapter);
+                                                spinnerCommunePost.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                                                     @Override
                                                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                                                        postSearch.setCommune_id(((Commune)parent.getItemAtPosition(position)).getCommune_id());
-                                                        loadData();
+                                                        setCommune(((Commune)parent.getItemAtPosition(position)).getCommune_id());
                                                     }
 
                                                     @Override
@@ -175,18 +203,6 @@ public class SearchFragment extends android.support.v4.app.Fragment {
 
                     }
                 });
-            }
-        });
-
-    }
-
-    private void loadData(){
-        postSupport.search(postSearch, 1, 100, new CallbackSupport<Post>() {
-            @Override
-            public void onCallback(Post post, String key, List<Post> posts) {
-                ArrayAdapter<Post> postArrayAdapter
-                        = new ArrayAdapter<Post>(getContext(), android.R.layout.simple_list_item_1, posts);
-                listViewSearchJobs.setAdapter(postArrayAdapter);
             }
         });
     }

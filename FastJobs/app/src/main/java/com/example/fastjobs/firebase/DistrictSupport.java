@@ -2,8 +2,8 @@ package com.example.fastjobs.firebase;
 
 import android.support.annotation.NonNull;
 
-import com.example.fastjobs.entity.District;
-import com.example.fastjobs.entity.Province;
+
+import com.example.fastjobs.Entity.District;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -20,9 +20,10 @@ public class DistrictSupport extends BaseSupport{
 
     public void getAll(final String province_id, final CallbackSupport callbackSupport){
         dbDistrict.addValueEventListener(new ValueEventListener() {
-            List<District> districts = new ArrayList<>();
+
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<District> districts = new ArrayList<>();
                 for (DataSnapshot item : dataSnapshot.getChildren())
                 {
                     if(item.getValue(District.class).getProvince_id().equalsIgnoreCase(province_id)){

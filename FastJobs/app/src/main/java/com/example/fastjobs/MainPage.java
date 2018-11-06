@@ -1,9 +1,9 @@
 package com.example.fastjobs;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -17,10 +17,10 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.example.fastjobs.firebase.LoginSupport;
-import com.example.fastjobs.view.LoginActivity;
+import com.example.fastjobs.View.LoginActivity;
 
 public class MainPage extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, JobDetail.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,9 +116,13 @@ public class MainPage extends AppCompatActivity
             ft.replace(R.id.contentLayout,new SearchFragment());
             ft.commit();
         } else if (id == R.id.nav_addpost) {
-
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.contentLayout,new NewPostPragment());
+            ft.commit();
         }else if (id == R.id.nav_listPost) {
-
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.contentLayout,new MyFragment());
+            ft.commit();
         }
         else if (id == R.id.nav_logOut) {
             LoginSupport loginSupport = new LoginSupport();
@@ -130,5 +134,10 @@ public class MainPage extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }

@@ -1,4 +1,4 @@
-package com.example.fastjobs.view;
+package com.example.fastjobs.View;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -7,12 +7,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
-import com.example.fastjobs.MainPage;
 import com.example.fastjobs.R;
-import com.example.fastjobs.entity.User;
+import com.example.fastjobs.Entity.User;
 import com.example.fastjobs.firebase.CallbackSupport;
 import com.example.fastjobs.firebase.LoginSupport;
 

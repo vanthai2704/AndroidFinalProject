@@ -19,10 +19,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.example.fastjobs.R;
-import com.example.fastjobs.adapter.ChatAdapter;
-import com.example.fastjobs.adapter.ListMessageAdapter;
-import com.example.fastjobs.entity.Message;
-import com.example.fastjobs.entity.MessageOne;
+import com.example.fastjobs.Adapter.ListMessageAdapter;
+import com.example.fastjobs.Entity.MessageOne;
 import com.example.fastjobs.firebase.CallbackSupport;
 import com.example.fastjobs.firebase.LoginSupport;
 import com.example.fastjobs.firebase.MessageSupport;

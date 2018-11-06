@@ -2,9 +2,9 @@ package com.example.fastjobs.firebase;
 
 import android.support.annotation.NonNull;
 
-import com.example.fastjobs.entity.Commune;
-import com.example.fastjobs.entity.District;
-import com.example.fastjobs.entity.Province;
+
+import com.example.fastjobs.Entity.Commune;
+import com.example.fastjobs.Entity.District;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -21,12 +21,12 @@ public class CommuneSupport extends BaseSupport{
 
     public void getAll(final String district_id, final CallbackSupport callbackSupport){
         dbCommune.addValueEventListener(new ValueEventListener() {
-            List<Commune> communes = new ArrayList<>();
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<Commune> communes = new ArrayList<>();
                 for (DataSnapshot item : dataSnapshot.getChildren())
                 {
-                    if(item.getValue(District.class).getProvince_id().equalsIgnoreCase(district_id)){
+                    if(item.getValue(Commune.class).getDistrict_id().equalsIgnoreCase(district_id)){
                         communes.add(item.getValue(Commune.class));
                     }
                 }

@@ -1,4 +1,4 @@
-package com.example.fastjobs.entity;
+package com.example.fastjobs.Entity;
 
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
@@ -45,6 +45,11 @@ public class Province {
         this.type = type;
     }
 
+    @Exclude
+    @Override
+    public String toString() {
+        return getName();
+    }
 
     @Exclude
     public Map<String, Object> toMap() {
