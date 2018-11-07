@@ -82,12 +82,6 @@
         android:inputType="textPersonName" />
 
     <Button
-        android:id="@+id/huyButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Huy Cong Viec" />
-
-    <Button
         android:id="@+id/backButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -152,6 +152,11 @@ public class MainPage extends AppCompatActivity
             ft.replace(R.id.contentLayout,new MyFragment());
             ft.commit();
         }
+        else if (id == R.id.nav_cartPost) {
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.contentLayout,new CartFragment());
+            ft.commit();
+        }
         else if (id == R.id.nav_logOut) {
             LoginSupport loginSupport = new LoginSupport();
             loginSupport.signOut();
