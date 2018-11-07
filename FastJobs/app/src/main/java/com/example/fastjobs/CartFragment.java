@@ -74,13 +74,20 @@ public class CartFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Post postSelected = (Post)listView.getAdapter().getItem(position);
-                String post_id = postSelected.getPost_id();
-                ViewPostFragment viewPostFragment = ViewPostFragment.newInstance(
-                        post_id, null);
-                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.contentLayout,viewPostFragment);
-                fragmentTransaction.commit();
+                Cart cart = (Cart) listView.getAdapter().getItem(position);
+                PostSupport support = PostSupport.getInstance();
+                support.get(cart.getPost_id(), new CallbackSupport<Post>() {
+                    @Override
+                    public void onCallback(Post post, String key, List<Post> posts) {
+                        String post_id = post.getPost_id();
+                        ViewPostFragment viewPostFragment = ViewPostFragment.newInstance(
+                                post_id, null);
+                        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                        fragmentTransaction.replace(R.id.contentLayout,viewPostFragment);
+                        fragmentTransaction.commit();
+                    }
+                });
+
             }
         });
         return view;

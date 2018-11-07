@@ -133,7 +133,6 @@ public class MyPostDetail extends Fragment {
         jobCategory = view.findViewById(R.id.jobCategory);
         jobLocation = view.findViewById(R.id.jobLocation);
         backlistpost = view.findViewById(R.id.backButton);
-        huy = view.findViewById(R.id.huyButton);
         jobTitle.setInputType(0);
         jobContent.setInputType(0);
         jobremuneration.setInputType(0);
@@ -158,12 +157,6 @@ public class MyPostDetail extends Fragment {
             }
         });
 
-        huy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
 
         backlistpost.setOnClickListener(new View.OnClickListener() {
             @Override
