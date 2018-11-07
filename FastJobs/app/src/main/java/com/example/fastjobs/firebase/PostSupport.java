@@ -23,6 +23,13 @@ public class PostSupport extends BaseSupport{
     public static String DELETE = "DELETE";
     public static String PROCESS = "PROCESS";
     public static String COMPLETE = "COMPLETE";
+    private static PostSupport instance = null;
+    public static PostSupport getInstance(){
+        if(instance == null){
+            instance = new PostSupport();
+        }
+        return instance;
+    }
     private DatabaseReference dbPost;
     public PostSupport(){
         dbPost = db.child("post");

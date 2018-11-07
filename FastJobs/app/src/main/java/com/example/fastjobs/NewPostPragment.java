@@ -93,11 +93,11 @@ public class NewPostPragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         activityTmp = getActivity();
         contextTmp = getContext();
-        postSupport = new PostSupport();
-        categorySupport = new CategorySupport();
-        provinceSupport = new ProvinceSupport();
-        districtSupport = new DistrictSupport();
-        communeSupport = new CommuneSupport();
+        postSupport = PostSupport.getInstance();
+        categorySupport = CategorySupport.getInstance();
+        provinceSupport = ProvinceSupport.getInstance();
+        districtSupport = DistrictSupport.getInstance();
+        communeSupport = CommuneSupport.getInstance();
         spinnerCategoriesPost = view.findViewById(R.id.spinnerCategoriesPost);
         spinnerProvincePost = view.findViewById(R.id.spinnerProvincePost);
         spinnerDistrictPost = view.findViewById(R.id.spinnerDistrictPost);

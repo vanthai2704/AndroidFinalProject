@@ -15,6 +15,13 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.ArrayList;
 
 public class LoginSupport extends BaseSupport{
+    private static LoginSupport instance = null;
+    public static LoginSupport getInstance(){
+        if(instance == null){
+            instance = new LoginSupport();
+        }
+        return instance;
+    }
     public Task<AuthResult> login(final String email,final String password, final CallbackSupport callbackSupport){
         return auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override

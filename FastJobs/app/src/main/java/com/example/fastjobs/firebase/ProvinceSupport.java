@@ -13,6 +13,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProvinceSupport extends BaseSupport{
+    private static ProvinceSupport instance = null;
+    public static ProvinceSupport getInstance(){
+        if(instance == null){
+            instance = new ProvinceSupport();
+        }
+        return instance;
+    }
     private DatabaseReference dbProvince;
     public ProvinceSupport(){
         dbProvince = db.child("province");

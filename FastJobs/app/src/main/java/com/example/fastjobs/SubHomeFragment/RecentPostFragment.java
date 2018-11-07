@@ -52,7 +52,7 @@ public class RecentPostFragment extends Fragment implements LocationListener{
         contextTmp = getContext();
         locationManager = (LocationManager) activityTmp.getSystemService(Context.LOCATION_SERVICE);
         listView = view.findViewById(R.id.listViewPost);
-        postSupport = new PostSupport();
+        postSupport = PostSupport.getInstance();
         postSupport.getRecently(new CallbackSupport<Post>() {
             @Override
             public void onCallback(Post post, String key, List<Post> posts) {

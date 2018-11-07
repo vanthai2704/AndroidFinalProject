@@ -19,6 +19,14 @@ import java.util.List;
 import java.util.Map;
 
 public class UserSupport extends BaseSupport{
+    private static UserSupport instance = null;
+    public static UserSupport getInstance(){
+        if(instance == null){
+            instance = new UserSupport();
+        }
+        return instance;
+    }
+
     private DatabaseReference dbUser;
     public UserSupport(){
         dbUser = db.child("user");

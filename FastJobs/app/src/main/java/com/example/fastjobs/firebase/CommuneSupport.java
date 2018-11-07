@@ -14,6 +14,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CommuneSupport extends BaseSupport{
+    private static CommuneSupport instance = null;
+    public static CommuneSupport getInstance(){
+        if(instance == null){
+            instance = new CommuneSupport();
+        }
+        return instance;
+    }
     private DatabaseReference dbCommune;
     public CommuneSupport(){
         dbCommune = db.child("commune");

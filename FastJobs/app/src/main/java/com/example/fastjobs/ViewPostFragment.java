@@ -138,7 +138,7 @@ public class ViewPostFragment extends Fragment {
         jobCategory.setInputType(0);
         jobLocation.setInputType(0);
 
-        postSupport = new PostSupport();
+        postSupport = PostSupport.getInstance();
         postSupport.get(mParam1, new CallbackSupport<Post>() {
             @Override
             public void onCallback(Post post, String key, List<Post> posts) {

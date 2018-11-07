@@ -78,8 +78,8 @@ public class SearchFragment extends android.support.v4.app.Fragment {
         contextTmp = getContext();
             locationManager = (LocationManager) activityTmp.getSystemService(Context.LOCATION_SERVICE);
             postSearch = new Post();
-            categorySupport = new CategorySupport();
-            postSupport = new PostSupport();
+            categorySupport = CategorySupport.getInstance();
+            postSupport = PostSupport.getInstance();
             editTextDistanceSearch = view.findViewById(R.id.editTextDistanceSearch);
             spinnerCategoriesSearch = view.findViewById(R.id.spinnerCategoriesSearch);
             buttonSearch =view.findViewById(R.id.buttonSearch);

@@ -22,6 +22,13 @@ import com.google.firebase.storage.UploadTask;
 import java.util.UUID;
 
 public class ImageSupport extends BaseSupport{
+    private static ImageSupport instance = null;
+    public static ImageSupport getInstance(){
+        if(instance == null){
+            instance = new ImageSupport();
+        }
+        return instance;
+    }
     private DatabaseReference dbImage;
     StorageReference storageReference;
     public ImageSupport(){
