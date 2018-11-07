@@ -53,9 +53,9 @@ public class UserProfile extends Fragment {
                 txtName.setText(user.getFullname());
                 txtPhone.setText(user.getPhone());
                 if(user.getDob() != null){
-//                    SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-//                    String date = format.format(user.getDob());
-                        txtDOB.setText("111111111");
+                    SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+                    String date = format.format(user.getDob());
+                        txtDOB.setText(date);
                     }else {
                         txtDOB.setText("DOB");
                 }
