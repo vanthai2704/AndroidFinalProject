@@ -26,17 +26,10 @@ import android.widget.ListView;
 import android.widget.Spinner;
 
 import com.example.fastjobs.Entity.Category;
-import com.example.fastjobs.Entity.Commune;
-import com.example.fastjobs.Entity.District;
-import com.example.fastjobs.Entity.Image;
 import com.example.fastjobs.Entity.Post;
-import com.example.fastjobs.Entity.Province;
 import com.example.fastjobs.firebase.CallbackSupport;
 import com.example.fastjobs.firebase.CategorySupport;
-import com.example.fastjobs.firebase.CommuneSupport;
-import com.example.fastjobs.firebase.DistrictSupport;
 import com.example.fastjobs.firebase.PostSupport;
-import com.example.fastjobs.firebase.ProvinceSupport;
 
 import java.util.ArrayList;
 import java.util.List;
