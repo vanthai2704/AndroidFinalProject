@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import com.example.fastjobs.Entity.Cart;
 import com.example.fastjobs.Entity.Image;
 import com.example.fastjobs.Entity.Post;
 import com.example.fastjobs.Entity.User;
@@ -52,7 +53,7 @@ public class TestActivity extends AppCompatActivity {
                 // ...
                 // ...
             }
-        });
+        }, this);
     }
 
     public void loginOnclick(View view){
@@ -82,7 +83,7 @@ public class TestActivity extends AppCompatActivity {
     /*---- This for User information ----*/
     public void insertUser(View view){
         UserSupport userSupport = new UserSupport();
-        userSupport.insert(new User("Nguyen Quang Dat","datnqse04777@fpt.edu.vn","0965658574",new Date(), null), this);
+        userSupport.insert(new User("Nguyen Quang Dat","datnqse04777@fpt.edu.vn","0965658574",new Date(), new ArrayList<Image>(), new ArrayList<Cart>()), this);
 
         // Need insert avatar code like this
         userSupport.get("datnqse04777@fpt.edu.vn", new CallbackSupport<User>() {
@@ -103,7 +104,7 @@ public class TestActivity extends AppCompatActivity {
     public void updateUser(View view){
         // Can NOT change email because email is key
         UserSupport userSupport = new UserSupport();
-        User newUser = new User("New Nguyen Quang Dat","datnqse04777@fpt.edu.vn","0123456789",new Date(), new ArrayList<Image>());
+        User newUser = new User("New Nguyen Quang Dat","datnqse04777@fpt.edu.vn","0123456789",new Date(), new ArrayList<Image>(), new ArrayList<Cart>());
         userSupport.update(newUser);
     }
 
