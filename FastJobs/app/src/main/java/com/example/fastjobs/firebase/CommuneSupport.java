@@ -27,9 +27,9 @@ public class CommuneSupport extends BaseSupport{
         dbCommune = db.child("commune");
     }
 
-    private List<Commune> allCommunes;
+
     public void getAll(final String district_id, final CallbackSupport callbackSupport){
-        if(allCommunes == null){
+
             dbCommune.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -40,7 +40,7 @@ public class CommuneSupport extends BaseSupport{
                             communes.add(item.getValue(Commune.class));
                         }
                     }
-                    allCommunes = communes;
+
                     callbackSupport.onCallback(null, null, communes);
                 }
 
@@ -49,9 +49,6 @@ public class CommuneSupport extends BaseSupport{
 
                 }
             });
-        }else {
-            callbackSupport.onCallback(null, null, allCommunes);
-        }
 
     }
 
