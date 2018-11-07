@@ -187,6 +187,9 @@ public class ViewPostFragment extends Fragment {
                     buttonChatPostCart.setVisibility(View.VISIBLE);
                     buttonDirectPostCart.setVisibility(View.VISIBLE);
                     buy.setVisibility(View.INVISIBLE);
+                    editTextContactPostCart.setInputType(0);
+                    jobLocation.setInputType(0);
+                    editTextEmailPostCart.setInputType(0);
                 }
                 (new CategorySupport()).get(post.getCategory_id(), new CallbackSupport<Category>() {
 
