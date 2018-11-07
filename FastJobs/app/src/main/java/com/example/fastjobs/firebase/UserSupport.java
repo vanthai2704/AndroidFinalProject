@@ -135,8 +135,9 @@ public class UserSupport extends BaseSupport{
             }
         });
     }
-
+    boolean isUpdated ;
     public void addToCart(final String post_id){
+        isUpdated = false;
         get(LoginSupport.getInstance().getCurrentUserEmail().replaceAll("\\.", "_"), new CallbackSupport<User>() {
             @Override
             public void onCallback(User user, String key, List<User> users) {
@@ -148,10 +149,16 @@ public class UserSupport extends BaseSupport{
                 Cart cart = new Cart(post_id, CART_ACTIVE,new Date());
                 carts.add(cart);
                 user.setCarts(carts);
-                update(user);
+                if(!isUpdated){
+                    update(user);
+                    isUpdated = true;
+                }
             }
         });
+
     }
+
+
     private List<Cart> cartsTmp;
     public void getCarts(final CallbackSupport callbackSupport){
         if(cartsTmp == null){
