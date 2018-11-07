@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -14,10 +15,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.fastjobs.firebase.CallbackSupport;
 import com.example.fastjobs.firebase.LoginSupport;
 import com.example.fastjobs.View.LoginActivity;
+import com.example.fastjobs.firebase.UserSupport;
+
+import java.util.List;
 
 public class MainPage extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, JobDetail.OnFragmentInteractionListener {
@@ -62,6 +68,28 @@ public class MainPage extends AppCompatActivity
                 navigationView.getHeaderView(0);
         TextView textViewHeaderEmail = headerLayout.findViewById(R.id.textViewHeaderEmail);
         textViewHeaderEmail.setText(loginSupport.getCurrentUserEmail());
+
+        //Doanhdq Profile================================
+        final ImageView imageView = headerLayout.findViewById(R.id.imageView);
+
+        UserSupport userSupport = new UserSupport();
+        userSupport.get(loginSupport.getCurrentUserEmail(), new CallbackSupport() {
+            @Override
+            public void onCallback(Object o, String key, List list) {
+                //getImage=================================
+            }
+        });
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.contentLayout,new UserProfile());
+                ft.commit();
+            }
+        });
+
+
     }
 
     public MainPage getMainPage(){
