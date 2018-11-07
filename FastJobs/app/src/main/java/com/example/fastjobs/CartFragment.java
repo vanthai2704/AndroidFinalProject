@@ -53,6 +53,7 @@ public class CartFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_cart, container, false);
+        getActivity().setTitle("Công Việc Đã Mua");
         activityTmp = getActivity();
         contextTmp = getContext();
         locationManager = (LocationManager) activityTmp.getSystemService(Context.LOCATION_SERVICE);
