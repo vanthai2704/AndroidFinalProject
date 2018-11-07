@@ -77,15 +77,18 @@ public class RegisterActivity extends AppCompatActivity {
             final ProgressDialog dialog = ProgressDialog.show(RegisterActivity.this, "",
                     "Loading. Please wait...", true);
             LoginSupport loginSupport = new LoginSupport();
-            loginSupport.signUp(getemail, getpass, new CallbackSupport<User>() {
+            loginSupport.signUp(getemail, getpass, new CallbackSupport<Boolean>() {
+
                 @Override
-                public void onCallback(User user, String key, List<User> users) {
-                    Intent intent = new Intent(RegisterActivity.super.getBaseContext(), LoginActivity.class);
-                    startActivity(intent);
-                    finish();
-                    dialog.dismiss();
+                public void onCallback(Boolean aBoolean, String key, List<Boolean> booleans) {
+                    if(aBoolean){
+                        Intent intent = new Intent(RegisterActivity.super.getBaseContext(), LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                        dialog.dismiss();
+                    }
                 }
-            });
+            }, this);
         }
     }
 }
