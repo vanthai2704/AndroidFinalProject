@@ -17,12 +17,12 @@ public class PaymentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_payment);
         spinner = findViewById(R.id.drop_down_list_bank);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.id.drop_down_list_bank,);
+        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.id.drop_down_list_bank,);
         ArrayList<String> arrayList = new ArrayList<>();
         arrayList.add("Vietcombank");
         arrayList.add("TPBank");
         arrayList.add("");
-        spinner.setAdapter();
+        //spinner.setAdapter();
     }
 
 
