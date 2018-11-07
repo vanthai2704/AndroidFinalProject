@@ -10,6 +10,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -55,10 +56,11 @@ public class RecentPostFragment extends Fragment implements LocationListener{
     }
 
 
+    private FloatingActionButton fab;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        fab = getActivity().findViewById(R.id.fab);
         View view= inflater.inflate(R.layout.fragment_recent_post, container, false);
         activityTmp = getActivity();
         contextTmp = getContext();
@@ -84,6 +86,7 @@ public class RecentPostFragment extends Fragment implements LocationListener{
                 FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.contentLayout,viewPostFragment);
                 fragmentTransaction.commit();
+                fab.hide();
             }
         });
         // Inflate the layout for this fragment
