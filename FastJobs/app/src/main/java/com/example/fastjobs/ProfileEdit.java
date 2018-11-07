@@ -60,8 +60,13 @@ public class ProfileEdit extends Fragment {
                 btnSave.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        userSupport.update(user);
-                        Toast.makeText( getActivity() , "Chỉnh Sửa Thông Tin Thành Công." ,Toast.LENGTH_LONG).show();
+                        try{
+                            userSupport.update(user);
+                            Toast.makeText( getActivity() , "Chỉnh Sửa Thông Tin Thành Công." ,Toast.LENGTH_LONG).show();
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+
                     }
                 });
 

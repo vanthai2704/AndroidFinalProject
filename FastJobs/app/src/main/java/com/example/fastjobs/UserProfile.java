@@ -48,17 +48,17 @@ public class UserProfile extends Fragment {
         userSupport.get(loginSupport.getCurrentUserEmail(), new CallbackSupport<User>() {
             @Override
             public void onCallback(User user, String key, List<User> users) {
+                if(user.getDob() != null){
+//                    SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+//                    String date = format.format(user.getDob());
+                        txtDOB.setText(user.getDob().toString());
+                    }else {
+                        txtDOB.setText("DOB");
+                }
                 txtEmail.setText(user.getEmail());
                 txtCash.setText("Your Cash : " + user.getCash());
                 txtName.setText(user.getFullname());
                 txtPhone.setText(user.getPhone());
-                if(user.getDob() != null){
-                    SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-                    String date = format.format(user.getDob());
-                        txtDOB.setText(date);
-                    }else {
-                        txtDOB.setText("DOB");
-                }
 
             }
         });
