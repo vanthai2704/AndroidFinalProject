@@ -136,11 +136,13 @@ public class UserSupport extends BaseSupport{
         });
     }
     boolean isUpdated ;
+    boolean isUpdatedPost ;
     public void addToCart(final String post_id){
         isUpdated = false;
+        isUpdatedPost = false;
         get(LoginSupport.getInstance().getCurrentUserEmail().replaceAll("\\.", "_"), new CallbackSupport<User>() {
             @Override
-            public void onCallback(User user, String key, List<User> users) {
+            public void onCallback(final User user, String key, List<User> users) {
                 PostSupport postSupport = PostSupport.getInstance();
                 List<Cart> carts = user.getCarts();
                 if(carts == null){
@@ -149,12 +151,25 @@ public class UserSupport extends BaseSupport{
                 Cart cart = new Cart(post_id, CART_ACTIVE,new Date());
                 carts.add(cart);
                 user.setCarts(carts);
-                if(!isUpdated){
-                    update(user);
-                    isUpdated = true;
-                }
+                PostSupport.getInstance().get(post_id, new CallbackSupport<Post>() {
+                    @Override
+                    public void onCallback(Post post, String key, List<Post> posts) {
+                        user.setCash(user.getCash()-post.getPrice());
+                        if(!isUpdated){
+                            update(user);
+                            isUpdated = true;
+                        }
+                        post.setPost_status(PostSupport.PROCESS);
+                        if(!isUpdatedPost){
+                            PostSupport.getInstance().update(post);
+                            isUpdatedPost = true;
+                        }
+                    }
+                });
             }
         });
+
+
 
     }
 

@@ -6,10 +6,9 @@ import com.google.firebase.database.IgnoreExtraProperties;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
+@IgnoreExtraProperties
 public class Revenue {
 
-    private String id ;
     private String email;
     private float money;
     private Date date;
@@ -17,19 +16,10 @@ public class Revenue {
     public Revenue() {
     }
 
-    public Revenue(String id, String email, float money, Date date) {
-        this.id = id;
+    public Revenue(String email, float money, Date date) {
         this.email = email;
         this.money = money;
         this.date = date;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getEmail() {
@@ -58,7 +48,6 @@ public class Revenue {
     @Exclude
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
-        result.put("id", id);
         result.put("email", email);
         result.put("money", money);
         result.put("date", date);

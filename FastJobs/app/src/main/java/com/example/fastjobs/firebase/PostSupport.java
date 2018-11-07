@@ -100,7 +100,9 @@ public class PostSupport extends BaseSupport{
                     List<Post> posts = new ArrayList<>();
                     for (DataSnapshot item : dataSnapshot.getChildren())
                     {
-                        posts.add(item.getValue(Post.class));
+                        if(item.getValue(Post.class).getPost_status().equals(ACTIVE)){
+                            posts.add(item.getValue(Post.class));
+                        }
                     }
                     Collections.reverse(posts);
                     recentlyPosts = posts;
