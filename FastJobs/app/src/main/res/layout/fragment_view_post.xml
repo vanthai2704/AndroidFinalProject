@@ -52,6 +52,21 @@
         android:inputType="textPersonName" />
 
     <TextView
+        android:id="@+id/jobprice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="Job Price" />
+
+    <EditText
+        android:id="@+id/viewPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:ems="10"
+        android:inputType="textPersonName" />
+
+    <TextView
         android:id="@+id/categoryPost"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

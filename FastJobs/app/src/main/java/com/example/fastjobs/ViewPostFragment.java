@@ -36,7 +36,7 @@ public class ViewPostFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private EditText jobTitle, jobContent, jobremuneration,jobCategory,jobLocation;
+    private EditText jobTitle, jobContent, jobremuneration,jobCategory,jobLocation,jobPrice;
     private Button backlistpost;
     private PostSupport postSupport;
     private Button buy;
@@ -132,6 +132,7 @@ public class ViewPostFragment extends Fragment {
         jobremuneration = view.findViewById(R.id.viewRemuneration);
         jobCategory = view.findViewById(R.id.viewJobCategory);
         jobLocation = view.findViewById(R.id.viewJobLocation);
+        jobPrice = view.findViewById(R.id.viewPrice);
         backlistpost = view.findViewById(R.id.viewBackButton);
         buy = view.findViewById(R.id.viewBuyButton);
         jobTitle.setInputType(0);
@@ -147,6 +148,7 @@ public class ViewPostFragment extends Fragment {
                 jobTitle.setText(post.getPost_title());
                 jobContent.setText(post.getPost_content());
                 jobremuneration.setText(post.getRemuneration()+ "VND");
+                jobPrice.setText(post.getPrice()+"VND");
                 (new CategorySupport()).get(post.getCategory_id(), new CallbackSupport<Category>() {
 
                     @Override
