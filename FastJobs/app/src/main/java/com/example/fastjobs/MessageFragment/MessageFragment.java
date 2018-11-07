@@ -98,8 +98,8 @@ public class MessageFragment extends Fragment {
                 chat();
             }
         });
-        messageSupport = new MessageSupport();
-        loginSupport = new LoginSupport();
+        messageSupport = MessageSupport.getInstance();
+        loginSupport = LoginSupport.getInstance();
         from = loginSupport.getCurrentUserEmail().replaceAll("\\.","_");
         listViewChat = view.findViewById(R.id.listViewChat);
         editTextMessageContent = view.findViewById(R.id.editTextMessageContent);

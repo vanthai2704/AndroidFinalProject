@@ -76,7 +76,7 @@ public class RegisterActivity extends AppCompatActivity {
         if (matcher.matches()){
             final ProgressDialog dialog = ProgressDialog.show(RegisterActivity.this, "",
                     "Loading. Please wait...", true);
-            LoginSupport loginSupport = new LoginSupport();
+            LoginSupport loginSupport = LoginSupport.getInstance();
             loginSupport.signUp(getemail, getpass, new CallbackSupport<Boolean>() {
 
                 @Override

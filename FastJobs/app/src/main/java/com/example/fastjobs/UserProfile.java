@@ -44,7 +44,11 @@ public class UserProfile extends Fragment {
             public void onCallback(User user, String key, List<User> users) {
                 txtName.setText(user.getFullname());
                 txtPhone.setText(user.getPhone());
-                txtDOB.setText(user.getDob().toString());
+                if(user.getDob() != null){
+                        txtDOB.setText(user.getDob().toString());
+                    }else {
+                        txtDOB.setText("DOB");
+                }
                 txtEmail.setText(user.getEmail());
             }
         });

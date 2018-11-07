@@ -13,6 +13,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DistrictSupport extends BaseSupport{
+    private static DistrictSupport instance = null;
+    public static DistrictSupport getInstance(){
+        if(instance == null){
+            instance = new DistrictSupport();
+        }
+        return instance;
+    }
     private DatabaseReference dbDistrict;
     public DistrictSupport(){
         dbDistrict = db.child("district");
