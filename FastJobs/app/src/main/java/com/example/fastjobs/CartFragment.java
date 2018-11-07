@@ -27,6 +27,7 @@ import com.example.fastjobs.firebase.CallbackSupport;
 import com.example.fastjobs.firebase.PostSupport;
 import com.example.fastjobs.firebase.UserSupport;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -61,6 +62,9 @@ public class CartFragment extends Fragment {
         userSupport.getCarts(new CallbackSupport<Cart>() {
             @Override
             public void onCallback(Cart cart, String key, List<Cart> carts) {
+                if(carts == null){
+                    carts = new ArrayList<>();
+                }
                 Location currentLocation = getLastBestLocation();
                 CartAdapter cartAdapter = new CartAdapter(getCardFragment(),carts, currentLocation);
                 listView.setAdapter(cartAdapter);

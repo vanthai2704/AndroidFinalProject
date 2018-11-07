@@ -172,18 +172,18 @@ public class ViewPostFragment extends Fragment {
         backlistpost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                userSupport = UserSupport.getInstance();
-                userSupport.addToCart(mParam1);
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.contentLayout,new CartFragment());
+                ft.replace(R.id.contentLayout,new HomeFragment());
                 ft.commit();
             }
         });
         buy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                userSupport = UserSupport.getInstance();
+                userSupport.addToCart(mParam1);
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.contentLayout,new HomeFragment());
+                ft.replace(R.id.contentLayout,new CartFragment());
                 ft.commit();
             }
         });
