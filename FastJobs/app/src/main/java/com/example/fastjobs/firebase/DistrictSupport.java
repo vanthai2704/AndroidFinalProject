@@ -25,26 +25,33 @@ public class DistrictSupport extends BaseSupport{
         dbDistrict = db.child("district");
     }
 
+    private List<District> allDistricts;
     public void getAll(final String province_id, final CallbackSupport callbackSupport){
-        dbDistrict.addValueEventListener(new ValueEventListener() {
+        if(allDistricts == null){
+            dbDistrict.addValueEventListener(new ValueEventListener() {
 
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                List<District> districts = new ArrayList<>();
-                for (DataSnapshot item : dataSnapshot.getChildren())
-                {
-                    if(item.getValue(District.class).getProvince_id().equalsIgnoreCase(province_id)){
-                        districts.add(item.getValue(District.class));
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    List<District> districts = new ArrayList<>();
+                    for (DataSnapshot item : dataSnapshot.getChildren())
+                    {
+                        if(item.getValue(District.class).getProvince_id().equalsIgnoreCase(province_id)){
+                            districts.add(item.getValue(District.class));
+                        }
                     }
+                    allDistricts = districts;
+                    callbackSupport.onCallback(null, null, districts);
                 }
-                callbackSupport.onCallback(null, null, districts);
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
+                }
+            });
+        }else {
+            callbackSupport.onCallback(null, null, allDistricts);
+        }
+
     }
 
     public void get(final String district_id, final CallbackSupport callbackSupport){

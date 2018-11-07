@@ -26,6 +26,8 @@ import com.example.fastjobs.R;
 import com.example.fastjobs.firebase.CallbackSupport;
 import com.example.fastjobs.firebase.PostSupport;
 
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,6 +39,14 @@ public class RecentPostFragment extends Fragment implements LocationListener{
     private LocationManager locationManager;
     private Activity activityTmp;
     private Context contextTmp;
+
+    private static RecentPostFragment instance = null;
+    public static RecentPostFragment getInstance(){
+        if(instance == null){
+            instance = new RecentPostFragment();
+        }
+        return instance;
+    }
 
     public RecentPostFragment() {
         // Required empty public constructor

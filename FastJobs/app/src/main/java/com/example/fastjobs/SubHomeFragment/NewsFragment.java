@@ -13,7 +13,13 @@ import com.example.fastjobs.R;
  * A simple {@link Fragment} subclass.
  */
 public class NewsFragment extends Fragment {
-
+    private static NewsFragment instance = null;
+    public static NewsFragment getInstance(){
+        if(instance == null){
+            instance = new NewsFragment();
+        }
+        return instance;
+    }
 
     public NewsFragment() {
         // Required empty public constructor

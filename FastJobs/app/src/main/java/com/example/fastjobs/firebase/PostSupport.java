@@ -2,11 +2,13 @@ package com.example.fastjobs.firebase;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 
 import com.example.fastjobs.Entity.Image;
 import com.example.fastjobs.Entity.Post;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -88,26 +90,34 @@ public class PostSupport extends BaseSupport{
         });
     }
 
+    private List<Post> recentlyPosts;
     public void getRecently(final CallbackSupport callbackSupport){
-        dbPost.orderByKey().limitToLast(100).addValueEventListener(new ValueEventListener() {
+        if(recentlyPosts == null){
+            dbPost.orderByKey().limitToLast(100).addValueEventListener(new ValueEventListener() {
 
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                List<Post> posts = new ArrayList<>();
-                for (DataSnapshot item : dataSnapshot.getChildren())
-                {
-                    posts.add(item.getValue(Post.class));
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    List<Post> posts = new ArrayList<>();
+                    for (DataSnapshot item : dataSnapshot.getChildren())
+                    {
+                        posts.add(item.getValue(Post.class));
+                    }
+                    Collections.reverse(posts);
+                    recentlyPosts = posts;
+                    callbackSupport.onCallback(null, null, posts);
                 }
-                Collections.reverse(posts);
-                callbackSupport.onCallback(null, null, posts);
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
+                }
+            });
+        }else {
+            callbackSupport.onCallback(null, null, recentlyPosts);
+        }
+
     }
+
     public void delete(Post post){
         dbPost.child(post.getPost_id()).removeValue();
     }

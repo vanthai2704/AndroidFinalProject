@@ -16,6 +16,7 @@ public class User {
     private Date dob;
     private List<Image> images;
     private List<Cart> carts;
+    private double cash;
 
     public User() {
     }
@@ -77,6 +78,14 @@ public class User {
         this.carts = carts;
     }
 
+    public double getCash() {
+        return cash;
+    }
+
+    public void setCash(double cash) {
+        this.cash = cash;
+    }
+
     @Exclude
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
@@ -86,6 +95,7 @@ public class User {
         result.put("dob", dob);
         result.put("images", images);
         result.put("carts", carts);
+        result.put("cash", cash);
         return result;
     }
 

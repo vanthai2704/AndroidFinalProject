@@ -26,25 +26,32 @@ public class CommuneSupport extends BaseSupport{
         dbCommune = db.child("commune");
     }
 
+    private List<Commune> allCommunes;
     public void getAll(final String district_id, final CallbackSupport callbackSupport){
-        dbCommune.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                List<Commune> communes = new ArrayList<>();
-                for (DataSnapshot item : dataSnapshot.getChildren())
-                {
-                    if(item.getValue(Commune.class).getDistrict_id().equalsIgnoreCase(district_id)){
-                        communes.add(item.getValue(Commune.class));
+        if(allCommunes == null){
+            dbCommune.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    List<Commune> communes = new ArrayList<>();
+                    for (DataSnapshot item : dataSnapshot.getChildren())
+                    {
+                        if(item.getValue(Commune.class).getDistrict_id().equalsIgnoreCase(district_id)){
+                            communes.add(item.getValue(Commune.class));
+                        }
                     }
+                    allCommunes = communes;
+                    callbackSupport.onCallback(null, null, communes);
                 }
-                callbackSupport.onCallback(null, null, communes);
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
+                }
+            });
+        }else {
+            callbackSupport.onCallback(null, null, allCommunes);
+        }
+
     }
 
     public void get(final String commune_id, final CallbackSupport callbackSupport){
