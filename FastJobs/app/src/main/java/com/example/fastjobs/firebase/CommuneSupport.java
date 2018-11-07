@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 
 import com.example.fastjobs.Entity.Commune;
 import com.example.fastjobs.Entity.District;
+import com.example.fastjobs.Entity.Province;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -71,6 +72,26 @@ public class CommuneSupport extends BaseSupport{
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
+            }
+        });
+    }
+
+    public void getFullLocation(final String commune_id, final CallbackSupport callbackSupport){
+        get(commune_id, new CallbackSupport<Commune>() {
+            @Override
+            public void onCallback(final Commune commune, String key, List<Commune> communes) {
+                DistrictSupport.getInstance().get(commune_id, new CallbackSupport<District>() {
+                    @Override
+                    public void onCallback(final District district, String key, List<District> districts) {
+                        ProvinceSupport.getInstance().get(district.getProvince_id(), new CallbackSupport<Province>() {
+                            @Override
+                            public void onCallback(Province province, String key, List<Province> provinces) {
+                                String fullLocation ="";
+                                fullLocation+=commune.getName()+","+district.getName()+","+province.getName();
+                            }
+                        });
+                    }
+                });
             }
         });
     }
