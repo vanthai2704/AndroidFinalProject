@@ -39,6 +39,7 @@
                 android:layout_margin="8dp"
                 android:text="Job Content*" />
 
+
             <EditText
                 android:id="@+id/jobContent"
                 android:layout_width="match_parent"
@@ -46,7 +47,20 @@
                 android:layout_margin="8dp"
                 android:ems="10"
                 android:inputType="textPersonName" />
+            <TextView
+                android:id="@+id/textViewContactNew"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="@string/contact" />
 
+            <EditText
+                android:id="@+id/editTextContactNew"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:ems="10"
+                android:inputType="textPersonName" />
             <TextView
                 android:id="@+id/jobremuneration"
                 android:layout_width="match_parent"
@@ -124,6 +138,21 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:id="@+id/textViewLocationDetailNew"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="@string/location_detail" />
+
+            <EditText
+                android:id="@+id/editTextLocationDetailNew"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:ems="10"
+                android:inputType="textPersonName" />
 
             <Button
                 android:id="@+id/buttonChooseImage"

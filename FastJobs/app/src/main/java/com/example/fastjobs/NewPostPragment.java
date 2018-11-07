@@ -4,11 +4,9 @@ package com.example.fastjobs;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -37,9 +35,7 @@ import com.example.fastjobs.firebase.DistrictSupport;
 import com.example.fastjobs.firebase.LoginSupport;
 import com.example.fastjobs.firebase.PostSupport;
 import com.example.fastjobs.firebase.ProvinceSupport;
-import com.google.android.gms.maps.model.LatLng;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -60,7 +56,7 @@ public class NewPostPragment extends Fragment {
     private ProvinceSupport provinceSupport;
     private DistrictSupport districtSupport;
     private CommuneSupport communeSupport;
-    private EditText jobTitle, jobContent, jobremuneration, editTextTimeToDisplay;
+    private EditText jobTitle, jobContent, jobremuneration, editTextTimeToDisplay, editTextContactNew, editTextLocationDetailNew;
     private Button addpost;
     private Button buttonChooseImage;
     private GridView gridViewImageInNew;
@@ -97,11 +93,11 @@ public class NewPostPragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         activityTmp = getActivity();
         contextTmp = getContext();
-        postSupport = new PostSupport();
-        categorySupport = new CategorySupport();
-        provinceSupport = new ProvinceSupport();
-        districtSupport = new DistrictSupport();
-        communeSupport = new CommuneSupport();
+        postSupport = PostSupport.getInstance();
+        categorySupport = CategorySupport.getInstance();
+        provinceSupport = ProvinceSupport.getInstance();
+        districtSupport = DistrictSupport.getInstance();
+        communeSupport = CommuneSupport.getInstance();
         spinnerCategoriesPost = view.findViewById(R.id.spinnerCategoriesPost);
         spinnerProvincePost = view.findViewById(R.id.spinnerProvincePost);
         spinnerDistrictPost = view.findViewById(R.id.spinnerDistrictPost);
@@ -109,6 +105,8 @@ public class NewPostPragment extends Fragment {
         jobTitle = view.findViewById(R.id.jobName);
         jobContent = view.findViewById(R.id.jobContent);
         jobremuneration = view.findViewById(R.id.remuneration);
+        editTextContactNew= view.findViewById(R.id.editTextContactNew);
+        editTextLocationDetailNew= view.findViewById(R.id.editTextLocationDetailNew);
         addpost = view.findViewById(R.id.jobPost);
         buttonChooseImage = view.findViewById(R.id.buttonChooseImage);
         editTextTimeToDisplay = view.findViewById(R.id.editTextTimeToDisplay);
@@ -132,6 +130,8 @@ public class NewPostPragment extends Fragment {
                 double remuneration = Double.parseDouble(jobremuneration.getText().toString());
                 double timeToDisplay = Double.parseDouble(editTextTimeToDisplay.getText().toString());
                 String location_coordinate="";
+                String contact = editTextContactNew.getText().toString();
+                String locationDetail = editTextLocationDetailNew.getText().toString();
                 try {
                     String location = spinnerDistrictPost.getSelectedItem().toString()
                             + " "+ spinnerDistrictPost.getSelectedItem().toString()
@@ -145,7 +145,8 @@ public class NewPostPragment extends Fragment {
                 }
 
                 String user_id = (new LoginSupport()).getCurrentUserEmail().replaceAll("\\.","_");
-                Post post = new Post(commune,category,user_id,50000,remuneration,location_coordinate,title,content,"A",new Date(),timeToDisplay,images);
+                Post post = new Post(commune,category,user_id,50000,remuneration,location_coordinate,
+                        title,content,PostSupport.ACTIVE,new Date(),timeToDisplay,images,contact,locationDetail);
                 postSupport.insert(post,contextTmp);
 
 

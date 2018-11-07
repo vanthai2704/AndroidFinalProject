@@ -1,4 +1,4 @@
-package com.example.fastjobs.MessageFragment;
+package com.example.fastjobs;
 
 import android.content.Context;
 import android.net.Uri;
@@ -11,44 +11,41 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
-import com.example.fastjobs.R;
-import com.example.fastjobs.Adapter.ChatAdapter;
-import com.example.fastjobs.Entity.Message;
-import com.example.fastjobs.firebase.CallbackSupport;
-import com.example.fastjobs.firebase.LoginSupport;
-import com.example.fastjobs.firebase.MessageSupport;
 
-import java.util.Date;
+import com.example.fastjobs.Entity.Category;
+import com.example.fastjobs.Entity.Post;
+import com.example.fastjobs.firebase.CallbackSupport;
+import com.example.fastjobs.firebase.CategorySupport;
+import com.example.fastjobs.firebase.PostSupport;
+
 import java.util.List;
+
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link MessageFragment.OnFragmentInteractionListener} interface
+ * {@link ViewPostFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link MessageFragment#newInstance} factory method to
+ * Use the {@link ViewPostFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MessageFragment extends Fragment {
+public class ViewPostFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private EditText jobTitle, jobContent, jobremuneration,jobCategory,jobLocation;
+    private Button backlistpost;
+    private PostSupport postSupport;
+    private Button buy;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private ListView listViewChat;
-    private EditText editTextMessageContent;
-    private MessageSupport messageSupport;
-    private LoginSupport loginSupport;
-    private String from;
-    private String to;
 
     private OnFragmentInteractionListener mListener;
 
-    public MessageFragment() {
+    public ViewPostFragment() {
         // Required empty public constructor
     }
 
@@ -58,11 +55,11 @@ public class MessageFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment MessageFragment.
+     * @return A new instance of fragment ViewPostFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static MessageFragment newInstance(String param1, String param2) {
-        MessageFragment fragment = new MessageFragment();
+    public static ViewPostFragment newInstance(String param1, String param2) {
+        ViewPostFragment fragment = new ViewPostFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -76,35 +73,14 @@ public class MessageFragment extends Fragment {
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
-            to = mParam1;
         }
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_message, container, false);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        Button buttonSend = view.findViewById(R.id.buttonSend);
-        buttonSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                chat();
-            }
-        });
-        messageSupport = MessageSupport.getInstance();
-        loginSupport = LoginSupport.getInstance();
-        from = loginSupport.getCurrentUserEmail().replaceAll("\\.","_");
-        listViewChat = view.findViewById(R.id.listViewChat);
-        editTextMessageContent = view.findViewById(R.id.editTextMessageContent);
-        displayChatMessages();
-
+        return inflater.inflate(R.layout.fragment_view_post, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -146,28 +122,38 @@ public class MessageFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    public void chat(){
-        String content = editTextMessageContent.getText().toString();
-        if(!content.equals("")){
-            messageSupport.chat(from, to,new Date(),content);
-            editTextMessageContent.setText("");
-        }
-    }
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        jobTitle = view.findViewById(R.id.viewJobName);
+        jobContent = view.findViewById(R.id.viewJobContent);
+        jobremuneration = view.findViewById(R.id.viewRemuneration);
+        jobCategory = view.findViewById(R.id.viewJobCategory);
+        jobLocation = view.findViewById(R.id.viewJobLocation);
+        backlistpost = view.findViewById(R.id.viewBackButton);
+        buy = view.findViewById(R.id.viewBuyButton);
+        jobTitle.setInputType(0);
+        jobContent.setInputType(0);
+        jobremuneration.setInputType(0);
+        jobCategory.setInputType(0);
+        jobLocation.setInputType(0);
 
-
-    public void displayChatMessages(){
-        messageSupport.getMessage(from, to, 1, 100, new CallbackSupport<Message>() {
-
+        postSupport = PostSupport.getInstance();
+        postSupport.get(mParam1, new CallbackSupport<Post>() {
             @Override
-            public void onCallback(Message message, String key,final List<Message> messages) {
-                ChatAdapter chatAdapter = new ChatAdapter(messages, getActivityMessage());
-                listViewChat.setAdapter(chatAdapter);
+            public void onCallback(Post post, String key, List<Post> posts) {
+                jobTitle.setText(post.getPost_title());
+                jobContent.setText(post.getPost_content());
+                jobremuneration.setText(post.getRemuneration()+ "VND");
+                (new CategorySupport()).get(post.getCategory_id(), new CallbackSupport<Category>() {
+
+                    @Override
+                    public void onCallback(Category category, String key, List<Category> categories) {
+                        jobCategory.setText(category.getCategory_name());
+                    }
+                });
+
             }
         });
     }
-
-    public final MessageFragment getActivityMessage(){
-        return this;
-    }
-
 }

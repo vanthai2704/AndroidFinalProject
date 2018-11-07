@@ -9,23 +9,23 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.fastjobs.Adapter.RecentPostAdapter;
 import com.example.fastjobs.Entity.Post;
+import com.example.fastjobs.MyPostDetail;
 import com.example.fastjobs.R;
 import com.example.fastjobs.firebase.CallbackSupport;
 import com.example.fastjobs.firebase.PostSupport;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -50,19 +50,30 @@ public class RecentPostFragment extends Fragment implements LocationListener{
         View view= inflater.inflate(R.layout.fragment_recent_post, container, false);
         activityTmp = getActivity();
         contextTmp = getContext();
-
-            locationManager = (LocationManager) activityTmp.getSystemService(Context.LOCATION_SERVICE);
-            listView = view.findViewById(R.id.listViewPost);
-            postSupport = new PostSupport();
-            postSupport.getRecently(new CallbackSupport<Post>() {
-                @Override
-                public void onCallback(Post post, String key, List<Post> posts) {
-                    Location currentLocation = getLastBestLocation();
-                    RecentPostAdapter recentPostAdapter = new RecentPostAdapter(getRecentPostFragment(),posts, currentLocation);
-                    listView.setAdapter(recentPostAdapter);
-                }
-            });
-
+        locationManager = (LocationManager) activityTmp.getSystemService(Context.LOCATION_SERVICE);
+        listView = view.findViewById(R.id.listViewPost);
+        postSupport = PostSupport.getInstance();
+        postSupport.getRecently(new CallbackSupport<Post>() {
+            @Override
+            public void onCallback(Post post, String key, List<Post> posts) {
+                Location currentLocation = getLastBestLocation();
+                RecentPostAdapter recentPostAdapter = new RecentPostAdapter(getRecentPostFragment(),posts, currentLocation,getFragmentManager());
+                listView.setAdapter(recentPostAdapter);
+            }
+        });
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Post postSelected = (Post)listView.getAdapter().getItem(position);
+                String post_id = postSelected.getPost_id();
+                MyPostDetail myPostDetail = MyPostDetail.newInstance(
+                        post_id, null);
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.remove(getFragmentManager().findFragmentById(R.id.contentLayout));
+                fragmentTransaction.add(R.id.contentLayout, myPostDetail);
+                fragmentTransaction.commit();
+            }
+        });
         // Inflate the layout for this fragment
         return view;
     }

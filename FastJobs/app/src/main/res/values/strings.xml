@@ -26,6 +26,8 @@
     <string name="image">Image</string>
     <string name="distance">Distance (Km)</string>
     <string name="search">Search</string>
+    <string name="contact">Contact</string>
+    <string name="location_detail">Location detail</string>
 
 
 </resources>

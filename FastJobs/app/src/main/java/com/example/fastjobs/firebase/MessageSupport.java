@@ -17,6 +17,13 @@ import java.util.Date;
 import java.util.List;
 
 public class MessageSupport extends BaseSupport{
+    private static MessageSupport instance = null;
+    public static MessageSupport getInstance(){
+        if(instance == null){
+            instance = new MessageSupport();
+        }
+        return instance;
+    }
     private DatabaseReference dbMessage;
     public MessageSupport(){
         dbMessage = db.child("message");

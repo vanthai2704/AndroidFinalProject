@@ -17,7 +17,7 @@ import com.example.fastjobs.Entity.Category;
 import com.example.fastjobs.Entity.Post;
 import com.example.fastjobs.firebase.CallbackSupport;
 import com.example.fastjobs.firebase.CategorySupport;
-import com.example.fastjobs.firebase.CommuneSupport;
+import com.example.fastjobs.firebase.LoginSupport;
 import com.example.fastjobs.firebase.PostSupport;
 
 import java.util.List;
@@ -26,12 +26,12 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link JobDetail.OnFragmentInteractionListener} interface
+ * {@link MyPostDetail.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link JobDetail#newInstance} factory method to
+ * Use the {@link MyPostDetail#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class JobDetail extends Fragment {
+public class MyPostDetail extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -39,6 +39,7 @@ public class JobDetail extends Fragment {
     private EditText jobTitle, jobContent, jobremuneration,jobCategory,jobLocation;
     private Button backlistpost;
     private PostSupport postSupport;
+    private Button huy;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -46,7 +47,7 @@ public class JobDetail extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public JobDetail() {
+    public MyPostDetail() {
         // Required empty public constructor
     }
 
@@ -56,11 +57,11 @@ public class JobDetail extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment JobDetail.
+     * @return A new instance of fragment MyPostDetail.
      */
     // TODO: Rename and change types and number of parameters
-    public static JobDetail newInstance(String param1, String param2) {
-        JobDetail fragment = new JobDetail();
+    public static MyPostDetail newInstance(String param1, String param2) {
+        MyPostDetail fragment = new MyPostDetail();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -132,8 +133,14 @@ public class JobDetail extends Fragment {
         jobCategory = view.findViewById(R.id.jobCategory);
         jobLocation = view.findViewById(R.id.jobLocation);
         backlistpost = view.findViewById(R.id.backButton);
+        huy = view.findViewById(R.id.huyButton);
+        jobTitle.setInputType(0);
+        jobContent.setInputType(0);
+        jobremuneration.setInputType(0);
+        jobCategory.setInputType(0);
+        jobLocation.setInputType(0);
 
-        postSupport = new PostSupport();
+        postSupport = PostSupport.getInstance();
         postSupport.get(mParam1, new CallbackSupport<Post>() {
             @Override
             public void onCallback(Post post, String key, List<Post> posts) {
@@ -151,15 +158,21 @@ public class JobDetail extends Fragment {
             }
         });
 
+        huy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
         backlistpost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.contentLayout,new MyFragment());
-                ft.commit();
+                    ft.replace(R.id.contentLayout,new MyFragment());
+                    ft.commit();
             }
         });
-
 
     }
 }

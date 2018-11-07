@@ -82,7 +82,7 @@ public class LoginActivity extends AppCompatActivity {
         if (matcher.matches()){
             final ProgressDialog dialog = ProgressDialog.show(LoginActivity.this, "",
                     "Loading. Please wait...", true);
-            LoginSupport loginSupport = new LoginSupport();
+            LoginSupport loginSupport = LoginSupport.getInstance();
             loginSupport.login(tooltipmail, tooltippass, new CallbackSupport<Boolean>() {
                 @Override
                 public void onCallback(Boolean aBoolean, String key, List<Boolean> booleans) {

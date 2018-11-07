@@ -17,6 +17,14 @@ import java.util.List;
 import java.util.Map;
 
 public class CategorySupport extends BaseSupport {
+    private static CategorySupport instance = null;
+    public static CategorySupport getInstance(){
+        if(instance == null){
+            instance = new CategorySupport();
+        }
+        return instance;
+    }
+
     private DatabaseReference dbCategory;
     public CategorySupport(){
         dbCategory = db.child("category");

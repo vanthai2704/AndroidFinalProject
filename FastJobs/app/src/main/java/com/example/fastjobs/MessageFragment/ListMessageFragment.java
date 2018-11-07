@@ -119,8 +119,8 @@ public class ListMessageFragment extends Fragment {
                 dialog.show();
             }
         });
-        messageSupport = new MessageSupport();
-        loginSupport = new LoginSupport();
+        messageSupport = MessageSupport.getInstance();
+        loginSupport = LoginSupport.getInstance();
         String from = loginSupport.getCurrentUserEmail().replaceAll("\\.","_");
         messageSupport.getMessageOne(this ,from, 1, 100, new CallbackSupport<MessageOne>() {
 

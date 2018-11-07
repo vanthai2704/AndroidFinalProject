@@ -15,16 +15,18 @@ public class User {
     private String phone;
     private Date dob;
     private List<Image> images;
+    private List<Cart> carts;
 
     public User() {
     }
 
-    public User(String fullname, String email, String phone, Date dob, List<Image> images) {
+    public User(String fullname, String email, String phone, Date dob, List<Image> images, List<Cart> carts) {
         this.fullname = fullname;
         this.email = email;
         this.phone = phone;
         this.dob = dob;
         this.images = images;
+        this.carts = carts;
     }
 
     public String getFullname() {
@@ -67,6 +69,14 @@ public class User {
         this.images = images;
     }
 
+    public List<Cart> getCarts() {
+        return carts;
+    }
+
+    public void setCarts(List<Cart> carts) {
+        this.carts = carts;
+    }
+
     @Exclude
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
@@ -75,6 +85,7 @@ public class User {
         result.put("phone", phone);
         result.put("dob", dob);
         result.put("images", images);
+        result.put("carts", carts);
         return result;
     }
 

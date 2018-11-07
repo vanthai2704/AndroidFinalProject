@@ -20,7 +20,7 @@ import com.example.fastjobs.firebase.LoginSupport;
 import com.example.fastjobs.View.LoginActivity;
 
 public class MainPage extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, JobDetail.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener, MyPostDetail.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
