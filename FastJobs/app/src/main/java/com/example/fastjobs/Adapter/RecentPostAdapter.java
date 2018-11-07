@@ -10,7 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.fastjobs.Entity.*;
-import com.example.fastjobs.JobDetail;
+import com.example.fastjobs.MyPostDetail;
 import com.example.fastjobs.MainPage;
 import com.example.fastjobs.R;
 import com.example.fastjobs.SubHomeFragment.RecentPostFragment;
@@ -117,11 +117,11 @@ public class RecentPostAdapter extends BaseAdapter {
                 @Override
                 public void onClick(View v) {
                     Post post = postList.get(position);
-                    JobDetail jobDetail = JobDetail.newInstance(
+                    MyPostDetail myPostDetail = MyPostDetail.newInstance(
                             post.getPost_id(), null);
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.remove(fragmentManager.findFragmentById(R.id.contentLayout));
-                    fragmentTransaction.add(R.id.contentLayout, jobDetail);
+                    fragmentTransaction.add(R.id.contentLayout, myPostDetail);
                     fragmentTransaction.commit();
                 }
             });

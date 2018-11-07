@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MyPostDetail">
+    tools:context=".ViewPostFragment">
 
     <TextView
         android:id="@+id/title"
@@ -14,7 +14,7 @@
         android:text="Job Title" />
 
     <EditText
-        android:id="@+id/jobName"
+        android:id="@+id/viewJobName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
@@ -29,7 +29,7 @@
         android:text="Job Content" />
 
     <EditText
-        android:id="@+id/jobContent"
+        android:id="@+id/viewJobContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
@@ -44,7 +44,7 @@
         android:text="Remuneration" />
 
     <EditText
-        android:id="@+id/remuneration"
+        android:id="@+id/viewRemuneration"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
@@ -59,7 +59,7 @@
         android:text="Category" />
 
     <EditText
-        android:id="@+id/jobCategory"
+        android:id="@+id/viewJobCategory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
@@ -74,7 +74,7 @@
         android:text="Location" />
 
     <EditText
-        android:id="@+id/jobLocation"
+        android:id="@+id/viewJobLocation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
@@ -82,13 +82,13 @@
         android:inputType="textPersonName" />
 
     <Button
-        android:id="@+id/huyButton"
+        android:id="@+id/viewBuyButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Huy Cong Viec" />
+        android:text="Mua Cong Viec" />
 
     <Button
-        android:id="@+id/backButton"
+        android:id="@+id/viewBackButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Back" />
