@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 
+import com.example.fastjobs.Entity.Cart;
 import com.example.fastjobs.Entity.Image;
 import com.example.fastjobs.Entity.Post;
 import com.example.fastjobs.Entity.User;
@@ -14,11 +15,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class UserSupport extends BaseSupport{
+    public static String CART_ACTIVE ="ACTIVE";
     private static UserSupport instance = null;
     public static UserSupport getInstance(){
         if(instance == null){
@@ -131,5 +134,38 @@ public class UserSupport extends BaseSupport{
 
             }
         });
+    }
+
+    public void addToCart(final String post_id){
+        get(LoginSupport.getInstance().getCurrentUserEmail().replaceAll("\\.", "_"), new CallbackSupport<User>() {
+            @Override
+            public void onCallback(User user, String key, List<User> users) {
+                PostSupport postSupport = PostSupport.getInstance();
+                List<Cart> carts = user.getCarts();
+                if(carts == null){
+                    carts = new ArrayList<>();
+                }
+                Cart cart = new Cart(post_id, CART_ACTIVE,new Date());
+                carts.add(cart);
+                user.setCarts(carts);
+                update(user);
+            }
+        });
+    }
+    private List<Cart> cartsTmp;
+    public void getCarts(final CallbackSupport callbackSupport){
+        if(cartsTmp == null){
+            get(LoginSupport.getInstance().getCurrentUserEmail().replaceAll("\\.", "_"), new CallbackSupport<User>() {
+                @Override
+                public void onCallback(User user, String key, List<User> users) {
+                    cartsTmp = user.getCarts();
+                    callbackSupport.onCallback(null, LoginSupport.getInstance().getCurrentUserEmail().replaceAll("\\.", "_"),
+                            user.getCarts());
+                }
+            });
+        }else {
+            callbackSupport.onCallback(null, LoginSupport.getInstance().getCurrentUserEmail().replaceAll("\\.", "_"),
+                    cartsTmp);
+        }
     }
 }
