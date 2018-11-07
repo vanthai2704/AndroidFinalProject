@@ -26,7 +26,7 @@ import com.example.fastjobs.firebase.UserSupport;
 import java.util.List;
 
 public class MainPage extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, MyPostDetail.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener, MyPostDetail.OnFragmentInteractionListener ,ViewPostFragment.OnFragmentInteractionListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

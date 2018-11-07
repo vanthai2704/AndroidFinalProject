@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import android.widget.EditText;
 
 import com.example.fastjobs.Entity.Category;
 import com.example.fastjobs.Entity.Post;
+import com.example.fastjobs.SubHomeFragment.RecentPostFragment;
 import com.example.fastjobs.firebase.CallbackSupport;
 import com.example.fastjobs.firebase.CategorySupport;
 import com.example.fastjobs.firebase.PostSupport;
@@ -153,6 +155,23 @@ public class ViewPostFragment extends Fragment {
                     }
                 });
 
+            }
+        });
+
+        backlistpost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.replace(R.id.contentLayout,new HomeFragment());
+                ft.commit();
+            }
+        });
+        buy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.replace(R.id.contentLayout,new HomeFragment());
+                ft.commit();
             }
         });
     }
