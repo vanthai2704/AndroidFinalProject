@@ -23,6 +23,7 @@ import com.example.fastjobs.Adapter.RecentPostAdapter;
 import com.example.fastjobs.Entity.Post;
 import com.example.fastjobs.MyPostDetail;
 import com.example.fastjobs.R;
+import com.example.fastjobs.ViewPostFragment;
 import com.example.fastjobs.firebase.CallbackSupport;
 import com.example.fastjobs.firebase.PostSupport;
 
@@ -67,7 +68,7 @@ public class RecentPostFragment extends Fragment implements LocationListener{
             @Override
             public void onCallback(Post post, String key, List<Post> posts) {
                 Location currentLocation = getLastBestLocation();
-                RecentPostAdapter recentPostAdapter = new RecentPostAdapter(getRecentPostFragment(),posts, currentLocation,getFragmentManager());
+                RecentPostAdapter recentPostAdapter = new RecentPostAdapter(getRecentPostFragment(),posts, currentLocation);
                 listView.setAdapter(recentPostAdapter);
             }
         });
@@ -76,11 +77,10 @@ public class RecentPostFragment extends Fragment implements LocationListener{
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Post postSelected = (Post)listView.getAdapter().getItem(position);
                 String post_id = postSelected.getPost_id();
-                MyPostDetail myPostDetail = MyPostDetail.newInstance(
+                ViewPostFragment viewPostFragment = ViewPostFragment.newInstance(
                         post_id, null);
-                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.remove(getFragmentManager().findFragmentById(R.id.contentLayout));
-                fragmentTransaction.add(R.id.contentLayout, myPostDetail);
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.contentLayout,viewPostFragment);
                 fragmentTransaction.commit();
             }
         });
