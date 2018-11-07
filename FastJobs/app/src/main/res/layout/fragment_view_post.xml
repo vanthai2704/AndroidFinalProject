@@ -101,6 +101,20 @@
         android:ems="10"
         android:inputType="textPersonName" />
 
+    <TextView
+        android:id="@+id/textViewContactPostCart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="Contact" />
+    <EditText
+        android:id="@+id/editTextContactPostCart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:ems="10"
+        android:inputType="textPersonName" />
+
     <Button
         android:id="@+id/viewBuyButton"
         android:layout_width="match_parent"
