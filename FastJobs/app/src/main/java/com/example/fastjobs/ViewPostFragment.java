@@ -18,6 +18,7 @@ import com.example.fastjobs.Entity.Post;
 import com.example.fastjobs.SubHomeFragment.RecentPostFragment;
 import com.example.fastjobs.firebase.CallbackSupport;
 import com.example.fastjobs.firebase.CategorySupport;
+import com.example.fastjobs.firebase.CommuneSupport;
 import com.example.fastjobs.firebase.PostSupport;
 
 import java.util.List;
@@ -36,7 +37,7 @@ public class ViewPostFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private EditText jobTitle, jobContent, jobremuneration,jobCategory,jobLocation;
+    private EditText jobTitle, jobContent, jobremuneration,jobCategory,jobLocation,jobPrice;
     private Button backlistpost;
     private PostSupport postSupport;
     private Button buy;
@@ -132,6 +133,7 @@ public class ViewPostFragment extends Fragment {
         jobremuneration = view.findViewById(R.id.viewRemuneration);
         jobCategory = view.findViewById(R.id.viewJobCategory);
         jobLocation = view.findViewById(R.id.viewJobLocation);
+        jobPrice = view.findViewById(R.id.viewPrice);
         backlistpost = view.findViewById(R.id.viewBackButton);
         buy = view.findViewById(R.id.viewBuyButton);
         jobTitle.setInputType(0);
@@ -139,14 +141,16 @@ public class ViewPostFragment extends Fragment {
         jobremuneration.setInputType(0);
         jobCategory.setInputType(0);
         jobLocation.setInputType(0);
+        jobPrice.setInputType(0);
 
         postSupport = PostSupport.getInstance();
         postSupport.get(mParam1, new CallbackSupport<Post>() {
             @Override
-            public void onCallback(Post post, String key, List<Post> posts) {
+            public void onCallback(final Post post, String key, List<Post> posts) {
                 jobTitle.setText(post.getPost_title());
                 jobContent.setText(post.getPost_content());
                 jobremuneration.setText(post.getRemuneration()+ "VND");
+                jobPrice.setText(post.getPrice()+"VND");
                 (new CategorySupport()).get(post.getCategory_id(), new CallbackSupport<Category>() {
 
                     @Override
@@ -154,7 +158,12 @@ public class ViewPostFragment extends Fragment {
                         jobCategory.setText(category.getCategory_name());
                     }
                 });
-
+                CommuneSupport.getInstance().getFullLocation(post.getCommune_id(), new CallbackSupport<String>() {
+                    @Override
+                    public void onCallback(String s, String key, List<String> strings) {
+                        jobLocation.setText(post.getPost_location_detail()+","+s);
+                    }
+                });
             }
         });
 
