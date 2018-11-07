@@ -208,6 +208,7 @@ public class ViewPostFragment extends Fragment {
                             public void onClick(View v) {
                                 Intent intent = new Intent(activityTmp, GoogleMaps.class);
                                 intent.putExtra("destinationPoint", jobLocation.getText().toString());
+                                intent.putExtra("phoneNumber", post.getPost_contact());
                                 activityTmp.startActivity(intent);
                             }
                         });
