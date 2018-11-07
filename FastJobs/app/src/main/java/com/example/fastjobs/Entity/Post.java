@@ -165,6 +165,7 @@ public class Post {
     public void setImages(List<Image> images) {
         this.images = images;
     }
+
     @Exclude
     @Override
     public String toString() {

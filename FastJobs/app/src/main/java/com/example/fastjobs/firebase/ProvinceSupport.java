@@ -25,24 +25,31 @@ public class ProvinceSupport extends BaseSupport{
         dbProvince = db.child("province");
     }
 
+    private List<Province> allProvinces;
     public void getAll(final CallbackSupport callbackSupport){
-        dbProvince.addValueEventListener(new ValueEventListener() {
-
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                List<Province> provinces = new ArrayList<>();
-                for (DataSnapshot item : dataSnapshot.getChildren())
-                {
-                    provinces.add(item.getValue(Province.class));
+        if(allProvinces == null){
+            dbProvince.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    List<Province> provinces = new ArrayList<>();
+                    for (DataSnapshot item : dataSnapshot.getChildren())
+                    {
+                        provinces.add(item.getValue(Province.class));
+                    }
+                    allProvinces = provinces;
+                    callbackSupport.onCallback(null, null, provinces);
                 }
-                callbackSupport.onCallback(null, null, provinces);
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
+                }
+            });
+        }
+        else {
+            callbackSupport.onCallback(null, null, allProvinces);
+        }
+
     }
 
     public void get(final String province_id, final CallbackSupport callbackSupport){

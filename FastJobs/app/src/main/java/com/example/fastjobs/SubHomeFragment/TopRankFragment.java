@@ -14,6 +14,13 @@ import com.example.fastjobs.R;
  */
 public class TopRankFragment extends Fragment {
 
+    private static TopRankFragment instance = null;
+    public static TopRankFragment getInstance(){
+        if(instance == null){
+            instance = new TopRankFragment();
+        }
+        return instance;
+    }
 
     public TopRankFragment() {
         // Required empty public constructor

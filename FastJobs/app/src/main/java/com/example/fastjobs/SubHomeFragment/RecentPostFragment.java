@@ -23,9 +23,12 @@ import com.example.fastjobs.Adapter.RecentPostAdapter;
 import com.example.fastjobs.Entity.Post;
 import com.example.fastjobs.MyPostDetail;
 import com.example.fastjobs.R;
+import com.example.fastjobs.ViewPostFragment;
 import com.example.fastjobs.firebase.CallbackSupport;
 import com.example.fastjobs.firebase.PostSupport;
 
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,6 +40,14 @@ public class RecentPostFragment extends Fragment implements LocationListener{
     private LocationManager locationManager;
     private Activity activityTmp;
     private Context contextTmp;
+
+    private static RecentPostFragment instance = null;
+    public static RecentPostFragment getInstance(){
+        if(instance == null){
+            instance = new RecentPostFragment();
+        }
+        return instance;
+    }
 
     public RecentPostFragment() {
         // Required empty public constructor
@@ -57,7 +68,7 @@ public class RecentPostFragment extends Fragment implements LocationListener{
             @Override
             public void onCallback(Post post, String key, List<Post> posts) {
                 Location currentLocation = getLastBestLocation();
-                RecentPostAdapter recentPostAdapter = new RecentPostAdapter(getRecentPostFragment(),posts, currentLocation,getFragmentManager());
+                RecentPostAdapter recentPostAdapter = new RecentPostAdapter(getRecentPostFragment(),posts, currentLocation);
                 listView.setAdapter(recentPostAdapter);
             }
         });
@@ -66,11 +77,10 @@ public class RecentPostFragment extends Fragment implements LocationListener{
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Post postSelected = (Post)listView.getAdapter().getItem(position);
                 String post_id = postSelected.getPost_id();
-                MyPostDetail myPostDetail = MyPostDetail.newInstance(
+                ViewPostFragment viewPostFragment = ViewPostFragment.newInstance(
                         post_id, null);
-                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.remove(getFragmentManager().findFragmentById(R.id.contentLayout));
-                fragmentTransaction.add(R.id.contentLayout, myPostDetail);
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.contentLayout,viewPostFragment);
                 fragmentTransaction.commit();
             }
         });
@@ -127,6 +137,27 @@ public class RecentPostFragment extends Fragment implements LocationListener{
             return null;
         } else {
             // Permission has already been granted
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1, 0, new LocationListener() {
+                @Override
+                public void onLocationChanged(Location location) {
+
+                }
+
+                @Override
+                public void onStatusChanged(String provider, int status, Bundle extras) {
+
+                }
+
+                @Override
+                public void onProviderEnabled(String provider) {
+
+                }
+
+                @Override
+                public void onProviderDisabled(String provider) {
+
+                }
+            });
             Location locationGPS = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             Location locationNet = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 

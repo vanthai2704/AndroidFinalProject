@@ -59,23 +59,31 @@ public class CategorySupport extends BaseSupport {
             }
         }
     }
+
+    private List<Category> allCategories;
     public void getAll(final CallbackSupport callbackSupport){
-        dbCategory.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                List<Category> categories = new ArrayList<>();
-                for (DataSnapshot item : dataSnapshot.getChildren())
-                {
-                    categories.add(item.getValue(Category.class));
+        if(allCategories == null){
+            dbCategory.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    List<Category> categories = new ArrayList<>();
+                    for (DataSnapshot item : dataSnapshot.getChildren())
+                    {
+                        categories.add(item.getValue(Category.class));
+                    }
+                    allCategories = categories;
+                    callbackSupport.onCallback(null, null, categories);
                 }
-                callbackSupport.onCallback(null, null, categories);
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
+                }
+            });
+        }else {
+            callbackSupport.onCallback(null, null, allCategories);
+        }
+
     }
     public void delete(Category category){
         dbCategory.child(category.getCategory_id()).removeValue();

@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 
 import com.example.fastjobs.Entity.Commune;
 import com.example.fastjobs.Entity.District;
+import com.example.fastjobs.Entity.Province;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,25 +27,32 @@ public class CommuneSupport extends BaseSupport{
         dbCommune = db.child("commune");
     }
 
+    private List<Commune> allCommunes;
     public void getAll(final String district_id, final CallbackSupport callbackSupport){
-        dbCommune.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                List<Commune> communes = new ArrayList<>();
-                for (DataSnapshot item : dataSnapshot.getChildren())
-                {
-                    if(item.getValue(Commune.class).getDistrict_id().equalsIgnoreCase(district_id)){
-                        communes.add(item.getValue(Commune.class));
+        if(allCommunes == null){
+            dbCommune.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    List<Commune> communes = new ArrayList<>();
+                    for (DataSnapshot item : dataSnapshot.getChildren())
+                    {
+                        if(item.getValue(Commune.class).getDistrict_id().equalsIgnoreCase(district_id)){
+                            communes.add(item.getValue(Commune.class));
+                        }
                     }
+                    allCommunes = communes;
+                    callbackSupport.onCallback(null, null, communes);
                 }
-                callbackSupport.onCallback(null, null, communes);
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
+                }
+            });
+        }else {
+            callbackSupport.onCallback(null, null, allCommunes);
+        }
+
     }
 
     public void get(final String commune_id, final CallbackSupport callbackSupport){
@@ -64,6 +72,27 @@ public class CommuneSupport extends BaseSupport{
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
+            }
+        });
+    }
+
+    public void getFullLocation(final String commune_id, final CallbackSupport callbackSupport){
+        get(commune_id, new CallbackSupport<Commune>() {
+            @Override
+            public void onCallback(final Commune commune, String key, List<Commune> communes) {
+                DistrictSupport.getInstance().get(commune.getDistrict_id(), new CallbackSupport<District>() {
+                    @Override
+                    public void onCallback(final District district, String key, List<District> districts) {
+                        ProvinceSupport.getInstance().get(district.getProvince_id(), new CallbackSupport<Province>() {
+                            @Override
+                            public void onCallback(Province province, String key, List<Province> provinces) {
+                                String fullLocation ="";
+                                fullLocation+=commune.getName()+","+district.getName()+","+province.getName();
+                                callbackSupport.onCallback(fullLocation, null, null);
+                            }
+                        });
+                    }
+                });
             }
         });
     }
