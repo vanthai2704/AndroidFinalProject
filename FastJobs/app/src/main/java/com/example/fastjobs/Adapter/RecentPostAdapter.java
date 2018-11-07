@@ -62,7 +62,7 @@ public class RecentPostAdapter extends BaseAdapter {
             convertView.setTag(myHolder);
 
             if(postList.get(position).getImages() != null && postList.get(position).getImages().size()>0){
-                ImageSupport imageSupport = new ImageSupport();
+                ImageSupport imageSupport = ImageSupport.getInstance();
                 imageSupport.get(postList.get(position).getImages().get(0).getImage_id(), new CallbackSupport<Bitmap>() {
 
                     @Override
