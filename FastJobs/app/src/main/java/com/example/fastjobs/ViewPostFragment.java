@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -46,7 +47,7 @@ public class ViewPostFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private EditText jobTitle, jobContent, jobremuneration,jobCategory,jobLocation,jobPrice,editTextContactPostCart, editTextEmailPostCart;
-    private Button backlistpost, buttonChatPostCart;
+    private Button backlistpost, buttonChatPostCart, buttonDirectPostCart;
     private Button buy;
     private PostSupport postSupport;
     private UserSupport userSupport;
@@ -154,6 +155,7 @@ public class ViewPostFragment extends Fragment {
         backlistpost = view.findViewById(R.id.viewBackButton);
         buy = view.findViewById(R.id.viewBuyButton);
         buttonChatPostCart = view.findViewById(R.id.buttonChatPostCart);
+        buttonDirectPostCart= view.findViewById(R.id.buttonDirectPostCart);
         jobTitle.setInputType(0);
         jobContent.setInputType(0);
         jobremuneration.setInputType(0);
@@ -163,7 +165,8 @@ public class ViewPostFragment extends Fragment {
         jobLocation.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         editTextEmailPostCart.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         buy.setVisibility(View.INVISIBLE);
-        //buttonChatPostCart.setVisibility(View.INVISIBLE);
+        buttonChatPostCart.setVisibility(View.INVISIBLE);
+        buttonDirectPostCart.setVisibility(View.INVISIBLE);
         postSupport = PostSupport.getInstance();
         postSupport.get(mParam1, new CallbackSupport<Post>() {
             @Override
@@ -180,6 +183,11 @@ public class ViewPostFragment extends Fragment {
                 }else {
                     buy.setVisibility(View.VISIBLE);
                 }
+                if(!post.getPost_status().equals(PostSupport.ACTIVE)){
+                    buttonChatPostCart.setVisibility(View.VISIBLE);
+                    buttonDirectPostCart.setVisibility(View.VISIBLE);
+                    buy.setVisibility(View.INVISIBLE);
+                }
                 (new CategorySupport()).get(post.getCategory_id(), new CallbackSupport<Category>() {
 
                     @Override
@@ -192,6 +200,14 @@ public class ViewPostFragment extends Fragment {
                     @Override
                     public void onCallback(String s, String key, List<String> strings) {
                         jobLocation.setText(post.getPost_location_detail()+","+s);
+                        buttonDirectPostCart.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(activityTmp, GoogleMaps.class);
+                                intent.putExtra("destinationPoint", jobLocation.getText().toString());
+                                activityTmp.startActivity(intent);
+                            }
+                        });
                     }
                 });
                 buttonChatPostCart.setOnClickListener(new View.OnClickListener() {
