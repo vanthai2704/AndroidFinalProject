@@ -3,6 +3,7 @@ package com.example.fastjobs.SubHomeFragment;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -75,6 +76,7 @@ public class RecentPostFragment extends Fragment implements LocationListener{
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(contextTmp);
                 Post postSelected = (Post)listView.getAdapter().getItem(position);
                 String post_id = postSelected.getPost_id();
                 ViewPostFragment viewPostFragment = ViewPostFragment.newInstance(
