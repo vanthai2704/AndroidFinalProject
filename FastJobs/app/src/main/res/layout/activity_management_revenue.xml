@@ -4,11 +4,59 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ManagementRevenue">
+    tools:context=".ManagementRevenue"
+    android:orientation="vertical">
 
-
-    <ListView
-        android:id="@+id/listRevenue"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:text="Email"
+            android:textColor="@color/common_google_signin_btn_text_light_default"
+            android:background="@color/common_google_signin_btn_text_light_disabled"
+            android:gravity="center"/>
+
+        <TextView
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:text="Money"
+            android:textColor="@color/common_google_signin_btn_text_light_default"
+            android:background="@color/common_google_signin_btn_text_light_disabled"
+            android:gravity="center"/>
+
+        <TextView
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:text="Date"
+            android:textColor="@color/common_google_signin_btn_text_light_default"
+            android:background="@color/common_google_signin_btn_text_light_disabled"
+            android:gravity="center"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ListView
+            android:id="@+id/listRevenue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </ListView>
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="bottom">
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Đăng Xuất"
+            android:onClick="LogOut"/>
+
+    </RelativeLayout>
+
 </LinearLayout>

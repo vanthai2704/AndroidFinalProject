@@ -24,21 +24,22 @@
         <activity
             android:name=".MainPage"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".MessageActivity" />
-        <activity android:name=".GoogleMaps" />
-        <activity android:name=".BankInfomationActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainPage" />
-
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ManagementRevenue"></activity>
+        <activity android:name=".MessageActivity" />
+        <activity android:name=".GoogleMaps" />
+        <activity android:name=".BankInfomationActivity">
+
+
+        </activity>
+        <activity android:name=".ManagementRevenue">
+
+        </activity>
     </application>
 
 </manifest>

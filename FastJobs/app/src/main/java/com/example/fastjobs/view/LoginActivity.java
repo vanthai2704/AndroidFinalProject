@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.fastjobs.MainPage;
+import com.example.fastjobs.ManagementRevenue;
 import com.example.fastjobs.R;
 import com.example.fastjobs.firebase.CallbackSupport;
 import com.example.fastjobs.firebase.LoginSupport;
@@ -77,7 +78,11 @@ public class LoginActivity extends AppCompatActivity {
             password.requestFocus();
             return;
         }
-
+        if(tooltipmail.equals("admin@gmail.com") && tooltippass.equals("123456")){
+            Intent intent = new Intent(LoginActivity.super.getBaseContext(), ManagementRevenue.class);
+            startActivity(intent);
+            finish();
+        }
 
         if (matcher.matches()){
             final ProgressDialog dialog = ProgressDialog.show(LoginActivity.this, "",
