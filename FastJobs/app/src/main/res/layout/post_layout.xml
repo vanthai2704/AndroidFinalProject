@@ -11,7 +11,7 @@
         android:text="Job Title" />
 
     <Button
-        android:id="@+id/myPostDetail"
+        android:id="@+id/jobDetail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
