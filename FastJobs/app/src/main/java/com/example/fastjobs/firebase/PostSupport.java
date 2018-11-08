@@ -157,7 +157,7 @@ public class PostSupport extends BaseSupport{
                 List<Post> posts = new ArrayList<>();
                 for (DataSnapshot item : dataSnapshot.getChildren()) {
                     Post postItem = item.getValue(Post.class);
-                    if (post.getPost_status().equals(PostSupport.ACTIVE)){
+
                     if (post.getCommune_id() == null || (postItem.getCommune_id() != null
                             && postItem.getCommune_id().toLowerCase().contains(post.getCommune_id().toLowerCase()))) {
                         if (post.getCategory_id() == null || (postItem.getCategory_id() != null
@@ -186,7 +186,7 @@ public class PostSupport extends BaseSupport{
                         }
                     }
                 }
-                }
+
                 callbackSupport.onCallback(null, null, posts);
             }
 
