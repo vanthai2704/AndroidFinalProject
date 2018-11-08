@@ -155,26 +155,26 @@ public class PostSupport extends BaseSupport{
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 List<Post> posts = new ArrayList<>();
-                for (DataSnapshot item : dataSnapshot.getChildren())
-                {
+                for (DataSnapshot item : dataSnapshot.getChildren()) {
                     Post postItem = item.getValue(Post.class);
-                    if(post.getCommune_id() == null || (postItem.getCommune_id() != null
-                            && postItem.getCommune_id().toLowerCase().contains(post.getCommune_id().toLowerCase()))){
-                        if(post.getCategory_id() == null || (postItem.getCategory_id() != null
-                                && postItem.getCategory_id().toLowerCase().contains(post.getCategory_id().toLowerCase()))){
-                            if(post.getUser_id() == null || (postItem.getUser_id() != null
-                                    && postItem.getUser_id().toLowerCase().contains(post.getUser_id().toLowerCase()))){
-                                if(post.getLocation_coordinate() == null || (postItem.getLocation_coordinate() != null
-                                        && postItem.getLocation_coordinate().toLowerCase().contains(post.getLocation_coordinate().toLowerCase()))){
-                                    if(post.getPost_title() == null || (postItem.getPost_title() != null
-                                            && postItem.getPost_title().toLowerCase().contains(post.getPost_title().toLowerCase()))){
-                                        if(post.getPost_content() == null || (postItem.getPost_content() != null
-                                                && postItem.getPost_content().toLowerCase().contains(post.getPost_content().toLowerCase()))){
-                                            if(post.getPost_status() == null || (postItem.getPost_status() != null
-                                                    && postItem.getPost_status().toLowerCase().contains(post.getPost_status().toLowerCase()))){
-                                                if(index>(page-1)*pageSize && index<= page*pageSize){
+                    if (post.getPost_status().equals(PostSupport.ACTIVE)){
+                    if (post.getCommune_id() == null || (postItem.getCommune_id() != null
+                            && postItem.getCommune_id().toLowerCase().contains(post.getCommune_id().toLowerCase()))) {
+                        if (post.getCategory_id() == null || (postItem.getCategory_id() != null
+                                && postItem.getCategory_id().toLowerCase().contains(post.getCategory_id().toLowerCase()))) {
+                            if (post.getUser_id() == null || (postItem.getUser_id() != null
+                                    && postItem.getUser_id().toLowerCase().contains(post.getUser_id().toLowerCase()))) {
+                                if (post.getLocation_coordinate() == null || (postItem.getLocation_coordinate() != null
+                                        && postItem.getLocation_coordinate().toLowerCase().contains(post.getLocation_coordinate().toLowerCase()))) {
+                                    if (post.getPost_title() == null || (postItem.getPost_title() != null
+                                            && postItem.getPost_title().toLowerCase().contains(post.getPost_title().toLowerCase()))) {
+                                        if (post.getPost_content() == null || (postItem.getPost_content() != null
+                                                && postItem.getPost_content().toLowerCase().contains(post.getPost_content().toLowerCase()))) {
+                                            if (post.getPost_status() == null || (postItem.getPost_status() != null
+                                                    && postItem.getPost_status().toLowerCase().contains(post.getPost_status().toLowerCase()))) {
+                                                if (index > (page - 1) * pageSize && index <= page * pageSize) {
                                                     posts.add(postItem);
-                                                }else {
+                                                } else {
                                                     break;
                                                 }
                                                 index++;
@@ -185,6 +185,7 @@ public class PostSupport extends BaseSupport{
                             }
                         }
                     }
+                }
                 }
                 callbackSupport.onCallback(null, null, posts);
             }
