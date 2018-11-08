@@ -48,6 +48,11 @@ public class UserProfile extends Fragment {
         userSupport.get(loginSupport.getCurrentUserEmail(), new CallbackSupport<User>() {
             @Override
             public void onCallback(User user, String key, List<User> users) {
+                txtEmail.setText(user.getEmail());
+//                txtEmail.setText("This is mail");
+                txtCash.setText("Your Cash : " + user.getCash());
+                txtName.setText(user.getFullname());
+                txtPhone.setText(user.getPhone());
                 if(user.getDob() != null){
 //                    SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 //                    String date = format.format(user.getDob());
@@ -55,10 +60,7 @@ public class UserProfile extends Fragment {
                     }else {
                         txtDOB.setText("DOB");
                 }
-                txtEmail.setText(user.getEmail());
-                txtCash.setText("Your Cash : " + user.getCash());
-                txtName.setText(user.getFullname());
-                txtPhone.setText(user.getPhone());
+
 
             }
         });
@@ -67,13 +69,13 @@ public class UserProfile extends Fragment {
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editClick(view);
+                editClick();
             }
         });
         return view;
     }
 
-    public void editClick(View view){
+    public void editClick(){
         //Chuyen sang Edit View
         ProfileEdit profileEdit = new ProfileEdit();
         getFragmentManager()
