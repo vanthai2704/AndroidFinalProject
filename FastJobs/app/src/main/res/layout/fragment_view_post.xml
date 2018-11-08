@@ -93,13 +93,13 @@
         android:layout_margin="8dp"
         android:text="Location" />
 
-    <EditText
-        android:id="@+id/viewJobLocation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:ems="10"
-        android:inputType="textPersonName" />
+            <EditText
+                android:id="@+id/viewJobLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:ems="10"
+                android:inputType="textPersonName" />
 
     <TextView
         android:id="@+id/textViewContactPostCart"
@@ -114,7 +114,29 @@
         android:layout_margin="8dp"
         android:ems="10"
         android:inputType="textPersonName" />
-
+    <TextView
+        android:id="@+id/textViewEmailPostCart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="Email" />
+    <EditText
+        android:id="@+id/editTextEmailPostCart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:ems="10"
+        android:inputType="textPersonName" />
+    <Button
+        android:id="@+id/buttonChatPostCart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Chat" />
+    <Button
+        android:id="@+id/buttonDirectPostCart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Chi duong" />
     <Button
         android:id="@+id/viewBuyButton"
         android:layout_width="match_parent"

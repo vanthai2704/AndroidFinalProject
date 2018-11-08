@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.fastjobs.MainPage;
+import com.example.fastjobs.ManagementRevenue;
 import com.example.fastjobs.R;
 import com.example.fastjobs.firebase.CallbackSupport;
 import com.example.fastjobs.firebase.LoginSupport;
@@ -78,18 +79,24 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-
         if (matcher.matches()){
             final ProgressDialog dialog = ProgressDialog.show(LoginActivity.this, "",
                     "Loading. Please wait...", true);
-            LoginSupport loginSupport = LoginSupport.getInstance();
+            final LoginSupport loginSupport = LoginSupport.getInstance();
             loginSupport.login(tooltipmail, tooltippass, new CallbackSupport<Boolean>() {
                 @Override
                 public void onCallback(Boolean aBoolean, String key, List<Boolean> booleans) {
                     if(aBoolean){
-                        Intent intent = new Intent(LoginActivity.super.getBaseContext(), MainPage.class);
-                        startActivity(intent);
-                        finish();
+                        if(loginSupport.getCurrentUserEmail().equals("admin@gmail.com")){
+                            Intent intent = new Intent(LoginActivity.super.getBaseContext(), ManagementRevenue.class);
+                            startActivity(intent);
+                            finish();
+                        }else {
+                            Intent intent = new Intent(LoginActivity.super.getBaseContext(), MainPage.class);
+                            startActivity(intent);
+                            finish();
+                        }
+
                     }
                     else{
                         Toast.makeText(getApplicationContext(),"Email or password is wrong!",Toast.LENGTH_LONG).show();

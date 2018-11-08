@@ -17,6 +17,7 @@ import com.example.fastjobs.SubHomeFragment.RecentPostFragment;
 import com.example.fastjobs.firebase.CallbackSupport;
 import com.example.fastjobs.firebase.ImageSupport;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class RevenueAdapter extends BaseAdapter {
@@ -61,7 +62,8 @@ public class RevenueAdapter extends BaseAdapter {
     }
         myHolder.txtEmail.setText(revenues.get(position).getEmail());
         myHolder.txtMoney.setText(""+revenues.get(position).getMoney());
-        myHolder.txtDate.setText(""+revenues.get(position).getDate());
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        myHolder.txtDate.setText(""+formatter.format(revenues.get(position).getDate()));
         return convertView;
 
     }

@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.fastjobs.MessageFragment.MessageFragment;
 import com.example.fastjobs.firebase.CallbackSupport;
 import com.example.fastjobs.firebase.LoginSupport;
 import com.example.fastjobs.View.LoginActivity;
@@ -26,7 +27,8 @@ import com.example.fastjobs.firebase.UserSupport;
 import java.util.List;
 
 public class MainPage extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, MyPostDetail.OnFragmentInteractionListener ,ViewPostFragment.OnFragmentInteractionListener{
+        implements NavigationView.OnNavigationItemSelectedListener, MyPostDetail.OnFragmentInteractionListener ,
+        ViewPostFragment.OnFragmentInteractionListener, MessageFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

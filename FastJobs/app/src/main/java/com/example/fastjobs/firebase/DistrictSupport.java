@@ -25,9 +25,8 @@ public class DistrictSupport extends BaseSupport{
         dbDistrict = db.child("district");
     }
 
-    private List<District> allDistricts;
     public void getAll(final String province_id, final CallbackSupport callbackSupport){
-        if(allDistricts == null){
+
             dbDistrict.addValueEventListener(new ValueEventListener() {
 
                 @Override
@@ -39,7 +38,7 @@ public class DistrictSupport extends BaseSupport{
                             districts.add(item.getValue(District.class));
                         }
                     }
-                    allDistricts = districts;
+
                     callbackSupport.onCallback(null, null, districts);
                 }
 
@@ -48,9 +47,6 @@ public class DistrictSupport extends BaseSupport{
 
                 }
             });
-        }else {
-            callbackSupport.onCallback(null, null, allDistricts);
-        }
 
     }
 

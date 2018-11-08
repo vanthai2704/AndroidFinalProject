@@ -13,7 +13,9 @@ import android.os.Bundle;
 import android.app.Fragment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -64,9 +66,11 @@ public class SearchFragment extends android.support.v4.app.Fragment {
         return inflater.inflate(R.layout.fragment_search, container, false);
     }
 
+    private FloatingActionButton fab;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        fab = getActivity().findViewById(R.id.fab);
         activityTmp = getActivity();
         contextTmp = getContext();
             locationManager = (LocationManager) activityTmp.getSystemService(Context.LOCATION_SERVICE);
@@ -114,6 +118,17 @@ public class SearchFragment extends android.support.v4.app.Fragment {
                     loadData();
                 }
             });
+        listViewSearchJobs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ViewPostFragment viewPostFragment = ViewPostFragment.newInstance(
+                        ((Post)listViewSearchJobs.getAdapter().getItem(position)).getPost_id(), null);
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.contentLayout,viewPostFragment);
+                fragmentTransaction.commit();
+                fab.hide();
+            }
+        });
     }
 
 
@@ -142,6 +157,7 @@ public class SearchFragment extends android.support.v4.app.Fragment {
                 }
             }
         });
+
     }
 
     private Location getLastBestLocation() {
