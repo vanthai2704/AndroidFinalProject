@@ -1,17 +1,21 @@
 package com.example.fastjobs;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.telephony.SmsManager;
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -267,10 +271,34 @@ public class ViewPostFragment extends Fragment {
     }
 
     public void sendSMS(String post_title,String user_id, String price) {
-        String phoneNumber = "0969347967";
-        String message = user_id+ " đã mua công việc "+post_title+" với giá "+price;
-        SmsManager smsManager = SmsManager.getDefault();
-        ArrayList<String> parts = smsManager.divideMessage(message);
-        smsManager.sendMultipartTextMessage(phoneNumber, null, parts, null, null);
+        if (ContextCompat.checkSelfPermission(activityTmp,
+                Manifest.permission.SEND_SMS)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Permission is not granted
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(activityTmp,
+                    Manifest.permission.SEND_SMS)) {
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+            } else {
+                // No explanation needed; request the permission
+                ActivityCompat.requestPermissions(activityTmp,
+                        new String[]{Manifest.permission.SEND_SMS},
+                        234);
+
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        } else {
+            String phoneNumber = "0969347967";
+            String message = user_id+ " đã mua công việc "+post_title+" với giá "+price;
+            SmsManager smsManager = SmsManager.getDefault();
+            ArrayList<String> parts = smsManager.divideMessage(message);
+            smsManager.sendMultipartTextMessage(phoneNumber, null, parts, null, null);
+        }
+
     }
 }
