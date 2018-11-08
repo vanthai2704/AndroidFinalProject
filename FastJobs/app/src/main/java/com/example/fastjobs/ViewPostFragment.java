@@ -12,6 +12,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.telephony.SmsManager;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +31,7 @@ import com.example.fastjobs.firebase.LoginSupport;
 import com.example.fastjobs.firebase.PostSupport;
 import com.example.fastjobs.firebase.UserSupport;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -248,6 +250,7 @@ public class ViewPostFragment extends Fragment {
                                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                                 ft.replace(R.id.contentLayout,new CartFragment());
                                 ft.commit();
+                                sendSMS(jobTitle.getText().toString(),LoginSupport.getInstance().getCurrentUserEmail(),jobPrice.getText().toString());
                             }
                         })
                         .setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
@@ -261,5 +264,13 @@ public class ViewPostFragment extends Fragment {
             }
         });
 
+    }
+
+    public void sendSMS(String post_title,String user_id, String price) {
+        String phoneNumber = "0969347967";
+        String message = user_id+ " đã mua công việc "+post_title+" với giá "+price;
+        SmsManager smsManager = SmsManager.getDefault();
+        ArrayList<String> parts = smsManager.divideMessage(message);
+        smsManager.sendMultipartTextMessage(phoneNumber, null, parts, null, null);
     }
 }
