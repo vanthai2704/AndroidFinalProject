@@ -2,6 +2,7 @@ package com.example.fastjobs;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -44,19 +45,18 @@ public class UserProfile extends Fragment {
         final TextView txtPhone = view.findViewById(R.id.txtPhone);
         final TextView txtDOB = view.findViewById(R.id.txtDOB);
         final TextView txtEmail = view.findViewById(R.id.txtEmail);
-        Button btnEdit = view.findViewById(R.id.btnEdit);
+
         userSupport.get(loginSupport.getCurrentUserEmail(), new CallbackSupport<User>() {
             @Override
             public void onCallback(User user, String key, List<User> users) {
                 txtEmail.setText(user.getEmail());
-//                txtEmail.setText("This is mail");
                 txtCash.setText("Your Cash : " + user.getCash());
                 txtName.setText(user.getFullname());
                 txtPhone.setText(user.getPhone());
                 if(user.getDob() != null){
-//                    SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-//                    String date = format.format(user.getDob());
-                        txtDOB.setText(user.getDob().toString());
+                    SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+                    String date = format.format(user.getDob());
+                        txtDOB.setText(date);
                     }else {
                         txtDOB.setText("DOB");
                 }
@@ -65,11 +65,18 @@ public class UserProfile extends Fragment {
             }
         });
         // Inflate the layout for this fragment
-
+        Button btnEdit = view.findViewById(R.id.btnEdit);
+        Button btnDeposit = view.findViewById(R.id.btnDeposit);
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 editClick();
+            }
+        });
+        btnDeposit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                depositClick();
             }
         });
         return view;
@@ -82,6 +89,13 @@ public class UserProfile extends Fragment {
                 .beginTransaction()
                 .replace(R.id.contentLayout , profileEdit)
                 .commit();
+    }
+
+    public void depositClick(){
+        //Chuyen sang Edit View
+        Intent intent = new Intent(getActivity().getApplicationContext(),BankInfomationActivity.class);
+        getActivity().startActivity(intent);
+
     }
 
 }

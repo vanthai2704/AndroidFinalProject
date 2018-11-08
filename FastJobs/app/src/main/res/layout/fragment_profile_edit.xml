@@ -20,7 +20,7 @@
             android:src="@drawable/ic_name" />
 
         <EditText
-            android:id="@+id/txtName"
+            android:id="@+id/txtEditName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -43,7 +43,7 @@
             android:src="@drawable/ic_smartphone_black_24dp" />
 
         <EditText
-            android:id="@+id/txtPhone"
+            android:id="@+id/txtEditPhone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -64,7 +64,7 @@
             android:src="@drawable/ic_favorite_border_black_24dp"/>
 
         <EditText
-            android:id="@+id/txtDOB"
+            android:id="@+id/txtEditDOB"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"

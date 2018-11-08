@@ -39,33 +39,33 @@ public class ProfileEdit extends Fragment {
         getActivity().setTitle("Edit Profile");
         LoginSupport loginSupport = new LoginSupport();
         final UserSupport userSupport = new UserSupport();
-        final TextView txtName = view.findViewById(R.id.txtName);
-        final TextView txtDOB = view.findViewById(R.id.txtDOB);
-        final TextView txtPhone = view.findViewById(R.id.txtPhone);
+        final TextView txtName = view.findViewById(R.id.txtEditName);
+        final TextView txtDOB = view.findViewById(R.id.txtEditDOB);
+        final TextView txtPhone = view.findViewById(R.id.txtEditPhone);
         final Button btnSave= view.findViewById(R.id.btnSave);
 
         userSupport.get(loginSupport.getCurrentUserEmail(), new CallbackSupport<User>() {
             @Override
             public void onCallback(final User user, String key, List<User> users) {
-                user.setFullname(txtName.getText().toString());
-                user.setPhone(txtPhone.getText().toString());
-                SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-                try{
-                    Date DOB = format.parse(txtDOB.getText().toString());
-                    user.setDob(DOB);
-                }catch(ParseException e ){
-                    e.printStackTrace();
-                }
-
                 btnSave.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        user.setFullname(txtName.getText().toString());
+                        user.setPhone(txtPhone.getText().toString());
+
+                        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
                         try{
-                            userSupport.update(user);
-                            Toast.makeText( getActivity() , "Chỉnh Sửa Thông Tin Thành Công." ,Toast.LENGTH_LONG).show();
-                        }catch (Exception e){
+                            Date DOB = format.parse(txtDOB.getText().toString());
+                            user.setDob(DOB);
+
+                        }catch(ParseException e ){
                             e.printStackTrace();
                         }
+
+
+                            userSupport.update(user);
+                            Toast.makeText( getActivity() , "Chỉnh Sửa Thông Tin Thành Công." ,Toast.LENGTH_LONG).show();
+
 
                     }
                 });
